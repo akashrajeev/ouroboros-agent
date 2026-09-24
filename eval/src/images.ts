@@ -17,8 +17,9 @@ const M = new URL('../../models/', import.meta.url).pathname;
 const FONTS = ['DejaVu Sans', 'DejaVu Serif', 'DejaVu Sans Mono', 'Carlito', 'Caladea'];
 const BGS = ['#f4f1e8', '#e8f0f7', '#ffffff', '#f7e9e4', '#eef6ea'];
 
-export interface Card { png: Buffer; values: { type: string; value: string }[]; decoys: string[]; faceBox: { x: number; y: number; w: number; h: number } }
+export interface Card { png: Buffer; values: { type: string; value: string }[]; decoys: string[]; faceBox: { x: number; y: number; w: number; h: number }; header: string }
 
+export const HEADERS = ['GOVERNMENT OF INDIA', 'e-KYC CARD', 'ACCOUNT HOLDER'];
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 export async function makeCard(face: Buffer, hard = false): Promise<Card> {
@@ -39,8 +40,9 @@ export async function makeCard(face: Buffer, hard = false): Promise<Card> {
   const faceSize = f.number.int({ min: 130, max: 180 });
   const faceBox = { x: W - faceSize - 30, y: 90, w: faceSize, h: Math.round(faceSize * 1.25) };
   const text = lines.map((l, i) => `<text x="30" y="${110 + i * (fs + 18)}" font-family="${font}" font-size="${fs}">${esc(l)}</text>`).join('');
+  const header = f.helpers.arrayElement(HEADERS); // drawn here to keep the seeded sequence of earlier runs
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="${bg}"/>
-<text x="30" y="55" font-family="${font}" font-size="30" font-weight="bold">${f.helpers.arrayElement(['GOVERNMENT OF INDIA', 'e-KYC CARD', 'ACCOUNT HOLDER'])}</text>${text}</svg>`;
+<text x="30" y="55" font-family="${font}" font-size="30" font-weight="bold">${header}</text>${text}</svg>`;
   const photo = await sharp(face).resize(faceBox.w, faceBox.h, { fit: 'cover' }).toBuffer();
   let png = await sharp(Buffer.from(svg)).composite([{ input: photo, left: faceBox.x, top: faceBox.y }]).png().toBuffer();
   if (hard) {
@@ -52,10 +54,10 @@ export async function makeCard(face: Buffer, hard = false): Promise<Card> {
     const small = await sharp(png).resize(Math.round(meta.width! * scale)).jpeg({ quality: f.number.int({ min: 35, max: 60 }) }).toBuffer();
     png = await sharp(small).resize(meta.width!, meta.height!).png().toBuffer();
   }
-  return { png, values: values.map(({ type, value }) => ({ type, value })), decoys, faceBox };
+  return { png, values: values.map(({ type, value }) => ({ type, value })), decoys, faceBox, header };
 }
 
-async function toImg(png: Buffer): Promise<Img> {
+export async function toImg(png: Buffer): Promise<Img> {
   const { data, info } = await sharp(png).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   return { data: new Uint8ClampedArray(data), width: info.width, height: info.height } as Img;
 }
