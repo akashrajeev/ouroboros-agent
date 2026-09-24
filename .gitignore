@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.output/
+.wxt/
+__pycache__/
+.venv/
+.pytest_cache/
+*.pyc
+eval/pages/
+models/
