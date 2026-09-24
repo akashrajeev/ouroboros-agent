@@ -17,9 +17,11 @@ describe('domRuleType', () => {
     expect(domRuleType({ tag: 'input', label: 'Date of Birth' })).toBe('DOB');
     expect(domRuleType({ tag: 'input', label: 'CVV' })).toBe('CVV');
     expect(domRuleType({ tag: 'input', label: 'UPI PIN' })).toBe('PIN');
+    expect(domRuleType({ tag: 'input', label: 'PIN code' })).toBe('PINCODE');
+    expect(domRuleType({ tag: 'input', autocomplete: 'postal-code' })).toBe('PINCODE');
   });
   it('does not flag ordinary fields', () => {
-    for (const label of ['First name', 'City', 'Search', 'Company', 'Pin code', 'Panel title', 'Japan'])
+    for (const label of ['First name', 'City', 'Search', 'Company', 'Panel title', 'Japan'])
       expect(domRuleType({ tag: 'input', label })).toBeNull();
   });
 });

@@ -13,6 +13,7 @@ const LABEL_RULES: [RegExp, PiiType][] = [
   [/\bifsc\b/i, 'IFSC'],
   [/\b(account|acct|a\/c)[\s_-]*(no|num|number)?\b/i, 'ACCOUNT'],
   [/\bdob\b|date[\s_-]?of[\s_-]?birth|birth[\s_-]?date/i, 'DOB'],
+  [/pin[\s_-]?code|postal[\s_-]?code|\bzip(code)?\b/i, 'PINCODE'],
   [/card[\s_-]?(no|num|number)|\bcc[\s_-]?num/i, 'CARD'],
   [/password|passwd|\bpwd\b|passcode/i, 'PASSWORD'],
   [/api[\s_-]?key|secret|token/i, 'SECRET'],
@@ -27,6 +28,7 @@ export function domRuleType(f: FieldInfo): PiiType | null {
   if (ac === 'cc-number') return 'CARD';
   if (ac.startsWith('cc-')) return 'CARD';
   if (ac === 'bday' || ac.startsWith('bday-')) return 'DOB';
+  if (ac === 'postal-code') return 'PINCODE';
   const hay = [f.name, f.id, f.label, f.placeholder].filter(Boolean).join(' ');
   if (!hay) return null;
   // Normalize camelCase / snake_case identifiers into words.
