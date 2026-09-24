@@ -1,0 +1,74 @@
+from fastapi.testclient import TestClient
+
+from app.main import app
+
+client = TestClient(app)
+
+FORM = [
+    {"id": "e1", "role": "textbox", "label": "Full name", "field_type": "text", "bbox": [0.1, 0.1, 0.3, 0.04]},
+    {"id": "e2", "role": "textbox", "label": "Mobile number", "field_type": "tel", "bbox": [0.1, 0.2, 0.3, 0.04]},
+    {"id": "e3", "role": "textbox", "label": "PAN", "field_type": "text", "bbox": [0.1, 0.3, 0.3, 0.04]},
+    {"id": "e4", "role": "button", "label": "Submit", "bbox": [0.1, 0.4, 0.1, 0.04]},
+]
+LEGEND = {"<NAME_1>": "NAME", "<PHONE_1>": "PHONE", "<PAN_1>": "PAN"}
+TASK = "Fill the KYC form for <NAME_1>, mobile <PHONE_1>, PAN <PAN_1>"
+
+
+def req(history=None, **kw):
+    body = {"session_id": "s1", "task": TASK, "screen_map": FORM, "legend": LEGEND, "history": history or []}
+    body.update(kw)
+    return body
+
+
+def test_health():
+    assert client.get("/health").json()["status"] == "ok"
+
+
+def test_stub_fills_fields_in_order_then_submits_then_done():
+    history = []
+    ops = []
+    for _ in range(6):
+        r = client.post("/step", json=req(history))
+        assert r.status_code == 200, r.text
+        a = r.json()["action"]
+        ops.append((a["op"], a.get("element_id"), a.get("text")))
+        if a["op"] == "done":
+            break
+        history.append({"op": a["op"], "element_id": a.get("element_id"), "text": a.get("text")})
+    assert ops == [
+        ("type", "e1", "<NAME_1>"),
+        ("type", "e2", "<PHONE_1>"),
+        ("type", "e3", "<PAN_1>"),
+        ("click", "e4", None),
+        ("done", None, None),
+    ]
+
+
+def test_type_matching_never_crosses_types():
+    legend = {"<PHONE_1>": "PHONE"}
+    r = client.post("/step", json=req(legend=legend, task="Use <PHONE_1>"))
+    a = r.json()["action"]
+    assert a == {"op": "type", "element_id": "e2", "text": "<PHONE_1>", "reason": a["reason"]}
+
+
+def test_rejects_raw_pii_without_echoing_it():
+    r = client.post("/step", json=req(task="Fill with 9876543210 and ABCPE1234F"))
+    assert r.status_code == 422
+    assert "9876543210" not in r.text and "ABCPE1234F" not in r.text
+    assert set(r.json()["detail"]["types"]) == {"PHONE", "PAN"}
+
+
+def test_rejects_raw_card_in_screen_map():
+    form = [dict(FORM[0], value="4111 1111 1111 1111")]
+    r = client.post("/step", json=req(screen_map=form))
+    assert r.status_code == 422
+
+
+def test_metrics_present():
+    m = client.post("/step", json=req()).json()["metrics"]
+    assert m["planner"] == "stub-v1" and m["input_chars"] > 0 and m["server_ms"] >= 0
+
+
+def test_schema_rejects_bad_element_id():
+    bad = [dict(FORM[0], id="x1")]
+    assert client.post("/step", json=req(screen_map=bad)).status_code == 422
