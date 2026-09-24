@@ -1,4 +1,5 @@
-import type { RawObservation } from '@ouroboros/core';
+import type { RawObservation, TextMatch } from '@ouroboros/core';
+import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserHost';
 import { runTask, type LoopEvent } from '../lib/agentLoop';
 import { confirmWithTimeout, type ConfirmRequest, type ContentRequest } from '../lib/messages';
 
@@ -9,6 +10,28 @@ async function post(body: string) {
   const r = await fetch(`${SERVER}/step`, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
   if (!r.ok) throw new Error(`server ${r.status}`);
   return r.json();
+}
+
+// A3c/A3d host: Chrome offscreen document; Firefox MV2 background page runs it in-process.
+async function host<T>(req: HostRequest): Promise<T> {
+  if (import.meta.env.FIREFOX) {
+    const { handleHostRequest } = await import('../lib/browserHost');
+    return handleHostRequest(req) as Promise<T>;
+  }
+  const off = (globalThis as any).chrome.offscreen;
+  if (!(await off.hasDocument?.())) {
+    await off.createDocument({ url: 'offscreen.html', reasons: ['WORKERS'], justification: 'On-device PII models (onnxruntime-web)' }).catch(() => {});
+  }
+  const r = (await browser.runtime.sendMessage(req)) as T & { error?: string };
+  if (r?.error) throw new Error(r.error);
+  return r;
+}
+
+let modelsOn: boolean | undefined;
+async function modelsEnabled(): Promise<boolean> {
+  // Models are staged into the build by scripts/stage-models.sh; without them the loop runs rules-only.
+  modelsOn ??= await fetch(browser.runtime.getURL('/models/paddleocr/det.onnx' as never), { method: 'HEAD' }).then((r) => r.ok, () => false);
+  return modelsOn;
 }
 
 export default defineBackground(() => {
@@ -25,6 +48,18 @@ export default defineBackground(() => {
         observe: () => send<RawObservation>({ type: 'ouro:observe' }),
         execute: (nodeId, op, text) => send({ type: 'ouro:execute', nodeId, op, text }),
         post,
+        detectText: async (texts) => {
+          if (!(await modelsEnabled())) return () => [];
+          const m = await host<PrimeResponse>({ type: 'ouro:host:prime', target: 'host', texts });
+          return (t: string): TextMatch[] => m[t] ?? [];
+        },
+        visual: async (raw) => {
+          if (!(await modelsEnabled())) return null; // fail closed: no masked image, text-only step
+          const dataUrl = await browser.tabs.captureVisibleTab(tab.windowId!, { format: 'png' });
+          const r = await host<VisualResponse>({ type: 'ouro:host:visual', target: 'host', dataUrl, regions: raw.opaque.map((o) => o.bbox), viewportW: raw.viewport.w });
+          events.push({ kind: 'vision', ms: r.ms, regions: r.regions } as never);
+          return { jpegB64: r.jpegB64, imageText: r.imageText, detections: r.detections };
+        },
         scroll: async (direction) => { await send({ type: 'ouro:scroll', direction }); },
         settle: async () => { await send({ type: 'ouro:settle' }); },
         // A9: consequential actions need a click in the popup; closed popup or 60 s silence = decline.

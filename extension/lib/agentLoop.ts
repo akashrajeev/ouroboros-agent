@@ -1,6 +1,6 @@
 import {
   observationKey, leakGate, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
-  type Action, type RawObservation, type ScreenMap,
+  type Action, type RawObservation, type ScreenMap, type TextDetector,
 } from '@ouroboros/core';
 
 /**
@@ -19,6 +19,8 @@ export interface LoopDeps {
    * A3d+A6 on pixels, only after the planner asks for need_visual. Returns an
    * already-masked JPEG and the re-OCR text of the masked regions (for the gate).
    */
+  /** A3c: run the text model over these strings and return a synchronous detector for sanitize(). */
+  detectText?(texts: string[]): Promise<TextDetector>;
   /** G7 local fast path: scroll the page without a round-trip for anything else. */
   scroll?(direction: 'up' | 'down'): Promise<void>;
   /** Wait for the DOM to settle (wait op). */
@@ -55,7 +57,8 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const t1 = now();
       const key = observationKey(raw);
       const reused = last?.key === key;
-      const screen = reused ? last!.screen : sanitize(raw, map).screen;
+      const extra = !reused && deps.detectText ? [await deps.detectText(raw.elements.flatMap((e) => [e.name, e.text, e.value]).filter(Boolean))] : [];
+      const screen = reused ? last!.screen : sanitize(raw, map, { extraDetectors: extra }).screen;
       last = { key, screen };
       const t2 = now();
       const vis = wantVisual && deps.visual ? await deps.visual(raw) : null;
@@ -86,7 +89,8 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       if (needsFresh) {
         const fresh = await deps.observe();
         const fk = observationKey(fresh);
-        current = fk === key ? planned : sanitize(fresh, map).screen;
+        const fx = fk !== key && deps.detectText ? [await deps.detectText(fresh.elements.flatMap((e) => [e.name, e.text, e.value]).filter(Boolean))] : [];
+        current = fk === key ? planned : sanitize(fresh, map, { extraDetectors: fx }).screen;
       }
       const v = validateAction(res.action, planned, current, map);
       if (!v.ok) {

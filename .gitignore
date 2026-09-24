@@ -8,3 +8,5 @@ __pycache__/
 *.pyc
 eval/pages/
 models/
+extension/public/models/
+extension/public/ort/

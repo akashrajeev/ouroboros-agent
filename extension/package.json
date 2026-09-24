@@ -12,7 +12,11 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@ouroboros/core": "*"
+    "@huggingface/transformers": "4.3.0",
+    "@ouroboros/core": "*",
+    "@ouroboros/ner": "*",
+    "@ouroboros/vision": "*",
+    "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0"
   },
   "devDependencies": {
     "happy-dom": "^15.0.0",
