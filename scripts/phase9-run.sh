@@ -7,9 +7,10 @@ cd "$(dirname "$0")/.."
 : "${VLM_BASE_URL:?set VLM_BASE_URL from the notebook}" "${VLM_API_KEY:?set VLM_API_KEY from the notebook}"
 N="${1:-20}"
 MODEL_TAG=$(echo "${VLM_MODEL:-vlm}" | tr '/:' '--' | tr 'A-Z' 'a-z')
-(cd server && PLANNER=vlm uvicorn app.main:app --port 8001 > /tmp/ouro-vlm-server.log 2>&1) &
+if curl -sf http://127.0.0.1:8001/health >/dev/null; then echo "port 8001 already in use; stop the old server first" >&2; exit 1; fi
+(cd server && PLANNER=vlm exec uvicorn app.main:app --port 8001 > /tmp/ouro-vlm-server.log 2>&1) &
 SRV=$!
 trap 'kill $SRV 2>/dev/null' EXIT
 for _ in $(seq 30); do curl -sf http://127.0.0.1:8001/health >/dev/null && break; sleep 1; done
 curl -s http://127.0.0.1:8001/health; echo
-OURO_SERVER=http://127.0.0.1:8001 OURO_TAG="phase9-${MODEL_TAG}" npm run --silent replay --workspace eval -- "$N"
+OURO_SERVER=http://127.0.0.1:8001 OURO_TAG="phase9-${MODEL_TAG}${TAG_SUFFIX:-}" npm run --silent replay --workspace eval -- "$N"

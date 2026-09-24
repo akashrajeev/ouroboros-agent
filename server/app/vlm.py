@@ -27,7 +27,16 @@ Rules:
 - Use only element ids from the list. For type/select, "text" must be a placeholder from the legend whose type fits the field, or plain non-personal text.
 - Never invent personal data. If you need something that is not in the legend, use ask_user.
 - Use need_visual only if the answer depends on an image, canvas or chart you cannot read from the list.
-- Use done when the task is complete."""
+- To fill a text field, use type on it directly; do not click it first.
+- Fill each field once. Skip fields that already show a value or appear in "Done so far". Never repeat the same action twice in a row.
+- Match placeholders to fields by type (e.g. <PAN_1> goes in the PAN field, <PHONE_1> in the mobile/phone field). A field with no fitting placeholder is left empty unless the task gives plain text for it.
+- Password, OTP and CAPTCHA fields: use ask_user.
+- When every field you can fill is filled, click the submit/continue button once, then use done.
+- Use done when the task is complete.
+
+Example. Elements: e2 textbox "Full name", e3 textbox "Mobile", e4 button "Submit". Legend: <NAME_1>=NAME, <PHONE_1>=PHONE. Done so far: (none).
+Good replies, one per step: {"op":"type","element_id":"e2","text":"<NAME_1>","reason":"name"} then {"op":"type","element_id":"e3","text":"<PHONE_1>","reason":"mobile"} then {"op":"click","element_id":"e4","text":null,"reason":"submit"} then {"op":"done","element_id":null,"text":null,"reason":"submitted"}.
+Bad reply: {"op":"click","element_id":"e2"} (clicking a text field does nothing useful)."""
 
 JSON_RE = re.compile(r"\{.*\}", re.S)
 Transport = Callable[[str, dict[str, Any], dict[str, str], float], dict[str, Any]]
@@ -56,6 +65,9 @@ def render_screen(req: StepRequest, max_elements: int) -> str:
     if len(req.screen_map) > max_elements:
         lines.append(f"... {len(req.screen_map) - max_elements} more elements not shown")
     legend = ", ".join(f"{k}={v}" for k, v in req.legend.items()) or "(none)"
+    used = {h.text for h in req.history if h.op in ("type", "select") and h.text}
+    unused = [k for k in req.legend if k not in used]
+    legend += "\nNot used yet: " + (", ".join(unused) if unused else "(all used)")
     hist = "\n".join(f"- {h.op} {h.element_id or ''} {h.text or ''}".rstrip() for h in req.history[-10:]) or "(none)"
     return f"Task: {req.task}\nSite: {req.url_origin}\nLegend (placeholder=type): {legend}\n\nElements:\n" + "\n".join(lines) + f"\n\nDone so far:\n{hist}\n\nNext action JSON:"
 
@@ -89,6 +101,20 @@ class VlmPlanner:
         return cls(os.environ["VLM_BASE_URL"], os.environ.get("VLM_MODEL", "Qwen/Qwen2.5-VL-7B-Instruct-AWQ"), os.environ.get("VLM_API_KEY", ""),
                    float(os.environ.get("VLM_TIMEOUT_S", "60")), int(os.environ.get("VLM_MAX_ELEMENTS", "150")))
 
+    @staticmethod
+    def _loop_note(req: StepRequest, action: Optional[Action]) -> Optional[str]:
+        if action is None:
+            return None
+        if req.history:
+            h = req.history[-1]
+            if h.op == action.op and h.element_id == action.element_id and (h.text or None) == (action.text or None):
+                return "That repeats your previous action. Choose a different next action (JSON only)."
+        if action.op == "click" and action.element_id:
+            el = next((e for e in req.screen_map if e.id == action.element_id), None)
+            if el is not None and el.role == "textbox":
+                return f"{action.element_id} is a text field; clicking it does nothing. Use type with a fitting placeholder, or pick another element (JSON only)."
+        return None
+
     def plan(self, req: StepRequest) -> Action:
         content: list[dict[str, Any]] = [{"type": "text", "text": render_screen(req, self.max_elements)}]
         if req.image_jpeg_b64:
@@ -105,4 +131,20 @@ class VlmPlanner:
             return Action(op="ask_user", reason=f"planner unavailable ({type(e).__name__})")
         self.last = {"ms": (time.perf_counter() - t0) * 1000, "prompt_tokens": usage.get("prompt_tokens"), "completion_tokens": usage.get("completion_tokens")}
         action = parse_action(text)
+        note = self._loop_note(req, action)
+        if note:
+            self.guard_fires = getattr(self, "guard_fires", 0) + 1
+            body["messages"].append({"role": "assistant", "content": text})
+            body["messages"].append({"role": "user", "content": note})
+            try:
+                out = self.transport(self.url, body, self.headers, self.timeout)
+                text = out["choices"][0]["message"]["content"]
+                action = parse_action(text) or action
+            except Exception:
+                pass
+            self.last["guard"] = True
+        dbg = os.environ.get("VLM_DEBUG_LOG")
+        if dbg:  # sanitized prompt + reply only; placeholders, never values
+            with open(dbg, "a") as f:
+                f.write(json.dumps({"reply": text, "prompt_tail": content[-1]["text"][-1500:]}) + "\n")
         return action or Action(op="ask_user", reason="planner returned no valid action")

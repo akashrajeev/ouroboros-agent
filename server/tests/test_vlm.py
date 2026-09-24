@@ -45,3 +45,20 @@ def test_fails_safe_on_garbage_or_network_error():
 
 def test_parse_action_ignores_extra_keys():
     assert parse_action(json.dumps({"op": "done", "reason": "ok", "confidence": 0.9})).op == "done"
+
+
+def test_loop_guard_reasks_on_textbox_click():
+    from app.schemas import StepRequest
+    from app.vlm import VlmPlanner
+    replies = iter(['{"op":"click","element_id":"e2"}', '{"op":"type","element_id":"e2","text":"<NAME_1>"}'])
+    calls = []
+
+    def transport(url, body, headers, timeout):
+        calls.append(body)
+        return {"choices": [{"message": {"content": next(replies)}}]}
+
+    p = VlmPlanner("http://x/v1", "m", transport=transport)
+    req = StepRequest(session_id="s", task="t <NAME_1>", url_origin="https://a.example", legend={"<NAME_1>": "NAME"},
+                      screen_map=[{"id": "e2", "role": "textbox", "label": "Full name", "bbox": (0, 0, 10, 10)}], history=[])
+    a = p.plan(req)
+    assert a.op == "type" and a.text == "<NAME_1>" and len(calls) == 2

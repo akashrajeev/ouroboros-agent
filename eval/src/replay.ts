@@ -34,7 +34,7 @@ async function withDomAsync<T>(html: string, fn: (doc: Document) => Promise<T>):
 }
 
 export async function replay(n: number) {
-  const pages = (generatePages(n * 3) as Page[]).filter((p) => p.template === 'kyc' || p.template === 'checkout').slice(0, n);
+  const pages = (generatePages(n * 3, Number(process.env.OURO_SEED ?? 26171)) as Page[]).filter((p) => p.template === 'kyc' || p.template === 'checkout').slice(0, n);
   const health = await fetch(`${SERVER}/health`).then((r) => r.json() as Promise<{ planner: string }>);
   let ner: NerDetector | undefined, loadMs = 0;
   if (existsSync(`${M}bert-small-pii/onnx/model_quantized.onnx`)) {

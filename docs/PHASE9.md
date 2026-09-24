@@ -28,3 +28,15 @@ The GPU only receives the sanitized request: placeholders and types, element ids
 
 - Colab: T4 availability is not guaranteed; sessions end after a few hours or when idle. Kaggle: 30 GPU h/week, 2x T4, 12 h sessions.
 - Numbers from a tunnel include internet round-trip; report planner ms (server-side) next to end-to-end ms.
+
+## Results so far (2026-09-24, Qwen2.5-VL-7B-Instruct-AWQ on a free Colab T4)
+
+| Run | Pages | Done | Fields exact | Steps | Leaks in request bodies | Server p50 / p95 ms |
+|---|--:|--:|--:|--:|--:|--:|
+| E1 (prompt v1) | 20 (seed 26171) | 2 | 50/120 | 460 | 0/460 | 634 / 1360 |
+| E1b (prompt v2 + loop guard) | 20 (seed 26171) | 20 | 120/120 | 160 | 0/160 | 971 / 1120 |
+| E1b held-out values | 20 (seed 90210) | 20 | 120/120 | 160 | 0/160 | 1009 / 1197 |
+
+What changed in v2: a one-shot example (type directly, no click first), "not used yet" placeholders in the legend, and a loop guard that re-asks once when the model repeats its last action or clicks a text field. Server p50 rose because a guarded step costs two model calls.
+
+Contamination: the v2 prompt was tuned by looking at the first 4 pages of seed 26171, so that row is partly contaminated. Seed 90210 has fresh values but the same two templates (KYC, checkout), so it tests new data, not new layouts. Next: unseen layouts (E2+), and gate the submit click behind user confirmation in the extension before real-site use.
