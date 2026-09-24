@@ -21,7 +21,7 @@ describe.skipIf(!have)('ModelHost (onnxruntime-node stands in for onnxruntime-we
       ort: ort as never,
       bytes: async (p) => new Uint8Array(readFileSync(M + p)),
       text: async (p) => readFileSync(M + p, 'utf8'),
-      ner: async () => ({ detect: async (t: string) => { nerCalls++; return /Ravi Kumar/.test(t) ? [{ type: 'NAME' as const, start: t.indexOf('Ravi'), end: t.indexOf('Ravi') + 10, value: 'Ravi Kumar', score: 0.9, source: 'ner' as const }] : []; } }),
+      ner: async () => ({ detect: async (t: string) => { nerCalls++; return /Ravi Kumar/.test(t) ? [{ type: 'NAME' as const, start: t.indexOf('Ravi'), end: t.indexOf('Ravi') + 10, value: 'Ravi Kumar', confidence: 0.9, source: 'ner' as const }] : []; } }),
     });
     await host.prime(['Holder: Ravi Kumar', 'Holder: Ravi Kumar', 'Submit']);
     await host.prime(['Holder: Ravi Kumar']);
