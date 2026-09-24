@@ -34,6 +34,10 @@ describe('positives', () => {
   it('dob with context', () => one('DOB: 14/08/1999', 'DOB'));
   it('pincode with context', () => one('Bengaluru, 560001', 'PINCODE'));
   it('pincode with label', () => one('PIN code: 682 001', 'PINCODE'));
+  it('phone with dot separator', () => one('Reach me at 98765.43210 after 6', 'PHONE'));
+  it('obfuscated email', () => { one('mail: ravi92 [at] gmail [dot] com', 'EMAIL'); one('ravi(at)example(dot)co(dot)in', 'EMAIL'); });
+  it('month-name DOB with context', () => { one('Born on 4 Aug 1999.', 'DOB'); one('DOB: August 4, 1999', 'DOB'); one('Date of birth 1999-08-04', 'DOB'); });
+  it('bare long number as a whole cell', () => one('04364896458', 'ACCOUNT'));
   it('account with context', () => one('Account: 000123456789', 'ACCOUNT'));
 });
 
@@ -51,9 +55,9 @@ describe('negatives (precision)', () => {
     expect(types('Saved card 5219 7555 7570 3934')).toEqual(['CARD']);
   });
   it('Verhoeff-valid 12 digits under an account label is ACCOUNT', () => expect(types(`Account: ${AADHAAR}`)).toEqual(['ACCOUNT']));
-  it('repeated digits are not cards', () => expect(types('0000000000000000')).toEqual([]));
+  it('repeated digits are not cards', () => { expect(types('code 0000000000000000')).toEqual([]); expect(types('0000000000000000')).toEqual([]); });
   it('PAN with invalid holder type char', () => expect(types('ABCXE1234F')).toEqual([]));
-  it('phone starting with 5', () => expect(types('5876543210')).toEqual([]));
+  it('phone starting with 5', () => expect(types('ticket 5876543210')).toEqual([]));
   it('email is not also UPI', () => expect(types('a.b@gmail.com')).toEqual(['EMAIL']));
   it('passport-shaped code without context', () => expect(types('Order K1234567')).toEqual([]));
   it('date without birth context', () => expect(types('Due 14/08/2025')).toEqual([]));
@@ -62,6 +66,9 @@ describe('negatives (precision)', () => {
   it('six-digit number without context', () => expect(types('Order 560001 shipped')).toEqual([]));
   it('invalid ip octets', () => expect(types('version 1.2.300.4')).toEqual([]));
   it('vehicle with unknown state code', () => expect(types('ZZ 01 AB 1234')).toEqual([]));
+  it('decimal numbers are not phones', () => expect(types('pi is 3.14159 and 98765.432101')).toEqual([]));
+  it('month-name date without birth context', () => expect(types('Meeting on 4 Aug 2025')).toEqual([]));
+  it('bare number inside a sentence is not an account', () => expect(types('Ticket 04364896458 closed')).toEqual([]));
   it('prices and years', () => expect(types('Rs 1,499 in 2024, qty 3')).toEqual([]));
 });
 

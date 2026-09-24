@@ -43,6 +43,11 @@ const RULES: Rule[] = [
     re: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}\b/g,
   },
   {
+    // Obfuscated: "name [at] gmail [dot] com", "name(at)gmail(dot)com"
+    type: 'EMAIL', priority: 89, confidence: 0.9,
+    re: /\b[A-Za-z0-9._%+-]+\s*[[(]\s*at\s*[\])]\s*[A-Za-z0-9-]+(?:\s*(?:[[(]\s*dot\s*[\])]|\.)\s*[A-Za-z0-9-]+)+\b/gi,
+  },
+  {
     // UPI VPA: handle has no dot (that would be an email domain).
     type: 'UPI', priority: 85, confidence: 0.95,
     re: /\b[A-Za-z0-9][A-Za-z0-9._-]{1,255}@[A-Za-z]{2,64}\b(?!\.[A-Za-z])/g,
@@ -82,7 +87,7 @@ const RULES: Rule[] = [
   },
   {
     type: 'PHONE', priority: 55, confidence: 0.93,
-    re: /(?<![\d+])(?:\+91[ -]?|0)?[6-9]\d{4}[ -]?\d{5}\b/g,
+    re: /(?<![\d+.])(?:\+91[ -]?|0)?[6-9]\d{4}[ .-]?\d{5}\b(?!\.\d)/g,
   },
   {
     type: 'VEHICLE', priority: 50, confidence: 0.9,
@@ -106,6 +111,17 @@ const RULES: Rule[] = [
       const [d, m, y] = raw.split(/[/.-]/).map(Number) as [number, number, number];
       return validDate(d, m, y) && hasContext(text, start, /\b(dob|d\.o\.b|birth|born)\b/i);
     },
+  },
+  {
+    type: 'DOB', priority: 34, confidence: 0.88,
+    re: /\b(?:\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*,?\s+\d{4}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}|\d{4}-\d{2}-\d{2})\b/gi,
+    validate: (_raw, text, start) => hasContext(text, start, /\b(dob|d\.o\.b|birth|born)\b/i),
+  },
+  {
+    // An element whose whole text is one long bare number is an identifier (fail-closed).
+    type: 'ACCOUNT', priority: 31, confidence: 0.7,
+    re: /^\s*\d{9,18}\s*$/g,
+    validate: (raw) => !/^(\d)\1+$/.test(raw.trim()),
   },
   {
     // Bank account numbers have no checksum; require an account context word.
