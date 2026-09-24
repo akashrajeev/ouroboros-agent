@@ -1,0 +1,22 @@
+{
+  "name": "@ouroboros/vision",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ouroboros/core": "*",
+    "onnxruntime-common": "*"
+  },
+  "devDependencies": {
+    "onnxruntime-node": "*",
+    "sharp": "*",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
