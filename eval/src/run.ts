@@ -1,5 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { generatePages } from './generate';
+import { NerDetector } from '@ouroboros/ner';
+import { existsSync } from 'node:fs';
 import { scorePage, summarize, type Summary } from './score';
 
 const pct = (x: number) => (x * 100).toFixed(1);
@@ -44,15 +46,39 @@ ${rows}
 async function main() {
   const n = Number(process.argv[2] ?? 60);
   const pages = generatePages(n);
-  const scores = [];
-  for (const p of pages) scores.push(await scorePage(p));
-  const s = summarize(scores, pages[0]!.decoys.length);
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
   const tag = n === 60 ? '' : `-${n}`;
-  writeFileSync(`${dir}baseline-rules${tag}.json`, JSON.stringify(s, null, 2));
-  writeFileSync(`${dir}baseline-rules${tag}.md`, toMarkdown('rules + patterns baseline (no models)', s));
-  console.log(toMarkdown('rules + patterns baseline (no models)', s));
+  const models = new URL('../../models/', import.meta.url).pathname;
+
+  const configs: { file: string; title: string; ner?: NerDetector }[] = [{ file: 'baseline-rules', title: 'rules + patterns baseline (no models)' }];
+  if (existsSync(`${models}bert-small-pii/onnx/model_quantized.onnx`)) {
+    configs.push({ file: 'rules-ner', title: 'rules + patterns + NER (bert-small-pii int8)', ner: await NerDetector.create({ localModelPath: models }) });
+  } else {
+    console.warn('NER model not found; run scripts/fetch-models.sh for the +NER row');
+  }
+
+  const rows: string[] = [];
+  for (const c of configs) {
+    const scores = [];
+    for (const p of pages) scores.push(await scorePage(p, c.ner));
+    const s = summarize(scores, pages[0]!.decoys.length);
+    writeFileSync(`${dir}${c.file}${tag}.json`, JSON.stringify(s, null, 2));
+    writeFileSync(`${dir}${c.file}${tag}.md`, toMarkdown(c.title, s));
+    const r = (t: string) => (s.perType[t] ? pct(s.perType[t]!.recall) : '-');
+    rows.push(`| ${c.title} | ${pct(s.structured.precision)} / ${pct(s.structured.recall)} | ${pct(s.micro.precision)} / ${pct(s.micro.recall)} | ${r('NAME')} | ${r('ADDRESS')} | ${s.decoysFlagged}/${s.decoysTotal} | ${s.leakedValues}/${s.totalValues} | ${s.msMean.toFixed(1)} / ${s.msP95.toFixed(1)} |`);
+    if (c.ner) rows.push(`|  - NER model calls: ${c.ner.stats.calls}, cache hits: ${c.ner.stats.cacheHits}, model ms per call: ${(c.ner.stats.ms / Math.max(1, c.ner.stats.calls)).toFixed(1)} | | | | | | | |`);
+  }
+  const table = `# Ablation (${n} pages, seed 26171)
+
+| Config | Structured P / R % | All types P / R % | NAME R % | ADDRESS R % | Decoys flagged | Values leaked pre-gate | ms/page mean / p95 |
+|---|---|---|---|---|---|---|---|
+${rows.join('\n')}
+
+Timing is Node + happy-dom on a CPU sandbox (onnxruntime-node for NER), not the in-browser WebGPU/WASM path. Browser numbers come from the extension metrics logger.
+`;
+  writeFileSync(`${dir}ablation${tag}.md`, table);
+  console.log(table);
 }
 
 void main();

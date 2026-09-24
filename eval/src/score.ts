@@ -1,5 +1,6 @@
 import { leakGate, normalizeValue, PlaceholderMap, sanitize, wireScreenMap, type PiiType, type TextDetector } from '@ouroboros/core';
 import { Window } from 'happy-dom';
+import type { NerDetector } from '@ouroboros/ner';
 import { NodeRegistry, observe } from '../../extension/lib/observe';
 import type { Page } from './generate';
 
@@ -38,15 +39,18 @@ function inWire(wire: string, normWire: string, value: string): boolean {
   return re.test(wire);
 }
 
-export async function scorePage(page: Page, extra: TextDetector[] = []): Promise<PageScore> {
+export async function scorePage(page: Page, ner?: NerDetector): Promise<PageScore> {
   const map = new PlaceholderMap();
   let n = 0;
   const rect = () => ({ x: 10, y: 10 + 30 * n++, w: 400, h: 24 });
   const t0 = performance.now();
-  const wireObj = withDom(page.html, (doc) => {
-    const obs = observe(doc, new NodeRegistry(), rect);
-    return wireScreenMap(sanitize(obs, map, { extraDetectors: extra }).screen);
-  });
+  const obs = withDom(page.html, (doc) => observe(doc, new NodeRegistry(), rect));
+  const extra: TextDetector[] = [];
+  if (ner) {
+    await ner.prime(obs.elements.flatMap((e) => [e.name, e.text, e.value]).filter(Boolean));
+    extra.push(ner.lookup);
+  }
+  const wireObj = wireScreenMap(sanitize(obs, map, { extraDetectors: extra }).screen);
   const ms = performance.now() - t0;
   const wire = JSON.stringify(wireObj);
   const normWire = normalizeValue(wire);

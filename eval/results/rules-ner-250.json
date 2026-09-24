@@ -18,12 +18,12 @@
       "f1": 1
     },
     "ADDRESS": {
-      "tp": 0,
-      "fn": 100,
-      "fp": 0,
-      "precision": 1,
-      "recall": 0,
-      "f1": 0
+      "tp": 85,
+      "fn": 15,
+      "fp": 18,
+      "precision": 0.8252427184466019,
+      "recall": 0.85,
+      "f1": 0.8374384236453202
     },
     "CARD": {
       "tp": 100,
@@ -74,12 +74,12 @@
       "f1": 1
     },
     "NAME": {
-      "tp": 0,
-      "fn": 300,
-      "fp": 0,
-      "precision": 1,
-      "recall": 0,
-      "f1": 0
+      "tp": 295,
+      "fn": 5,
+      "fp": 41,
+      "precision": 0.8779761904761905,
+      "recall": 0.9833333333333333,
+      "f1": 0.9276729559748428
     },
     "OTP": {
       "tp": 50,
@@ -147,9 +147,9 @@
     }
   },
   "micro": {
-    "precision": 1,
-    "recall": 0.813953488372093,
-    "f1": 0.8974358974358974
+    "precision": 0.9730470534490635,
+    "recall": 0.9906976744186047,
+    "f1": 0.9817930398709381
   },
   "structured": {
     "precision": 1,
@@ -158,18 +158,17 @@
   },
   "decoysFlagged": 0,
   "decoysTotal": 2000,
-  "leakedValues": 400,
+  "leakedValues": 2,
   "totalValues": 2150,
   "leakedByType": {
-    "NAME": 300,
-    "ADDRESS": 100
+    "NAME": 2
   },
-  "pagesWithLeak": 200,
-  "gateProdPass": 250,
-  "gateProdPassWithLeak": 200,
-  "gateTestPass": 50,
+  "pagesWithLeak": 2,
+  "gateProdPass": 227,
+  "gateProdPassWithLeak": 2,
+  "gateTestPass": 225,
   "gateTestPassWithLeak": 0,
-  "msMean": 5.230314699999999,
-  "msP95": 9.018453000000136,
-  "bytesMean": 1937.448
+  "msMean": 66.90983712800004,
+  "msP95": 94.0123450000001,
+  "bytesMean": 1923.336
 }
