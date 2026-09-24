@@ -35,5 +35,17 @@ describe.skipIf(!have)('ModelHost (onnxruntime-node stands in for onnxruntime-we
     const r = await host.visual(shot, [{ x: 0, y: 0, w: 600, h: 200 }]);
     expect(r.detections).toBeGreaterThan(0);
     expect(r.imageText).not.toContain('ABCPE1234F');
+    // G4: the same pixels again hit the region cache and give the same answer without OCR.
+    const shot2 = { data: new Uint8ClampedArray(data), width: info.width, height: info.height };
+    const r2 = await host.visual(shot2, [{ x: 0, y: 0, w: 600, h: 200 }]);
+    expect(r2.cacheHits).toBe(1);
+    expect(r2.ms.ocr).toBe(0);
+    expect(r2.imageText).toBe(r.imageText);
+    expect(Buffer.from(shot2.data).equals(Buffer.from(shot.data))).toBe(true); // masked identically
+    // A one-pixel change is a miss (exact hash, never perceptual).
+    const shot3 = { data: new Uint8ClampedArray(data), width: info.width, height: info.height };
+    const px = 4 * (50 * 600 + 300);
+    shot3.data[px] = (shot3.data[px] ?? 0) ^ 1;
+    expect((await host.visual(shot3, [{ x: 0, y: 0, w: 600, h: 200 }])).cacheHits).toBe(0);
   }, 30000);
 });

@@ -1,6 +1,6 @@
 import type { TextDetector, TextMatch } from '@ouroboros/core';
 import { Lru } from '@ouroboros/core';
-import { PaddleOcr, YuNet, processScreenshot, type Box, type Img, type Ort } from '@ouroboros/vision';
+import { PaddleOcr, YuNet, processScreenshot, type Box, type Img, type Ort, type RegionResult } from '@ouroboros/vision';
 
 /**
  * On-device model host (A3c + A3d). Runs in the Chrome offscreen document or the
@@ -17,13 +17,15 @@ export interface HostDeps {
   ner?: () => Promise<{ detect(t: string): Promise<TextMatch[]> }>;
 }
 
-export interface VisualResult { imageText: string; detections: number; regions: number; ms: Record<string, number> }
+export interface VisualResult { imageText: string; detections: number; regions: number; cacheHits: number; ms: Record<string, number> }
 
 export class ModelHost {
   private ocr?: PaddleOcr;
   private faces?: YuNet;
   private ner?: { detect(t: string): Promise<TextMatch[]> };
   readonly nerCache = new Lru<TextMatch[]>(4096);
+  /** G4: opaque-region results keyed by exact pixel hash. */
+  readonly regionCache = new Lru<RegionResult>(128);
   readonly loadMs: Record<string, number> = {};
   constructor(private d: HostDeps) {}
 
@@ -53,8 +55,8 @@ export class ModelHost {
   /** A3d + A6: mask opaque regions of the screenshot in place, return re-OCR text for the leak gate. */
   async visual(shot: Img, regions: Box[]): Promise<VisualResult> {
     await this.warm();
-    const r = await processScreenshot(shot, regions, this.ocr!, this.faces, { extraDetectors: this.ner ? [(t) => this.ner!.detect(t)] : [] });
-    return { imageText: r.imageText, detections: r.detections.length, regions: r.regionsProcessed, ms: r.ms };
+    const r = await processScreenshot(shot, regions, this.ocr!, this.faces, { extraDetectors: this.ner ? [(t) => this.ner!.detect(t)] : [], cache: this.regionCache });
+    return { imageText: r.imageText, detections: r.detections.length, regions: r.regionsProcessed, cacheHits: r.cacheHits, ms: r.ms };
   }
 }
 

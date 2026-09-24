@@ -11,7 +11,7 @@ export type HostRequest =
   | { type: 'ouro:host:visual'; target: 'host'; dataUrl: string; regions: Box[]; viewportW: number };
 
 export type PrimeResponse = Record<string, TextMatch[]>;
-export interface VisualResponse { jpegB64: string; imageText: string; detections: number; regions: number; ms: Record<string, number> }
+export interface VisualResponse { jpegB64: string; imageText: string; detections: number; regions: number; cacheHits: number; ms: Record<string, number> }
 
 let host: ModelHost | undefined;
 
@@ -64,5 +64,5 @@ export async function handleHostRequest(msg: HostRequest): Promise<PrimeResponse
   const bytes = new Uint8Array(await blob.arrayBuffer());
   let bin = '';
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return { jpegB64: btoa(bin), imageText: r.imageText, detections: r.detections, regions: r.regions, ms: r.ms };
+  return { jpegB64: btoa(bin), imageText: r.imageText, detections: r.detections, regions: r.regions, cacheHits: r.cacheHits, ms: r.ms };
 }

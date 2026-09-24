@@ -108,3 +108,15 @@ export function dirtyTiles(prev: bigint[] | undefined, next: bigint[], W: number
 export function intersects(a: Box, b: Box): boolean {
   return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 }
+
+/** G4 key: exact FNV-1a over a region's pixels (no perceptual hashing: a near-match must never reuse boxes). */
+export function hashPixels(img: Img): string {
+  let h1 = 0x811c9dc5, h2 = 0x01000193 ^ img.width;
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const v = d[i]! | (d[i + 1]! << 8) | (d[i + 2]! << 16);
+    h1 = Math.imul(h1 ^ v, 0x01000193) >>> 0;
+    h2 = Math.imul(h2 ^ (v + i), 0x5bd1e995) >>> 0;
+  }
+  return `${img.width}x${img.height}:${h1.toString(16)}${h2.toString(16)}`;
+}
