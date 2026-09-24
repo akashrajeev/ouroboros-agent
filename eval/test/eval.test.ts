@@ -9,8 +9,8 @@ describe('synthetic pages', () => {
   it('every Aadhaar in ground truth is Verhoeff-valid', () => {
     for (const p of pages) for (const t of p.truth) if (t.type === 'AADHAAR') expect(verhoeffValid(t.value.replace(/\D/g, ''))).toBe(true);
   });
-  it('decoys are not detected as PII on their own', () => {
-    for (const p of pages) for (const d of p.decoys) expect(detectPatterns(d), d).toEqual([]);
+  it('decoys inside running text are not detected as PII', () => {
+    for (const p of pages) for (const d of p.decoys) expect(detectPatterns(`ref ${d} noted`), d).toEqual([]);
   });
 });
 

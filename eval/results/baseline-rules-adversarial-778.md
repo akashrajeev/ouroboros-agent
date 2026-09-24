@@ -1,4 +1,4 @@
-# Eval: rules + patterns + NER (bert-small-pii int8)
+# Eval: rules + patterns baseline (no models)
 
 50 synthetic Faker en_IN pages (seed 26171, generated with `npm run metrics --workspace eval -- 50`; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
 
@@ -6,30 +6,29 @@
 
 | Type | Support | TP | FP | FN | Precision % | Recall % | F1 % |
 |------|--------:|---:|---:|---:|------------:|---------:|-----:|
-| AADHAAR | 30 | 20 | 0 | 10 | 100.0 | 66.7 | 80.0 |
-| ACCOUNT | 20 | 0 | 10 | 20 | 0.0 | 0.0 | 0.0 |
-| ADDRESS | 0 | 0 | 27 | 0 | 0.0 | 100.0 | 0.0 |
-| DOB | 10 | 0 | 0 | 10 | 100.0 | 0.0 | 0.0 |
-| EMAIL | 20 | 10 | 0 | 10 | 100.0 | 50.0 | 66.7 |
+| AADHAAR | 30 | 30 | 0 | 0 | 100.0 | 100.0 | 100.0 |
+| ACCOUNT | 20 | 20 | 10 | 0 | 66.7 | 100.0 | 80.0 |
+| DOB | 10 | 10 | 0 | 0 | 100.0 | 100.0 | 100.0 |
+| EMAIL | 20 | 20 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 | IFSC | 20 | 20 | 0 | 0 | 100.0 | 100.0 | 100.0 |
-| NAME | 50 | 48 | 14 | 2 | 77.4 | 96.0 | 85.7 |
+| NAME | 50 | 0 | 0 | 50 | 100.0 | 0.0 | 0.0 |
 | PAN | 10 | 0 | 0 | 10 | 100.0 | 0.0 | 0.0 |
-| PHONE | 40 | 20 | 0 | 20 | 100.0 | 50.0 | 66.7 |
+| PHONE | 40 | 40 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 
-- **Micro, all types:** P 69.8%, R 59.0%, F1 64.0%
-- **Micro, structured types (without NAME/ADDRESS):** P 87.5%, R 46.7%, F1 60.9%
+- **Micro, all types:** P 93.3%, R 70.0%, F1 80.0%
+- **Micro, structured types (without NAME/ADDRESS):** P 93.3%, R 93.3%, F1 93.3%
 - **Decoys flagged (look-alike non-PII: invalid checksums, order ids, prices, non-DOB dates):** 0 of 0
 
 ## Leakage (what would reach the server)
 
-- Values present in the sanitized payload before the gate: **53 of 200** (25 pages) - by type: PHONE 14, DOB 10, EMAIL 6, ACCOUNT 20, AADHAAR 1, NAME 2
-- Production-mode leak gate (map + regex only): passed 50/50 pages; **passed pages that still leaked: 25**
-- Test-mode leak gate (+ ground-truth canaries): passed 30/50 pages; passed pages that still leaked: 5
+- Values present in the sanitized payload before the gate: **50 of 200** (40 pages) - by type: NAME 50
+- Production-mode leak gate (map + regex only): passed 50/50 pages; **passed pages that still leaked: 40**
+- Test-mode leak gate (+ ground-truth canaries): passed 10/50 pages; passed pages that still leaked: 0
 
 ## Cost
 
-- Observe + sanitize per page (Node, happy-dom, no models): mean 25.15 ms, p95 36.37 ms
-- Mean sanitized payload: 698 bytes
+- Observe + sanitize per page (Node, happy-dom, no models): mean 4.55 ms, p95 7.34 ms
+- Mean sanitized payload: 603 bytes
 
 ## Caveats
 

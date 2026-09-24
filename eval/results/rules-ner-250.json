@@ -168,7 +168,7 @@
   "gateProdPassWithLeak": 2,
   "gateTestPass": 225,
   "gateTestPassWithLeak": 0,
-  "msMean": 66.90983712800004,
-  "msP95": 94.0123450000001,
+  "msMean": 71.99363586000001,
+  "msP95": 96.31059099999948,
   "bytesMean": 1923.336
 }

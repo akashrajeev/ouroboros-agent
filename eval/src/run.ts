@@ -47,10 +47,11 @@ ${rows}
 async function main() {
   const adv = process.argv[2] === 'adversarial';
   const n = adv ? 50 : Number(process.argv[2] ?? 60);
-  const pages = (adv ? generateAdversarial(n) : generatePages(n)) as Page[];
+  const advSeed = Number(process.argv[3] ?? 777);
+  const pages = (adv ? generateAdversarial(n, advSeed) : generatePages(n)) as Page[];
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
-  const tag = adv ? '-adversarial' : n === 60 ? '' : `-${n}`;
+  const tag = adv ? `-adversarial-${advSeed}` : n === 60 ? '' : `-${n}`;
   const models = new URL('../../models/', import.meta.url).pathname;
 
   const configs: { file: string; title: string; ner?: NerDetector }[] = [{ file: 'baseline-rules', title: 'rules + patterns baseline (no models)' }];
@@ -78,7 +79,8 @@ async function main() {
     rows.push(...advRow);
     if (c.ner) rows.push(`|  - NER model calls: ${c.ner.stats.calls}, cache hits: ${c.ner.stats.cacheHits}, model ms per call: ${(c.ner.stats.ms / Math.max(1, c.ner.stats.calls)).toFixed(1)} | | | | | | | |`);
   }
-  const table = `# ${adv ? 'HELD-OUT adversarial set' : 'Ablation'} (${n} pages, seed ${adv ? 777 : 26171})${adv ? '\n\nNot used for tuning: label variants, Hindi labels, values split across elements, odd formats, headerless tables. Scored as-is.' : ''}
+  const advNote = !adv ? '' : `\n\n${advSeed === 777 ? 'Seed 777 was inspected once (the first held-out run) and drove the generic fixes, so it is no longer clean; fresh seeds are the clean numbers.' : 'Fresh seed, never inspected before this run.'} Categories: label variants, Hindi labels, values split across elements, odd formats, headerless tables. Scored as-is.`;
+  const table = `# ${adv ? 'HELD-OUT adversarial set' : 'Ablation'} (${n} pages, seed ${adv ? advSeed : 26171})${advNote}
 
 | Config | Structured P / R % | All types P / R % | NAME R % | ADDRESS R % | Decoys flagged | Values leaked pre-gate | ms/page mean / p95 |
 |---|---|---|---|---|---|---|---|

@@ -1,0 +1,94 @@
+{
+  "pages": 50,
+  "perType": {
+    "AADHAAR": {
+      "tp": 30,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "ACCOUNT": {
+      "tp": 20,
+      "fn": 0,
+      "fp": 10,
+      "precision": 0.6666666666666666,
+      "recall": 1,
+      "f1": 0.8
+    },
+    "DOB": {
+      "tp": 10,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "EMAIL": {
+      "tp": 20,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "IFSC": {
+      "tp": 20,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "NAME": {
+      "tp": 0,
+      "fn": 50,
+      "fp": 0,
+      "precision": 1,
+      "recall": 0,
+      "f1": 0
+    },
+    "PAN": {
+      "tp": 0,
+      "fn": 10,
+      "fp": 0,
+      "precision": 1,
+      "recall": 0,
+      "f1": 0
+    },
+    "PHONE": {
+      "tp": 40,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    }
+  },
+  "micro": {
+    "precision": 0.9333333333333333,
+    "recall": 0.7,
+    "f1": 0.8
+  },
+  "structured": {
+    "precision": 0.9333333333333333,
+    "recall": 0.9333333333333333,
+    "f1": 0.9333333333333333
+  },
+  "decoysFlagged": 0,
+  "decoysTotal": 0,
+  "leakedValues": 50,
+  "totalValues": 200,
+  "leakedByType": {
+    "NAME": 50
+  },
+  "pagesWithLeak": 40,
+  "gateProdPass": 50,
+  "gateProdPassWithLeak": 40,
+  "gateTestPass": 10,
+  "gateTestPassWithLeak": 0,
+  "msMean": 4.646113240000018,
+  "msP95": 7.487329000000045,
+  "bytesMean": 603.58
+}
