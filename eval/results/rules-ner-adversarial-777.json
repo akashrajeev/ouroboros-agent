@@ -12,10 +12,10 @@
     "ACCOUNT": {
       "tp": 20,
       "fn": 0,
-      "fp": 10,
-      "precision": 0.6666666666666666,
+      "fp": 0,
+      "precision": 1,
       "recall": 1,
-      "f1": 0.8
+      "f1": 1
     },
     "DOB": {
       "tp": 10,
@@ -44,18 +44,18 @@
     "NAME": {
       "tp": 48,
       "fn": 2,
-      "fp": 10,
-      "precision": 0.8275862068965517,
-      "recall": 0.96,
-      "f1": 0.888888888888889
-    },
-    "PAN": {
-      "tp": 0,
-      "fn": 10,
       "fp": 0,
       "precision": 1,
-      "recall": 0,
-      "f1": 0
+      "recall": 0.96,
+      "f1": 0.9795918367346939
+    },
+    "PAN": {
+      "tp": 10,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
     },
     "PHONE": {
       "tp": 40,
@@ -67,14 +67,14 @@
     }
   },
   "micro": {
-    "precision": 0.9038461538461539,
-    "recall": 0.94,
-    "f1": 0.9215686274509804
+    "precision": 1,
+    "recall": 0.99,
+    "f1": 0.9949748743718593
   },
   "structured": {
-    "precision": 0.9333333333333333,
-    "recall": 0.9333333333333333,
-    "f1": 0.9333333333333333
+    "precision": 1,
+    "recall": 1,
+    "f1": 1
   },
   "decoysFlagged": 0,
   "decoysTotal": 0,
@@ -88,7 +88,7 @@
   "gateProdPassWithLeak": 2,
   "gateTestPass": 48,
   "gateTestPassWithLeak": 0,
-  "msMean": 21.474420980000005,
-  "msP95": 29.565337,
-  "bytesMean": 597
+  "msMean": 20.26860692000003,
+  "msP95": 27.5004670000003,
+  "bytesMean": 596.4
 }

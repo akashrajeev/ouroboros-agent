@@ -7,7 +7,8 @@
 | Type | Support | TP | FP | FN | Precision % | Recall % | F1 % |
 |------|--------:|---:|---:|---:|------------:|---------:|-----:|
 | AADHAAR | 30 | 30 | 0 | 0 | 100.0 | 100.0 | 100.0 |
-| ACCOUNT | 20 | 20 | 0 | 0 | 100.0 | 100.0 | 100.0 |
+| ACCOUNT | 20 | 19 | 0 | 1 | 100.0 | 95.0 | 97.4 |
+| CARD | 0 | 0 | 1 | 0 | 0.0 | 100.0 | 0.0 |
 | DOB | 10 | 10 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 | EMAIL | 20 | 20 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 | IFSC | 20 | 20 | 0 | 0 | 100.0 | 100.0 | 100.0 |
@@ -15,8 +16,8 @@
 | PAN | 10 | 10 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 | PHONE | 40 | 40 | 0 | 0 | 100.0 | 100.0 | 100.0 |
 
-- **Micro, all types:** P 100.0%, R 75.0%, F1 85.7%
-- **Micro, structured types (without NAME/ADDRESS):** P 100.0%, R 100.0%, F1 100.0%
+- **Micro, all types:** P 99.3%, R 74.5%, F1 85.1%
+- **Micro, structured types (without NAME/ADDRESS):** P 99.3%, R 99.3%, F1 99.3%
 - **Decoys flagged (look-alike non-PII: invalid checksums, order ids, prices, non-DOB dates):** 0 of 0
 
 ## Leakage (what would reach the server)
@@ -27,7 +28,7 @@
 
 ## Cost
 
-- Observe + sanitize per page (Node, happy-dom, no models): mean 6.39 ms, p95 10.88 ms
+- Observe + sanitize per page (Node, happy-dom, no models): mean 4.74 ms, p95 9.62 ms
 - Mean sanitized payload: 603 bytes
 
 ## Caveats

@@ -10,12 +10,20 @@
       "f1": 1
     },
     "ACCOUNT": {
-      "tp": 20,
-      "fn": 0,
+      "tp": 19,
+      "fn": 1,
       "fp": 0,
       "precision": 1,
+      "recall": 0.95,
+      "f1": 0.9743589743589743
+    },
+    "CARD": {
+      "tp": 0,
+      "fn": 0,
+      "fp": 1,
+      "precision": 0,
       "recall": 1,
-      "f1": 1
+      "f1": 0
     },
     "DOB": {
       "tp": 10,
@@ -42,12 +50,12 @@
       "f1": 1
     },
     "NAME": {
-      "tp": 0,
-      "fn": 50,
-      "fp": 0,
-      "precision": 1,
-      "recall": 0,
-      "f1": 0
+      "tp": 48,
+      "fn": 2,
+      "fp": 2,
+      "precision": 0.96,
+      "recall": 0.96,
+      "f1": 0.96
     },
     "PAN": {
       "tp": 10,
@@ -67,28 +75,28 @@
     }
   },
   "micro": {
-    "precision": 1,
-    "recall": 0.75,
-    "f1": 0.8571428571428571
+    "precision": 0.985,
+    "recall": 0.985,
+    "f1": 0.985
   },
   "structured": {
-    "precision": 1,
-    "recall": 1,
-    "f1": 1
+    "precision": 0.9933333333333333,
+    "recall": 0.9933333333333333,
+    "f1": 0.9933333333333333
   },
   "decoysFlagged": 0,
   "decoysTotal": 0,
-  "leakedValues": 50,
+  "leakedValues": 1,
   "totalValues": 200,
   "leakedByType": {
-    "NAME": 50
+    "NAME": 1
   },
-  "pagesWithLeak": 40,
+  "pagesWithLeak": 1,
   "gateProdPass": 50,
-  "gateProdPassWithLeak": 40,
-  "gateTestPass": 10,
+  "gateProdPassWithLeak": 1,
+  "gateTestPass": 49,
   "gateTestPassWithLeak": 0,
-  "msMean": 6.38913063999998,
-  "msP95": 10.88171299999999,
-  "bytesMean": 602.78
+  "msMean": 20.030990599999985,
+  "msP95": 27.93465100000003,
+  "bytesMean": 596.54
 }
