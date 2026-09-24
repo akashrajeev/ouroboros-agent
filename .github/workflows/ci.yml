@@ -19,6 +19,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
+      - run: npm run build --workspace extension
+      - name: content script has no network calls
+        run: "! grep -E 'fetch\\(|XMLHttpRequest|WebSocket' extension/.output/chrome-mv3/content-scripts/content.js extension/.output/firefox-mv2/content-scripts/content.js"
   server:
     runs-on: ubuntu-latest
     timeout-minutes: 10
