@@ -1,0 +1,47 @@
+# Ouroboros Agent - Build Phases
+
+Every phase ends with measurable acceptance criteria. CI (typecheck + unit tests for TypeScript and Python) must be green at each boundary.
+
+## Phase 0 - Repo, docs, CI
+- Private repo, ARCHITECTURE.md, PHASES.md, npm workspaces, Python server skeleton, GitHub Actions.
+- **Accept:** CI green on main; `npm test` and `pytest` both run.
+
+## Phase 1 - Core detectors + placeholders
+- A3a DOM rules; A3b pattern + checksum detectors (Verhoeff, Luhn, PAN, IFSC, UPI, mobile, email, GSTIN, passport, vehicle reg, pincode, IP, DOB).
+- A6 typed stable placeholders + A6m local map with per-task clear.
+- **Accept:** valid/invalid vectors per detector; Verhoeff catches all single-digit and adjacent-transposition errors on sampled numbers; same value -> same token.
+
+## Phase 2 - Extension skeleton + observe
+- WXT extension for Chrome MV3 and Firefox; A2 observe (DOM walk, accessible names, client-rect boxes, opaque regions); A8 egress in background only.
+- **Accept:** Chrome and Firefox builds succeed in CI; observe tests on DOM fixtures; content script bundle contains no fetch/XHR.
+
+## Phase 3 - Server + stub planner + round trip
+- FastAPI `/step` with Pydantic schemas mirroring core types; deterministic stub planner.
+- A9 validator, A10 rehydrate, A11 execute.
+- **Accept:** pytest for schema + stub; end-to-end test: mock form -> sanitized payload -> stub -> validated action -> rehydrated fill, with no real value in any payload.
+
+## Phase 4 - Leak gate
+- A7 checks 1, 2 and 4 (exact/normalized match, regex re-scan, canaries). Check 3 (re-OCR) lands in Phase 6.
+- **Accept:** adversarial tests (spaced, dashed, case-changed values, values in JSON keys) all BLOCK; clean payloads PASS; SHA-256 audit entry per send.
+
+## Phase 5 - Eval harness + synthetic pages
+- Faker en_IN page generator (forms, profiles, bank, KYC, tables) with ground truth (values, types) and canaries.
+- M2 per-type P/R and leak-count scripts.
+- **Accept:** >= 50 generated pages; one command produces the per-type P/R table; first numbers committed to eval/results/.
+
+## Phase 6 - NER + OCR + faces
+- A3c gravitee BERT PII via Transformers.js; A3d PaddleOCR v3 + YuNet on opaque regions; image masking; A4 fusion; leak-gate re-OCR.
+- **Accept:** ablation table rules / +regex / +NER / +vision; client model download size measured; re-OCR catches a planted unmasked value.
+
+## Phase 7 - Screen map + gating
+- A5 screen map, A1 change gate, G1-G7 caches and cascade.
+- **Accept:** screen-map recall vs ground truth (M1 proxy); % steps skipped on a replayed session; cache hit rates.
+
+## Phase 8 - Metrics instrumentation + dashboard
+- A12 logger (IndexedDB -> CSV), per-stage p50/p95, bytes and tokens sent.
+- **Accept:** one CSV per run covering M1-M5; dashboard renders it.
+
+## Phase 9 - Real VLM + experiments (needs compute approval)
+- Qwen2.5-VL-7B on vLLM only after compute is approved; until then stub results are labelled as stub.
+- Five metric experiments + ablations.
+- **Accept:** final results table in eval/results/ with methodology notes.
