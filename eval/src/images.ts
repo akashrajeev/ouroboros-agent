@@ -126,7 +126,7 @@ ${rows}
 
 ## Caveats
 
-- Self-generated images: clean synthetic text, a single reused face photo (OpenCV sample), no blur, skew, glare or phone-camera noise. Treat these as an upper bound.
+- Self-generated images with a single reused face photo (OpenCV sample). ${hard ? 'Degradation is simulated (rotation up to 4 deg, blur, 0.55-0.8x downscale, JPEG q35-60); no glare, perspective or real camera noise.' : 'Clean synthetic text: no blur, skew, glare or camera noise.'} Treat these as an upper bound.
 - Face "after" re-detection only shows YuNet no longer fires; it is not proof a person is unrecognisable.
 `;
   const dir = new URL('../results/', import.meta.url).pathname;

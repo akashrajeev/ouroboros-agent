@@ -50,3 +50,7 @@ Every phase ends with measurable acceptance criteria. CI (typecheck + unit tests
 ## Progress log
 - Phase 0-3: done (repo, docs, CI; core detectors, placeholders, leak gate; WXT extension + observe/execute; FastAPI + stub planner; device-loop E2E test).
 - Phase 5 (pulled ahead of Phase 4 wrap-up, since the gate's checks 1, 2 and 4 already shipped in core): eval harness done. `npm run metrics --workspace eval` writes eval/results/baseline-rules.{md,json}.
+
+## Status log
+
+- **Phase 6 (Node-side done, 2026-09-24):** client model download measured at 39.2 MB (BERT int8 28.7, PaddleOCR det 2.4 + rec 7.8, YuNet 0.23). Ablations: `eval/results/ablation-*.md` (text) and `eval/results/vision-cards-*.md` (images). Re-OCR in the gate blocked 7/7 degraded cards where a value survived masking. Not yet done: running NER/OCR/YuNet inside the extension (onnxruntime-web in the Chrome offscreen document / Firefox background page) - the loop takes an injected `visual()` stage today.
