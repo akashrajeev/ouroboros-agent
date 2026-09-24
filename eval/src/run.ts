@@ -10,7 +10,7 @@ export function toMarkdown(name: string, s: Summary): string {
     .join('\n');
   return `# Eval: ${name}
 
-${s.pages} synthetic Faker en_IN pages (seed 26171, generated with `npm run metrics --workspace eval -- ${s.pages}`; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
+${s.pages} synthetic Faker en_IN pages (seed 26171, generated with \`npm run metrics --workspace eval -- ${s.pages}\`; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
 
 ## PII detection (M2)
 

@@ -1,6 +1,6 @@
 # Eval: rules + patterns baseline (no models)
 
-60 synthetic Faker en_IN pages (seed 26171; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
+60 synthetic Faker en_IN pages (seed 26171, generated with `npm run metrics --workspace eval -- 60`; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
 
 ## PII detection (M2)
 
@@ -37,7 +37,7 @@
 
 ## Cost
 
-- Observe + sanitize per page (Node, happy-dom, no models): mean 6.69 ms, p95 11.96 ms
+- Observe + sanitize per page (Node, happy-dom, no models): mean 7.27 ms, p95 14.80 ms
 - Mean sanitized payload: 1937 bytes
 
 ## Caveats
