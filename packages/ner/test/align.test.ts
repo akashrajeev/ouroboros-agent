@@ -54,3 +54,18 @@ describe('token alignment', () => {
     expect(toMatches(text, tokens, ents, 0.5)).toEqual([]);
   });
 });
+
+import { dropKeywordNames } from '../src/index';
+describe('dropKeywordNames', () => {
+  it('drops a NAME that is only a field word, keeps real names', () => {
+    const m = (value: string) => ({ type: 'NAME' as const, start: 0, end: value.length, value, source: 'ner' as const, confidence: 0.9 });
+    expect(dropKeywordNames([m('UPI'), m('UPI ID'), m('Asha Rao')]).map((x) => x.value)).toEqual(['Asha Rao']);
+  });
+});
+
+describe('dropKeywordNames edges', () => {
+  it('trims a leading field word from a NAME span', () => {
+    const r = dropKeywordNames([{ type: 'NAME', start: 10, end: 22, value: 'UPI diptendu', source: 'ner', confidence: 0.9 }]);
+    expect(r).toEqual([{ type: 'NAME', start: 14, end: 22, value: 'diptendu', source: 'ner', confidence: 0.9 }]);
+  });
+});

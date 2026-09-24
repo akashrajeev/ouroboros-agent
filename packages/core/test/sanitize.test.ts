@@ -53,3 +53,16 @@ describe('fusion (A4)', () => {
     expect(out.map((x: { start: number; end: number }) => [x.start, x.end])).toEqual([[0, 9]]);
   });
 });
+
+describe('known values (A6b)', () => {
+  it('replaces a task-supplied value on screen even when no detector fires', () => {
+    const m = new PlaceholderMap();
+    const tok = m.tokenFor('NAME', 'Ishaan Verma');
+    const obs = kycObservation();
+    obs.elements = [{ ...obs.elements[0]!, name: 'Welcome back, Ishaan Verma', text: '', value: '' }];
+    const { screen } = sanitize(obs, m);
+    const wire = JSON.stringify(wireScreenMap(screen));
+    expect(wire).not.toContain('Ishaan Verma');
+    expect(wire).toContain(tok);
+  });
+});

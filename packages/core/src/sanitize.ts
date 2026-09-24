@@ -68,12 +68,25 @@ function trimSpan(s: string, m: TextMatch): TextMatch {
   return { ...m, start, end, value: s.slice(start, end) };
 }
 
+const escRe = (v: string) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** A6b: a value the device already mapped (e.g. from the task text) is replaced wherever it shows up on screen, even where no detector fires. */
+function knownValues(s: string, map: PlaceholderMap): TextMatch[] {
+  const out: TextMatch[] = [];
+  for (const { type, value } of map.values()) {
+    if (value.length < 3) continue;
+    const re = new RegExp(`(?<![A-Za-z0-9])${escRe(value)}(?![A-Za-z0-9])`, 'gi');
+    for (const m of s.matchAll(re)) out.push({ type, start: m.index!, end: m.index! + m[0].length, value: m[0], source: 'known', confidence: 1 });
+  }
+  return out;
+}
+
 function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[], context = ''): string {
   if (!s) return s;
   // Context (e.g. a column header) is prepended for detection only, then offsets are shifted back.
   const pre = context ? `${context}: ` : '';
   const shift = (ms: TextMatch[]) => ms.map((m) => ({ ...m, start: m.start - pre.length, end: m.end - pre.length })).filter((m) => m.start >= 0);
-  const lists = [shift(detectPatterns(pre + s)), ...(opts.extraDetectors ?? []).map((d) => d(s))];
+  const lists = [knownValues(s, map), shift(detectPatterns(pre + s)), ...(opts.extraDetectors ?? []).map((d) => d(s))];
   const merged = mergeMatches(lists)
     .map((m) => trimSpan(s, m))
     .filter((m) => m.source !== 'ner' || (m.value.match(/[A-Za-z0-9]/g) ?? []).length >= 3);

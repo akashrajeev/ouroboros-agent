@@ -9,7 +9,7 @@ const LABEL_RULES: [RegExp, PiiType][] = [
   [/\bcvv2?\b|\bcvc\b|security[\s_-]?code/i, 'CVV'],
   [/\bm?pin\b(?![\s_-]?code)/i, 'PIN'],
   [/aadha+r|\buid(ai)?\b/i, 'AADHAAR'],
-  [/\bpan\b(?![\s_-]?code)|pan[\s_-]?(no|number|card)/i, 'PAN'],
+  [/\bpan\b(?![\s_-]?code)|pan[\s_-]?(no|number|card)|permanent[\s_-]?account[\s_-]?(no|number)/i, 'PAN'],
   [/\bifsc\b/i, 'IFSC'],
   [/\b(account|acct|a\/c)[\s_-]*(no|num|number)?\b/i, 'ACCOUNT'],
   [/\bdob\b|date[\s_-]?of[\s_-]?birth|birth[\s_-]?date/i, 'DOB'],

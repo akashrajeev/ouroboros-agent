@@ -33,3 +33,9 @@ describe('compatibleTokenTypes', () => {
   });
   it('rule fields take their own type', () => expect(compatibleTokenTypes({ tag: 'input', label: 'Aadhaar' })).toEqual(['AADHAAR']));
 });
+
+describe('PAN full name', () => {
+  it('"Permanent Account Number" is PAN, not a bank account', () => {
+    expect(domRuleType({ tag: 'input', name: 'Permanent Account Number' })).toBe('PAN');
+  });
+});

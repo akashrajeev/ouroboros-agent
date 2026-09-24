@@ -80,7 +80,16 @@ export async function replay(n: number) {
           // Independent of the leak gate: does any real value appear in what we send?
           bodies++;
           const nb = normalizeValue(body);
-          if (page.truth.some((t) => body.includes(t.value) || (normalizeValue(t.value).length >= 6 && nb.includes(normalizeValue(t.value))))) bodiesWithValue++;
+          // Exact match needs a non-alphanumeric boundary, as the leak gate does: a 3-digit CVV inside a longer ticket number is not that CVV.
+          const exact = (v: string) => new RegExp(`(?<![A-Za-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![A-Za-z0-9])`).test(body);
+          const leaked = page.truth.filter((t) => exact(t.value) || (normalizeValue(t.value).length >= 6 && nb.includes(normalizeValue(t.value))));
+          if (leaked.length) {
+            bodiesWithValue++;
+            if (process.env.OURO_DEBUG) for (const t of leaked) {
+              const at = body.indexOf(t.value);
+              console.error(`LEAK ${page.template} type=${t.type} exact=${at >= 0} ctx=${at >= 0 ? JSON.stringify(body.slice(Math.max(0, at - 80), at) + '<VALUE>' + body.slice(at + t.value.length, at + t.value.length + 40)) : '(normalized match)'}`);
+            }
+          }
           const r = await fetch(`${SERVER}/step`, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
           if (!r.ok) throw new Error(`server ${r.status}: ${await r.text()}`);
           return r.json() as Promise<{ action: unknown }>;
@@ -93,6 +102,7 @@ export async function replay(n: number) {
         log: process.env.OURO_DEBUG ? (e) => { if (e.kind === 'blocked' || e.kind === 'rejected') console.error(`${page.template} ${JSON.stringify(e)}`); } : undefined,
       }, { runId: `replay-${String(i).padStart(3, '0')}-${page.template}`, maxSteps: 25 });
       outcomes[res.status] = (outcomes[res.status] ?? 0) + 1;
+      if (process.env.OURO_DEBUG && res.status !== 'done') console.error(`END ${page.template} ${res.status} step=${res.steps} ${res.reason ?? ''}`);
       const bt = (byTpl[page.template] ??= { ok: 0, total: 0, done: 0, pages: 0 });
       bt.pages++; if (res.status === 'done') bt.done++;
       for (const [el, v] of want) {

@@ -35,7 +35,7 @@ export interface LoopDeps {
 export type LoopEvent =
   | { kind: 'sent'; step: number; sha256: string; bytes: number; ms: Record<string, number>; image?: { detections: number }; reused?: boolean }
   | { kind: 'blocked'; step: number; hits: { kind: string; type?: string }[] }
-  | { kind: 'rejected'; step: number; reason: string }
+  | { kind: 'rejected'; step: number; reason: string; op?: string; label?: string; tokens?: string }
   | { kind: 'executed'; step: number; op: string; element_id?: string | null }
   | { kind: 'finished'; step: number; reason: string };
 
@@ -112,7 +112,8 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       }
       const v = validateAction(res.action, planned, current, map);
       if (!v.ok) {
-        deps.log?.({ kind: 'rejected', step, reason: v.reason });
+        { const a = res.action as { op?: string; element_id?: string; text?: string } | null; const el = current.elements.find((e) => e.id === a?.element_id);
+          deps.log?.({ kind: 'rejected', step, reason: v.reason, op: a?.op, label: el?.label, tokens: (a?.text ?? '').match(/<[A-Z_]+_\d+>/g)?.join(',') }); }
         return { status: 'rejected', steps: step, reason: v.reason };
       }
       const a = v.action;

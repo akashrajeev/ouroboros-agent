@@ -5,7 +5,7 @@ export type PiiType =
   | 'PASSWORD' | 'OTP' | 'CVV' | 'PIN' | 'ACCOUNT' | 'SECRET'
   | 'NAME' | 'ADDRESS' | 'ORG' | 'FACE';
 
-export type DetectorSource = 'dom_rule' | 'pattern' | 'ner' | 'ocr' | 'face';
+export type DetectorSource = 'dom_rule' | 'pattern' | 'ner' | 'ocr' | 'face' | 'known';
 
 /** A span of sensitive text found inside a string. */
 export interface TextMatch {

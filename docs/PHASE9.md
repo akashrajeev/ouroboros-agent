@@ -66,3 +66,22 @@ Kaggle (GPU T4 x2, internet on, account akashrajeevkv) now serves the same model
 Totals: done 5/20, exact fields 25/40, 0/35 request bodies with a real value, 10 gate blocks, server p50/p95 770/1018 ms.
 
 Reading: privacy held; both failures fail closed (nothing leaked, the run stops). The gaps are on the device side, not the model: (1) a value the task supplies can still appear raw in page text that the detectors miss, and the gate catches it; (2) the validator's field typing doesn't know label synonyms. Any fix for these will be re-measured on a fresh seed and the 31337 numbers above stay as the honest first-contact result.
+
+### E6b: after device-side fixes, on a fresh seed (8675309)
+
+Fixes, all found on the E6 seeds (31337, 4242), so those seeds are now contaminated and the fresh seed is the honest number:
+1. NER tagged the label word with the value ("UPI diptendu") as a NAME; after merging, the bare word "UPI" was mapped as a NAME, so the gate saw that "name" in every "UPI ID" label and blocked. NAME spans now drop field words at their edges (UPI, PAN, OTP, ID, ...). This was a gate false positive, not a leak.
+2. "Permanent Account Number" (PAN's full name) was typed as a bank ACCOUNT field, so the validator rejected `<PAN_1>` there. Added to the PAN rule.
+3. A value the device already mapped is now replaced wherever it appears on screen, even where no detector fires (A6b).
+4. The replay's independent leak check now needs a boundary for exact matches, as the gate does. Without it, a 3-digit CVV counted as leaked because the same digits sat inside an unrelated ticket number. Earlier runs had 0 hits either way.
+
+| Template | Done | Exact fields |
+|---|--:|--:|
+| label-variants | 5/5 | 25/25 |
+| hindi-labels | 5/5 | 15/15 |
+| profile (read-only page) | 0/5 | n/a |
+| bank (read-only table) | 0/5 | n/a |
+
+Totals: 0/60 request bodies with a real value, 0 gate blocks, 40/40 fields, server p50/p95 803/961 ms.
+
+Profile and bank pages have no inputs; they show every value as text. So they are a strong privacy test (all values on screen, none reached the model), but "fill this form" is the wrong task for them. The model tried to type into text and the executor stopped the run (`not_editable`), which fails safe. The right behavior is done or ask_user; that is a planner-prompt gap left open on purpose, since fixing it by reading these pages would contaminate them too.

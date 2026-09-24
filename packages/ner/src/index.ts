@@ -4,6 +4,25 @@ import type { PiiType } from '@ouroboros/core';
 
 export { DEFAULT_NER_TYPES, LABEL_MAP, toMatches, tokenSpans } from './align';
 
+/** Field and ID-type words the model sometimes tags as a person ("UPI" -> NAME). A NAME made only of these is not a name. */
+const FIELD_WORDS = new Set(['upi', 'id', 'vpa', 'pan', 'otp', 'pin', 'ifsc', 'cvv', 'kyc', 'dob', 'aadhaar', 'aadhar', 'uid', 'email', 'mobile', 'phone', 'gstin', 'account', 'card', 'code', 'no', 'number']);
+export function dropKeywordNames(ms: TextMatch[]): TextMatch[] {
+  const out: TextMatch[] = [];
+  for (const m of ms) {
+    if (m.type !== 'NAME') { out.push(m); continue; }
+    // Trim field words off either edge ("UPI diptendu" -> "diptendu"); drop the span if nothing is left.
+    const words = [...m.value.matchAll(/\S+/g)];
+    let i = 0, j = words.length;
+    const isField = (w: string) => { const k = w.toLowerCase().replace(/[^a-z]/g, ''); return !k || FIELD_WORDS.has(k); };
+    while (i < j && isField(words[i]![0])) i++;
+    while (j > i && isField(words[j - 1]![0])) j--;
+    if (i >= j) continue;
+    const a = words[i]!.index!, b = words[j - 1]!.index! + words[j - 1]![0].length;
+    out.push({ ...m, start: m.start + a, end: m.start + b, value: m.value.slice(a, b) });
+  }
+  return out;
+}
+
 export interface NerOptions {
   /** Directory containing <modelId>/config.json and <modelId>/onnx/model_quantized.onnx. */
   localModelPath: string;
@@ -50,7 +69,7 @@ export class NerDetector {
       const ents = (await this.pipe(text)) as TokenEntity[];
       this.stats.ms += performance.now() - t0;
       this.stats.calls++;
-      out = toMatches(text, this.tokenize(text), ents, this.threshold, this.allow);
+      out = dropKeywordNames(toMatches(text, this.tokenize(text), ents, this.threshold, this.allow));
     }
     this.cache.set(text, out);
     return out;
