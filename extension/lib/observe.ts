@@ -39,6 +39,18 @@ function visible(el: Element, rect: RectFn, win: Window): boolean {
   return r.w > 0 && r.h > 0;
 }
 
+/** Column header text for a table cell, used as detector context. */
+function columnHeader(el: Element): string | undefined {
+  const cell = el.closest('td');
+  if (!cell) return undefined;
+  const row = cell.parentElement as HTMLTableRowElement | null;
+  const table = cell.closest('table');
+  if (!row || !table) return undefined;
+  const idx = Array.prototype.indexOf.call(row.children, cell);
+  const th = table.querySelector('tr')?.children[idx];
+  return th && th.tagName === 'TH' ? (th.textContent ?? '').trim() || undefined : undefined;
+}
+
 function roleOf(el: Element): string {
   const explicit = el.getAttribute('role');
   if (explicit) return explicit;
@@ -152,6 +164,7 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
       ...(el.tagName === 'INPUT' && ['checkbox', 'radio'].includes(input.type) ? { checked: input.checked } : {}),
       ...(el.getAttribute('contenteditable') === 'true' ? { contentEditable: true } : {}),
       ...(SENSITIVE_FORM.test(formHay) ? { insideSensitiveForm: true } : {}),
+      ...(columnHeader(el) ? { context: columnHeader(el)! } : {}),
       bbox: rect(el),
     });
   }

@@ -41,9 +41,12 @@ function mergeMatches(lists: TextMatch[][]): TextMatch[] {
   return out;
 }
 
-function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[]): string {
+function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[], context = ''): string {
   if (!s) return s;
-  const lists = [detectPatterns(s), ...(opts.extraDetectors ?? []).map((d) => d(s))];
+  // Context (e.g. a column header) is prepended for detection only, then offsets are shifted back.
+  const pre = context ? `${context}: ` : '';
+  const shift = (ms: TextMatch[]) => ms.map((m) => ({ ...m, start: m.start - pre.length, end: m.end - pre.length })).filter((m) => m.start >= 0);
+  const lists = [shift(detectPatterns(pre + s)), ...(opts.extraDetectors ?? []).map((d) => d(s))];
   const merged = mergeMatches(lists).map((m) => ({ ...m, value: s.slice(m.start, m.end) }));
   sink.push(...merged);
   return merged.length ? redactText(s, merged, map) : s;
@@ -73,11 +76,11 @@ export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: Sanitiz
         value = map.tokenFor(rule, value);
         detections.push({ id: `d${detections.length + 1}`, type: rule, sources: ['dom_rule'], confidence: 1, nodeId: el.nodeId, bbox: el.bbox });
       } else {
-        value = redactString(value, map, opts, hits);
+        value = redactString(value, map, opts, hits, el.name);
       }
     }
-    const label = redactString(el.name, map, opts, hits);
-    const text = el.text && el.text !== el.name ? redactString(el.text, map, opts, hits) : '';
+    const label = redactString(el.name, map, opts, hits, el.context);
+    const text = el.text && el.text !== el.name ? redactString(el.text, map, opts, hits, el.context) : '';
     for (const m of hits) {
       detections.push({ id: `d${detections.length + 1}`, type: m.type, sources: [m.source], confidence: m.confidence, nodeId: el.nodeId, bbox: el.bbox });
     }

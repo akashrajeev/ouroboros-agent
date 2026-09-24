@@ -17,6 +17,8 @@ export interface RawElement {
   checked?: boolean;
   contentEditable?: boolean;
   insideSensitiveForm?: boolean;
+  /** Nearby label text that is not part of the element (e.g. table column header). Used only as detector context. */
+  context?: string;
   bbox: BBox;
 }
 
