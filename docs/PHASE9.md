@@ -122,3 +122,16 @@ What this shows:
 | 9102 (fresh, degraded) | 60 | 5/279 | **0** | 119 -> 115 |
 
 On degraded cards, the values still readable after masking are digits the first OCR pass misread, so no pattern matched them. Every such card was blocked by the re-OCR leak gate; none was sent.
+
+### E4b: after the finish fix, fresh seed 7777 (Kaggle, 7B)
+
+Changes since E4 (e371aa9, 69e09c2): the prompt says to reply done as soon as the request is met and never to use a placeholder that isn't in the legend; element lists go on the wire once instead of twice; the span-mask padding; the OCR label:value rule.
+
+| Arm | Right option | Clean finish (done) | Bodies with a card value | Image p50 | Device vision p50 | Round-trip p50 / p95 |
+|---|--:|--:|--:|--:|--:|--:|
+| text only | 6/12 (guessing; chance 4/12) | 4/12 | 0/42 | - | - | 735 / 870 ms |
+| masked image on need_visual | **10/12** | **10/12** (was 3/12) | 0/41 | 20 KB | 879 ms | 755 / 1694 ms |
+
+- Image arm: 10/12 right, same as seed 5151. Clean finishes rose from 3/12 to 10/12. The two wrong answers were both "ACCOUNT HOLDER" cards read as a different type.
+- The invented `<PAN_1>` is still the main failure. It happened 8 times in the text arm and once in the image arm, always typed into a text element. The validator rejected every one (`unknown_token`), so nothing unsafe happened.
+- 0 of 83 requests carried a card value. No gate blocks happened this run.
