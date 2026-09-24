@@ -8,19 +8,19 @@
 |------|------:|------:|------:|------:|
 | NAME | 60 | 52 | 0 | 100.0 |
 | DOB | 60 | 60 | 1 | 98.3 |
-| AADHAAR | 60 | 54 | 4 | 92.6 |
+| AADHAAR | 60 | 54 | 2 | 96.3 |
 | PAN | 60 | 55 | 0 | 100.0 |
 | PHONE | 60 | 58 | 2 | 96.6 |
 
-- **All values:** 279 of 300 readable before, **7 readable after masking**
+- **All values:** 279 of 300 readable before, **5 readable after masking**
 - Faces detected: 60/60 before, 0/60 after pixelation
 - Decoys readable: 118 before, 117 after (lower after = over-redaction)
-- Mean masked area: 13.0% of the image
-- Leak gate on re-OCR text: passed 54/60; passed while a value was still readable: **0**
+- Mean masked area: 13.2% of the image
+- Leak gate on re-OCR text: passed 56/60; passed while a value was still readable: **0**
 
 ## Cost (Node, onnxruntime-node CPU, sandbox)
 
-- OCR + faces + NER + masking per image: mean 384 ms, p50 353 ms, p95 545 ms
+- OCR + faces + NER + masking per image: mean 371 ms, p50 353 ms, p95 498 ms
 
 ## Caveats
 

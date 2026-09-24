@@ -1,4 +1,4 @@
-import { detectPatterns, type PiiType, type TextMatch } from '@ouroboros/core';
+import { detectPatterns, domRuleType, type PiiType, type TextMatch } from '@ouroboros/core';
 
 export type AsyncTextDetector = (text: string) => TextMatch[] | Promise<TextMatch[]>;
 import type { Face } from './faces';
@@ -12,6 +12,20 @@ export interface RedactImageOptions {
   /** Fail-closed: OCR lines under this confidence are masked whole. */
   minLineConfidence?: number;
   padding?: number;
+}
+
+const KV = /^\s*([A-Za-z][A-Za-z .\/'()-]{1,30}?)\s*[:：]\s*(\S.*)$/;
+const NAME_LABEL = /\b(name|father|mother|husband|spouse|guardian|s\/o|d\/o|w\/o|address)\b/i;
+
+/** OCR "Label: value" lines (cards, statements): the label decides, like DOM rules do for inputs. */
+export function labelValueMatch(text: string): TextMatch | null {
+  const m = KV.exec(text);
+  if (!m) return null;
+  const label = m[1]!, value = m[2]!.trimEnd();
+  const t: PiiType | null = domRuleType({ tag: 'text', label }) ?? (NAME_LABEL.test(label) ? (/address/i.test(label) ? 'ADDRESS' : 'NAME') : null);
+  if (!t) return null;
+  const start = text.length - m[2]!.length;
+  return { type: t, start, end: start + value.length, value, source: 'dom_rule', confidence: 1 } as TextMatch;
 }
 
 /** Proportional sub-box for a character span of an OCR line (monospace approximation, padded later). */
@@ -38,7 +52,8 @@ export async function redactImage(img: Img, lines: OcrLine[], faces: Face[], opt
       continue;
     }
     const extra = await Promise.all((opts.extraDetectors ?? []).map((d) => d(line.text)));
-    const matches: TextMatch[] = [detectPatterns(line.text), ...extra].flat();
+    const kv = labelValueMatch(line.text);
+    const matches: TextMatch[] = [detectPatterns(line.text), ...extra, ...(kv ? [kv] : [])].flat();
     for (const m of matches) dets.push({ type: m.type, box: spanBox(line, m), source: 'ocr', text: m.value });
   }
   blackFill(img, dets.map((d) => d.box), opts.padding ?? 4);

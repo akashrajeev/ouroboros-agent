@@ -108,3 +108,17 @@ What this shows:
 - The leak gate caught 1 of 12 image steps: on a degraded card, re-OCR could still read an Aadhaar number after masking, so the gate blocked the step before sending. That is the backstop doing its job. It also means pixel masking alone missed 1 of 12 on degraded cards.
 - A visual check of the masked sample shows the mask box starts about one character late: the first character of Aadhaar, PAN and mobile is still visible. Open fix: widen the left pad in `spanBox`.
 - Request bodies are about 2x bigger than they need to be, because the element list is sent twice (`elements` and `screen_map`). Open fix.
+
+### Vision follow-ups found through E4 (CPU only, no GPU)
+
+- Span masks now reach one average character past each side of the span. Before, proportional fonts left the first character showing. On seeds 9001/9002: masked area +0.6 pp, no decoy loss, whole-value reads unchanged.
+- New OCR "Label: value" rule: a line like `Name: X`, `Father's Name: X`, `DOB: X` or `Aadhaar: X` masks X because of the label, the way DOM rules treat inputs. It closes the one clean-card NAME the NER missed on seed 9001, which previously got past the gate too (names have no regex).
+
+| Seed | Cards | Values readable after masking | Passed the gate while a value was readable | Decoys readable before -> after |
+|---|---|--:|--:|--:|
+| 9001 (dev, clean) | 60 | 1 -> **0** | 1 -> **0** | 117 -> 117 |
+| 9002 (dev, degraded) | 60 | 7 -> 5 | 0 -> 0 | 118 -> 117 |
+| 9101 (fresh, clean) | 60 | **0**/298 | **0** | 120 -> 120 |
+| 9102 (fresh, degraded) | 60 | 5/279 | **0** | 119 -> 115 |
+
+On degraded cards, the values still readable after masking are digits the first OCR pass misread, so no pattern matched them. Every such card was blocked by the re-OCR leak gate; none was sent.
