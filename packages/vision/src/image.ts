@@ -70,3 +70,41 @@ export function iou(a: Box, b: Box): number {
   const inter = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
   return inter / (a.w * a.h + b.w * b.h - inter || 1);
 }
+
+/** A1 pixel half: 64-bit difference hash of a region (9x8 grayscale, horizontal gradients). */
+export function dHash(img: Img, region: Box = { x: 0, y: 0, w: img.width, h: img.height }): bigint {
+  const px = resizeCrop(img, region, 9, 8);
+  let h = 0n;
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+    const i = (y * 9 + x) * 4, j = i + 4;
+    const a = px[i]! * 0.299 + px[i + 1]! * 0.587 + px[i + 2]! * 0.114;
+    const b = px[j]! * 0.299 + px[j + 1]! * 0.587 + px[j + 2]! * 0.114;
+    h = (h << 1n) | (a > b ? 1n : 0n);
+  }
+  return h;
+}
+
+export function hamming(a: bigint, b: bigint): number {
+  let x = a ^ b, n = 0;
+  while (x) { n += Number(x & 1n); x >>= 1n; }
+  return n;
+}
+
+/** G2: 8x8 tile grid of dHashes; compare two grids to get dirty tiles. */
+export function tileHashes(img: Img, grid = 8): bigint[] {
+  const tw = img.width / grid, th = img.height / grid, out: bigint[] = [];
+  for (let ty = 0; ty < grid; ty++) for (let tx = 0; tx < grid; tx++) out.push(dHash(img, { x: tx * tw, y: ty * th, w: tw, h: th }));
+  return out;
+}
+
+export function dirtyTiles(prev: bigint[] | undefined, next: bigint[], W: number, H: number, grid = 8, maxDist = 2): Box[] {
+  const tw = W / grid, th = H / grid, out: Box[] = [];
+  next.forEach((h, i) => {
+    if (!prev || hamming(prev[i]!, h) > maxDist) out.push({ x: (i % grid) * tw, y: Math.floor(i / grid) * th, w: tw, h: th });
+  });
+  return out;
+}
+
+export function intersects(a: Box, b: Box): boolean {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+}

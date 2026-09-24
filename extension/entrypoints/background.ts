@@ -1,6 +1,6 @@
 import type { RawObservation } from '@ouroboros/core';
 import { runTask, type LoopEvent } from '../lib/agentLoop';
-import type { ContentRequest } from '../lib/messages';
+import { confirmWithTimeout, type ConfirmRequest, type ContentRequest } from '../lib/messages';
 
 const SERVER = 'http://localhost:8000';
 
@@ -25,8 +25,10 @@ export default defineBackground(() => {
         observe: () => send<RawObservation>({ type: 'ouro:observe' }),
         execute: (nodeId, op, text) => send({ type: 'ouro:execute', nodeId, op, text }),
         post,
-        // Popup-driven confirmation arrives in Phase 7; until then consequential clicks are declined.
-        confirm: async () => false,
+        scroll: async (direction) => { await send({ type: 'ouro:scroll', direction }); },
+        settle: async () => { await send({ type: 'ouro:settle' }); },
+        // A9: consequential actions need a click in the popup; closed popup or 60 s silence = decline.
+        confirm: (label) => confirmWithTimeout(() => browser.runtime.sendMessage({ type: 'ouro:confirm', label } satisfies ConfirmRequest)),
         log: (e) => events.push(e),
       });
       sendResponse({ result, events });

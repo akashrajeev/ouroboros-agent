@@ -4,6 +4,10 @@
   <body style="width:320px;font:13px system-ui;padding:10px">
     <textarea id="task" rows="3" style="width:100%" placeholder="Task, e.g. fill this form with my details"></textarea>
     <button id="run">Run</button>
+    <div id="confirm" hidden style="border:1px solid #c33;padding:8px;margin:8px 0">
+      <div>Allow the agent to click <b id="confirm-label"></b>?</div>
+      <button id="yes">Allow</button> <button id="no">Decline</button>
+    </div>
     <pre id="log" style="white-space:pre-wrap;max-height:300px;overflow:auto"></pre>
     <script type="module" src="./main.ts"></script>
   </body>

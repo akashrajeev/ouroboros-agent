@@ -1,5 +1,5 @@
 import {
-  leakGate, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
+  observationKey, leakGate, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
   type Action, type RawObservation, type ScreenMap,
 } from '@ouroboros/core';
 
@@ -19,11 +19,15 @@ export interface LoopDeps {
    * A3d+A6 on pixels, only after the planner asks for need_visual. Returns an
    * already-masked JPEG and the re-OCR text of the masked regions (for the gate).
    */
+  /** G7 local fast path: scroll the page without a round-trip for anything else. */
+  scroll?(direction: 'up' | 'down'): Promise<void>;
+  /** Wait for the DOM to settle (wait op). */
+  settle?(): Promise<void>;
   visual?(raw: RawObservation): Promise<{ jpegB64: string; imageText: string; detections: number } | null>;
 }
 
 export type LoopEvent =
-  | { kind: 'sent'; step: number; sha256: string; bytes: number; ms: Record<string, number>; image?: { detections: number } }
+  | { kind: 'sent'; step: number; sha256: string; bytes: number; ms: Record<string, number>; image?: { detections: number }; reused?: boolean }
   | { kind: 'blocked'; step: number; hits: { kind: string; type?: string }[] }
   | { kind: 'rejected'; step: number; reason: string }
   | { kind: 'executed'; step: number; op: string; element_id?: string | null }
@@ -43,12 +47,16 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
   const safeTask = sanitizeTask(task, map);
   const now = () => performance.now();
   let wantVisual = false;
+  let last: { key: string; screen: ScreenMap } | undefined; // G1: unchanged screen = reuse sanitized state
   try {
     for (let step = 1; step <= (opts.maxSteps ?? 20); step++) {
       const t0 = now();
       const raw = await deps.observe();
       const t1 = now();
-      const { screen } = sanitize(raw, map);
+      const key = observationKey(raw);
+      const reused = last?.key === key;
+      const screen = reused ? last!.screen : sanitize(raw, map).screen;
+      last = { key, screen };
       const t2 = now();
       const vis = wantVisual && deps.visual ? await deps.visual(raw) : null;
       wantVisual = false;
@@ -70,11 +78,16 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       }
       const res = await deps.post(body);
       const t4 = now();
-      deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, vision: tv - t2, gate: t3 - tv, server: t4 - t3 }, ...(vis ? { image: { detections: vis.detections } } : {}) });
+      deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, vision: tv - t2, gate: t3 - tv, server: t4 - t3 }, ...(vis ? { image: { detections: vis.detections } } : {}), ...(reused ? { reused: true } : {}) });
 
       const planned: ScreenMap = screen;
       const needsFresh = ['click', 'type', 'select'].includes((res.action as Action)?.op);
-      const current = needsFresh ? sanitize(await deps.observe(), map).screen : planned;
+      let current = planned;
+      if (needsFresh) {
+        const fresh = await deps.observe();
+        const fk = observationKey(fresh);
+        current = fk === key ? planned : sanitize(fresh, map).screen;
+      }
       const v = validateAction(res.action, planned, current, map);
       if (!v.ok) {
         deps.log?.({ kind: 'rejected', step, reason: v.reason });
@@ -83,6 +96,13 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const a = v.action;
       if (a.op === 'done') { deps.log?.({ kind: 'finished', step, reason: a.reason ?? '' }); return { status: 'done', steps: step }; }
       if (a.op === 'need_visual') { wantVisual = true; history.push(a); continue; }
+      if (a.op === 'scroll' && deps.scroll) {
+        await deps.scroll(/up/i.test(a.text ?? a.reason ?? '') ? 'up' : 'down');
+        deps.log?.({ kind: 'executed', step, op: a.op });
+        history.push(a);
+        continue;
+      }
+      if (a.op === 'wait' && deps.settle) { await deps.settle(); history.push(a); continue; }
       if (a.op === 'ask_user' || a.op === 'wait' || a.op === 'scroll') {
         // Stub-era: visual escalation and scrolling land in later phases.
         history.push(a);

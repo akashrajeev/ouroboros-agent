@@ -114,4 +114,19 @@ describe('end-to-end device loop (stub planner)', () => {
     expect(r.status).toBe('blocked');
     expect(bodies).toHaveLength(1);
   });
+
+  it('G1 reuses the sanitized screen when nothing changed, and G7 scrolls locally', async () => {
+    const m = mount();
+    const bodies: string[] = [];
+    const scrolls: string[] = [];
+    const script = [{ op: 'scroll', text: 'down' }, { op: 'wait' }, { op: 'done', reason: 'ok' }];
+    const post = async (b: string) => { bodies.push(b); return { action: script[bodies.length - 1] }; };
+    const events: LoopEvent[] = [];
+    const r = await runTask(TASK, { ...m.deps, post, confirm: async () => true, scroll: async (d) => { scrolls.push(d); }, settle: async () => {}, log: (e) => events.push(e) });
+    expect(r.status).toBe('done');
+    expect(scrolls).toEqual(['down']);
+    const sent = events.filter((e) => e.kind === 'sent') as Extract<LoopEvent, { kind: 'sent' }>[];
+    expect(sent.map((e) => !!e.reused)).toEqual([false, true, true]);
+    expect(new Set(bodies.map((b) => JSON.parse(b).screen_map.length)).size).toBe(1);
+  });
 });

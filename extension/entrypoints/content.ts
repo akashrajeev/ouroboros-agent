@@ -18,6 +18,15 @@ export default defineContentScript({
         waitForDomQuiet(document).then(() => sendResponse(r));
         return true;
       }
+      if (msg.type === 'ouro:scroll') {
+        window.scrollBy({ top: (msg.direction === 'up' ? -0.8 : 0.8) * window.innerHeight, behavior: 'instant' as ScrollBehavior });
+        waitForDomQuiet(document, 200, 1500).then(() => sendResponse(true));
+        return true;
+      }
+      if (msg.type === 'ouro:settle') {
+        waitForDomQuiet(document).then(() => sendResponse(true));
+        return true;
+      }
       sendResponse(undefined);
       return true;
     });
