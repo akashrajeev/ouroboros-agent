@@ -15,12 +15,12 @@
 - **All values:** 279 of 300 readable before, **7 readable after masking**
 - Faces detected: 60/60 before, 0/60 after pixelation
 - Decoys readable: 118 before, 117 after (lower after = over-redaction)
-- Mean masked area: 12.4% of the image
-- Leak gate on re-OCR text: passed 53/60; passed while a value was still readable: **0**
+- Mean masked area: 13.0% of the image
+- Leak gate on re-OCR text: passed 54/60; passed while a value was still readable: **0**
 
 ## Cost (Node, onnxruntime-node CPU, sandbox)
 
-- OCR + faces + NER + masking per image: mean 533 ms, p50 498 ms, p95 910 ms
+- OCR + faces + NER + masking per image: mean 384 ms, p50 353 ms, p95 545 ms
 
 ## Caveats
 
