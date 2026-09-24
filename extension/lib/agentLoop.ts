@@ -42,16 +42,17 @@ export type LoopEvent =
 export interface RunResult { status: 'done' | 'blocked' | 'rejected' | 'declined' | 'max_steps' | 'exec_failed'; steps: number; reason?: string }
 
 /** Tokenize the user's task with the same map so the planner sees placeholders. */
-export function sanitizeTask(task: string, map: PlaceholderMap): string {
+export function sanitizeTask(task: string, map: PlaceholderMap, extraDetectors: TextDetector[] = []): string {
   const obs: RawObservation = { url: '', viewport: { w: 1, h: 1 }, elements: [{ nodeId: 't', tag: 'p', role: 'text', name: task, text: '', value: '', bbox: { x: 0, y: 0, w: 1, h: 1 } }], opaque: [] };
-  return sanitize(obs, map).screen.elements[0]!.label;
+  return sanitize(obs, map, { extraDetectors }).screen.elements[0]!.label;
 }
 
 export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: number; sessionId?: string; map?: PlaceholderMap; runId?: string } = {}): Promise<RunResult> {
   const runId = opts.runId ?? `run-${Date.now().toString(36)}`;
   const map = opts.map ?? new PlaceholderMap();
   const history: Action[] = [];
-  const safeTask = sanitizeTask(task, map);
+  // A3c on the task text too, so names/addresses the user types become placeholders the planner can use.
+  const safeTask = sanitizeTask(task, map, deps.detectText ? [await deps.detectText([task])] : []);
   const now = () => performance.now();
   let wantVisual = false;
   let last: { key: string; screen: ScreenMap } | undefined; // G1: unchanged screen = reuse sanitized state

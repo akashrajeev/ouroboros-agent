@@ -9,7 +9,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "images": "tsx src/images.ts",
-    "screenmap": "tsx src/screenmap.ts"
+    "screenmap": "tsx src/screenmap.ts",
+    "replay": "tsx src/replay.ts"
   },
   "dependencies": {
     "@ouroboros/core": "*",
