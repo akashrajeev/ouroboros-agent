@@ -69,7 +69,12 @@ export async function scorePage(page: Page, ner?: NerDetector): Promise<PageScor
   for (const p of preds) {
     if (!truthNorm.some((t) => t.type === p.type && t.norm === p.norm)) fp.push({ type: p.type, decoy: decoyNorm.has(p.norm) });
   }
-  const leakedTypes = page.truth.filter((t) => inWire(wire, normWire, t.value)).map((t) => t.type);
+  const leakedTypes = page.truth
+    .filter((t) => {
+      const frags = (t as { fragments?: string[] }).fragments;
+      return frags ? frags.every((fr) => inWire(wire, normWire, fr)) : inWire(wire, normWire, t.value);
+    })
+    .map((t) => t.type);
   const gateProd = (await leakGate(wire, map)).pass;
   const gateTest = (await leakGate(wire, map, { canaries: page.truth.map((t) => t.value).filter((v) => normalizeValue(v).length >= 6) })).pass;
   return { id: page.id, template: page.template, tp, fn, fp, leakedTypes, gateProd, gateTest, ms, bytes: wire.length };

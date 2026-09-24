@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { generatePages } from './generate';
+import { generateAdversarial } from './adversarial';
+import { generatePages, type Page } from './generate';
 import { NerDetector } from '@ouroboros/ner';
 import { existsSync } from 'node:fs';
 import { scorePage, summarize, type Summary } from './score';
@@ -44,11 +45,12 @@ ${rows}
 }
 
 async function main() {
-  const n = Number(process.argv[2] ?? 60);
-  const pages = generatePages(n);
+  const adv = process.argv[2] === 'adversarial';
+  const n = adv ? 50 : Number(process.argv[2] ?? 60);
+  const pages = (adv ? generateAdversarial(n) : generatePages(n)) as Page[];
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
-  const tag = n === 60 ? '' : `-${n}`;
+  const tag = adv ? '-adversarial' : n === 60 ? '' : `-${n}`;
   const models = new URL('../../models/', import.meta.url).pathname;
 
   const configs: { file: string; title: string; ner?: NerDetector }[] = [{ file: 'baseline-rules', title: 'rules + patterns baseline (no models)' }];
@@ -63,13 +65,20 @@ async function main() {
     const scores = [];
     for (const p of pages) scores.push(await scorePage(p, c.ner));
     const s = summarize(scores, pages[0]!.decoys.length);
+    const advRow: string[] = [];
+    if (adv) {
+      const byTpl: Record<string, { tp: number; n: number; leaks: number }> = {};
+      scores.forEach((sc) => { const b = (byTpl[sc.template] ??= { tp: 0, n: 0, leaks: 0 }); b.tp += sc.tp.length; b.n += sc.tp.length + sc.fn.length; b.leaks += sc.leakedTypes.length; });
+      advRow.push(`|  - by template: ${Object.entries(byTpl).map(([k, v]) => `${k} R ${pct(v.tp / v.n)}% leaks ${v.leaks}/${v.n}`).join('; ')} | | | | | | | |`);
+    }
     writeFileSync(`${dir}${c.file}${tag}.json`, JSON.stringify(s, null, 2));
     writeFileSync(`${dir}${c.file}${tag}.md`, toMarkdown(c.title, s));
-    const r = (t: string) => (s.perType[t] ? pct(s.perType[t]!.recall) : '-');
+    const r = (t: string) => { const v = s.perType[t]; return v && v.tp + v.fn > 0 ? pct(v.recall) : '-'; };
     rows.push(`| ${c.title} | ${pct(s.structured.precision)} / ${pct(s.structured.recall)} | ${pct(s.micro.precision)} / ${pct(s.micro.recall)} | ${r('NAME')} | ${r('ADDRESS')} | ${s.decoysFlagged}/${s.decoysTotal} | ${s.leakedValues}/${s.totalValues} | ${s.msMean.toFixed(1)} / ${s.msP95.toFixed(1)} |`);
+    rows.push(...advRow);
     if (c.ner) rows.push(`|  - NER model calls: ${c.ner.stats.calls}, cache hits: ${c.ner.stats.cacheHits}, model ms per call: ${(c.ner.stats.ms / Math.max(1, c.ner.stats.calls)).toFixed(1)} | | | | | | | |`);
   }
-  const table = `# Ablation (${n} pages, seed 26171)
+  const table = `# ${adv ? 'HELD-OUT adversarial set' : 'Ablation'} (${n} pages, seed ${adv ? 777 : 26171})${adv ? '\n\nNot used for tuning: label variants, Hindi labels, values split across elements, odd formats, headerless tables. Scored as-is.' : ''}
 
 | Config | Structured P / R % | All types P / R % | NAME R % | ADDRESS R % | Decoys flagged | Values leaked pre-gate | ms/page mean / p95 |
 |---|---|---|---|---|---|---|---|
