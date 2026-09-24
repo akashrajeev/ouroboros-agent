@@ -47,3 +47,7 @@ Contamination: the v2 prompt was tuned by looking at the first 4 pages of seed 2
 - E3 (cost per step): about 1.2k prompt tokens per step (p50 1197), server p50 971-1009 ms, p95 1120-1197 ms. Tunnel overhead measured separately: /models round trip p50 141 ms, 1-token completion p50 166 ms. So about 0.8 s per step is model time on the T4, including the loop guard's second call where it fires.
 - E5 (privacy): 0 raw values in 780 request bodies across E1 and E1b; the leak gate never fired.
 - E4 (image) and E6 (adversarial layouts) are still open.
+
+### Kaggle as primary host (2026-09-24)
+
+Kaggle (GPU T4 x2, internet on, account akashrajeevkv) now serves the same model via notebooks/phase9_vlm_kaggle.ipynb; Colab stays as backup. vLLM was ready in 240 s. The seed-90210 replay reproduced on Kaggle: 20/20 done, 120/120 fields, 0/160 leaks, server p50/p95 974/1195 ms. The notebook's smoke test now waits for the new tunnel hostname to resolve (first Kaggle run failed that cell on DNS; the endpoint itself was fine).
