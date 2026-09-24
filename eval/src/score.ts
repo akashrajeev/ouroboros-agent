@@ -17,7 +17,7 @@ export interface PageScore {
   bytes: number;
 }
 
-function withDom<T>(html: string, fn: (doc: Document) => T): T {
+export function withDom<T>(html: string, fn: (doc: Document) => T): T {
   const win = new Window({ url: 'https://test.example.in/page', width: 1280, height: 800 });
   const g = globalThis as Record<string, unknown>;
   const keys = ['HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'NodeFilter', 'CSS', 'Event', 'InputEvent', 'MutationObserver'];

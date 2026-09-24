@@ -8,7 +8,8 @@
     "metrics": "tsx src/run.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "images": "tsx src/images.ts"
+    "images": "tsx src/images.ts",
+    "screenmap": "tsx src/screenmap.ts"
   },
   "dependencies": {
     "@ouroboros/core": "*",
