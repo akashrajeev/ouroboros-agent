@@ -4,3 +4,6 @@ export * from './patterns';
 export * from './domRules';
 export * from './placeholders';
 export * from './leakGate';
+export * from './observation';
+export * from './sanitize';
+export * from './validator';
