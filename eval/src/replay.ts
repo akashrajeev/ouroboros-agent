@@ -79,9 +79,11 @@ export async function replay(n: number) {
         post: async (body) => {
           // Independent of the leak gate: does any real value appear in what we send?
           bodies++;
-          const nb = normalizeValue(body);
+          // bbox arrays are layout numbers, not page content: a 3-digit CVV "313" must not match "0.313".
+          const scan = body.replace(/"bbox":\[[^\]]*\]/g, '"bbox":[]');
+          const nb = normalizeValue(scan);
           // Exact match needs a non-alphanumeric boundary, as the leak gate does: a 3-digit CVV inside a longer ticket number is not that CVV.
-          const exact = (v: string) => new RegExp(`(?<![A-Za-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![A-Za-z0-9])`).test(body);
+          const exact = (v: string) => new RegExp(`(?<![A-Za-z0-9])${v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![A-Za-z0-9])`).test(scan);
           const leaked = page.truth.filter((t) => exact(t.value) || (normalizeValue(t.value).length >= 6 && nb.includes(normalizeValue(t.value))));
           if (leaked.length) {
             bodiesWithValue++;

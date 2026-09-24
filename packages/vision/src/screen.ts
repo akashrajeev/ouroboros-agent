@@ -59,7 +59,14 @@ export async function processScreenshot(
   for (const [i, r] of rs.entries()) {
     const e = entries[i]!;
     // Same input pixels + same detectors => same masked pixels, so the re-OCR text is cacheable too.
-    if (!e.reText) e.reText = (await ocr.read(cropImg(shot, r))).map((l) => l.text);
+    if (!e.reText) {
+      // Second pass: the masked crop can OCR differently (a misread digit on pass 1 reads right on
+      // pass 2). Mask anything the detectors now find, then re-OCR once more for the gate.
+      let re = await ocr.read(cropImg(shot, r));
+      const again = await redactImage(shot, re.map((l) => ({ ...l, box: shift(l.box, r) })), [], { extraDetectors: opts.extraDetectors });
+      if (again.length) { detections.push(...again); re = await ocr.read(cropImg(shot, r)); }
+      e.reText = re.map((l) => l.text);
+    }
     texts.push(...e.reText);
     opts.cache?.set(keys[i]!, e);
   }

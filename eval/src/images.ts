@@ -62,6 +62,7 @@ export async function toImg(png: Buffer): Promise<Img> {
   return { data: new Uint8ClampedArray(data), width: info.width, height: info.height } as Img;
 }
 
+const TWO_PASS = process.argv.includes('--two-pass');
 const readable = (ocrText: string, v: string) => normalizeValue(ocrText).includes(normalizeValue(v));
 
 export async function run(n: number, seed: number, hard = false) {
@@ -85,6 +86,13 @@ export async function run(n: number, seed: number, hard = false) {
     ms.push(performance.now() - t0);
     if (faces.length) facesRaw++;
     masked += maskedFraction(dets, img.width, img.height);
+    if (TWO_PASS) {
+      // Same as processScreenshot: re-OCR the masked image, mask new finds, then measure.
+      const t2 = performance.now();
+      const re = await ocr.read(img);
+      dets.push(...(await redactImage(img, re, [], { extraDetectors: ner ? [(t) => ner.detect(t)] : [] })));
+      ms[ms.length - 1]! += performance.now() - t2;
+    }
     const after = await sharp(Buffer.from(img.data.buffer), { raw: { width: img.width, height: img.height, channels: 4 } }).png().toBuffer();
     if (i === 0) sample = after;
     const reImg = await toImg(after);
@@ -106,7 +114,7 @@ export async function run(n: number, seed: number, hard = false) {
   const pct = (x: number) => (x * 100).toFixed(1);
   const rows = Object.entries(byType).map(([t, v]) => `| ${t} | ${v.n} | ${v.rawReadable} | ${v.afterReadable} | ${pct(1 - v.afterReadable / Math.max(1, v.rawReadable))} |`).join('\n');
   const tot = Object.values(byType).reduce((a, v) => ({ raw: a.raw + v.rawReadable, after: a.after + v.afterReadable, n: a.n + v.n }), { raw: 0, after: 0, n: 0 });
-  const md = `# Eval: vision stage on synthetic ID-card images${hard ? ' (degraded: rotation, blur, downscale, JPEG)' : ''}
+  const md = `# Eval: vision stage on synthetic ID-card images${TWO_PASS ? ' [two-pass masking]' : ''}${hard ? ' (degraded: rotation, blur, downscale, JPEG)' : ''}
 
 ${n} Faker en_IN cards (seed ${seed}, \`npm run images --workspace eval -- ${n} ${seed}${hard ? ' --hard' : ''}\`), 720x440 PNG, 5 fonts, 5 backgrounds, 5 PII fields + 2 look-alike decoys + one face photo each. Pipeline: PaddleOCR PP-OCRv3 det + PP-OCRv5 mobile English rec (ONNX, CPU) -> rules${ner ? ' + NER' : ''} per OCR line -> black-fill matched spans (low-confidence lines masked whole) ; YuNet 2023mar -> pixelate faces. "Readable" = the value appears in PaddleOCR output of the image (normalized). The attacker model is the same OCR, so this is a lower bound on what a stronger reader could recover.
 
@@ -133,7 +141,7 @@ ${rows}
 `;
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
-  writeFileSync(`${dir}vision-cards${hard ? '-hard' : ''}-${seed}.md`, md);
+  writeFileSync(`${dir}vision-cards${hard ? '-hard' : ''}${TWO_PASS ? '-2pass' : ''}-${seed}.md`, md);
   if (sample) writeFileSync(`${dir}vision-sample${hard ? '-hard' : ''}-${seed}.png`, sample);
   console.log(md);
 }
