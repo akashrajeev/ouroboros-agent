@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import os
 import time
 
 from fastapi import FastAPI, HTTPException
@@ -10,7 +11,14 @@ from .planner import Planner, StubPlanner
 from .schemas import StepMetrics, StepRequest, StepResponse
 
 app = FastAPI(title="ouroboros-agent server", version="0.1.0")
-planner: Planner = StubPlanner()
+def make_planner() -> Planner:
+    if os.environ.get("PLANNER") == "vlm":
+        from .vlm import VlmPlanner
+        return VlmPlanner.from_env()
+    return StubPlanner()
+
+
+planner: Planner = make_planner()
 
 
 @app.get("/health")
@@ -35,5 +43,8 @@ def step(req: StepRequest) -> StepResponse:
             input_chars=len(text_view),
             image_bytes=image_bytes,
             planner=planner.name,
+            planner_ms=getattr(planner, "last", {}).get("ms"),
+            prompt_tokens=getattr(planner, "last", {}).get("prompt_tokens"),
+            completion_tokens=getattr(planner, "last", {}).get("completion_tokens"),
         ),
     )

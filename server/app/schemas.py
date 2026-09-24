@@ -46,6 +46,9 @@ class StepMetrics(BaseModel):
     input_chars: int
     image_bytes: int
     planner: str
+    planner_ms: Optional[float] = None
+    prompt_tokens: Optional[int] = None
+    completion_tokens: Optional[int] = None
 
 
 class StepResponse(BaseModel):

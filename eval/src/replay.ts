@@ -15,6 +15,7 @@ import { NodeRegistry, observe } from '../../extension/lib/observe';
 import { generatePages, type Page } from './generate';
 
 const SERVER = process.env.OURO_SERVER ?? 'http://127.0.0.1:8000';
+const TAG = process.env.OURO_TAG ?? 'metrics-sample';
 const M = new URL('../../models/', import.meta.url).pathname;
 
 async function withDomAsync<T>(html: string, fn: (doc: Document) => Promise<T>): Promise<T> {
@@ -34,6 +35,7 @@ async function withDomAsync<T>(html: string, fn: (doc: Document) => Promise<T>):
 
 export async function replay(n: number) {
   const pages = (generatePages(n * 3) as Page[]).filter((p) => p.template === 'kyc' || p.template === 'checkout').slice(0, n);
+  const health = await fetch(`${SERVER}/health`).then((r) => r.json() as Promise<{ planner: string }>);
   let ner: NerDetector | undefined, loadMs = 0;
   if (existsSync(`${M}bert-small-pii/onnx/model_quantized.onnx`)) {
     const t = performance.now();
@@ -86,15 +88,15 @@ export async function replay(n: number) {
   const s = summarizeSteps(rows);
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
-  writeFileSync(`${dir}metrics-sample.csv`, toCsv(rows));
+  writeFileSync(`${dir}${TAG}.csv`, toCsv(rows));
   const st = Object.entries(s.stages).map(([k, v]) => `| ${k} | ${v.p50.toFixed(2)} | ${v.p95.toFixed(2)} |`).join('\n');
   const md = `# Metrics sample: end-to-end replay (A12)
 
-${pages.length} emptied KYC/checkout pages from the Faker en_IN generator. The device loop runs in Node (happy-dom) against the real FastAPI server with the deterministic stub planner (no VLM) over HTTP on localhost. The task text carries the real values; the server only sees placeholders.${ner ? ' NER on.' : ' NER off (model not fetched).'} Rows: \`metrics-sample.csv\` (${rows.length} steps), viewable in the extension dashboard (load CSV).
+${pages.length} emptied KYC/checkout pages from the Faker en_IN generator. The device loop runs in Node (happy-dom) against the real FastAPI server (planner: \`${health.planner}\`). The task text carries the real values; the server only sees placeholders.${ner ? ' NER on.' : ' NER off (model not fetched).'} Rows: \`${TAG}.csv\` (${rows.length} steps), viewable in the extension dashboard (load CSV).
 
 - Run outcomes: ${Object.entries(outcomes).map(([k, v]) => `${k} ${v}`).join(', ')}
 - Fields filled with the exact original value after local rehydration: **${filledOk} of ${filledTotal}** (fields whose value the task supplied; password/OTP fields are never filled by design)
-- Steps: ${s.steps}; G1 reused the sanitized screen on ${s.g1SkipPct.toFixed(1)}%; masked image sent on ${s.imageStepPct.toFixed(1)}% (the stub never asks for need_visual)
+- Steps: ${s.steps}; G1 reused the sanitized screen on ${s.g1SkipPct.toFixed(1)}%; masked image sent on ${s.imageStepPct.toFixed(1)}%
 - Leak-gate blocks: ${s.blocked}. Independent check over every request body sent: **${bodiesWithValue} of ${bodies}** contained a real value (exact or normalized)
 - Payload per step: mean ${s.bytesMean.toFixed(0)} bytes, ~${s.tokensMean.toFixed(0)} tokens (bytes/4 estimate); ${s.tokensTotal} tokens for the whole replay
 - Model warm-up (NER): ${s.modelLoadMs.toFixed(0)} ms
@@ -105,10 +107,10 @@ ${st}
 
 ## Caveats
 
-- The server stage is the stub planner on localhost, so M5 here excludes real VLM inference and network time. It is a lower bound for the device-side cost only.
+- ${health.planner.startsWith('stub') ? 'The server stage is the stub planner on localhost, so M5 here excludes real VLM inference and network time. It is a lower bound for the device-side cost only.' : 'The server stage includes the tunnel round-trip to the free-tier GPU, so it overstates what a co-located server would add.'}
 - The planner fills one field per step, so many steps see a changed screen; G1 skips here come from the re-observe after each action.
 `;
-  writeFileSync(`${dir}metrics-sample.md`, md);
+  writeFileSync(`${dir}${TAG}.md`, md);
   console.log(md);
 }
 
