@@ -8,3 +8,4 @@ export * from './observation';
 export * from './sanitize';
 export * from './validator';
 export * from './gate';
+export * from './metrics';

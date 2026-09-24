@@ -18,3 +18,11 @@ browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
   (document.getElementById('no') as HTMLButtonElement).onclick = () => answer(false);
   return true;
 });
+
+document.getElementById('csv')!.addEventListener('click', async () => {
+  const csv = (await browser.runtime.sendMessage({ type: 'ouro:metrics:csv' })) as string;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `ouroboros-metrics-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.csv`;
+  a.click();
+});

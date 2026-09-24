@@ -1,5 +1,5 @@
 import {
-  observationKey, leakGate, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
+  observationKey, leakGate, estimateTokens, type StepRecord, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
   type Action, type RawObservation, type ScreenMap, type TextDetector,
 } from '@ouroboros/core';
 
@@ -19,6 +19,10 @@ export interface LoopDeps {
    * A3d+A6 on pixels, only after the planner asks for need_visual. Returns an
    * already-masked JPEG and the re-OCR text of the masked regions (for the gate).
    */
+  /** A12: one metrics row per step (no raw values). */
+  record?(r: StepRecord): void;
+  /** Model warm-up time to attribute to the first step. */
+  modelLoadMs?(): number;
   /** A3c: run the text model over these strings and return a synchronous detector for sanitize(). */
   detectText?(texts: string[]): Promise<TextDetector>;
   /** G7 local fast path: scroll the page without a round-trip for anything else. */
@@ -43,7 +47,8 @@ export function sanitizeTask(task: string, map: PlaceholderMap): string {
   return sanitize(obs, map).screen.elements[0]!.label;
 }
 
-export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: number; sessionId?: string; map?: PlaceholderMap } = {}): Promise<RunResult> {
+export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: number; sessionId?: string; map?: PlaceholderMap; runId?: string } = {}): Promise<RunResult> {
+  const runId = opts.runId ?? `run-${Date.now().toString(36)}`;
   const map = opts.map ?? new PlaceholderMap();
   const history: Action[] = [];
   const safeTask = sanitizeTask(task, map);
@@ -75,12 +80,24 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       });
       const gate = await leakGate(body, map, { canaries: deps.canaries, imageText: vis?.imageText });
       const t3 = now();
+      const rec = (outcome: StepRecord['outcome'], action: string, server = 0): StepRecord => ({
+        run_id: runId, step, ts: Date.now(), origin: screen.url_origin, outcome, action, reused,
+        elements: screen.elements.length, opaque: screen.opaqueCount, placeholders: map.size,
+        image_detections: vis?.detections ?? 0, image_sent: !!vis && outcome !== 'blocked',
+        bytes: outcome === 'blocked' ? 0 : gate.bytes, tokens_est: outcome === 'blocked' ? 0 : estimateTokens(gate.bytes - (vis?.jpegB64.length ?? 0), !!vis),
+        gate_hits: gate.hits.length,
+        ms_observe: t1 - t0, ms_sanitize: t2 - t1, ms_vision: tv - t2, ms_gate: t3 - tv, ms_server: server, ms_total: t3 - t0 + server,
+        model_load_ms: step === 1 ? (deps.modelLoadMs?.() ?? 0) : 0,
+      });
       if (!gate.pass) {
+        deps.record?.(rec('blocked', ''));
         deps.log?.({ kind: 'blocked', step, hits: gate.hits.map((h) => ({ kind: h.kind, type: h.type })) });
         return { status: 'blocked', steps: step };
       }
       const res = await deps.post(body);
       const t4 = now();
+      const op = String((res.action as Action)?.op ?? 'invalid');
+      deps.record?.(rec(op === 'done' ? 'done' : 'sent', op, t4 - t3));
       deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, vision: tv - t2, gate: t3 - tv, server: t4 - t3 }, ...(vis ? { image: { detections: vis.detections } } : {}), ...(reused ? { reused: true } : {}) });
 
       const planned: ScreenMap = screen;

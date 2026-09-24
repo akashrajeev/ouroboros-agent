@@ -1,6 +1,7 @@
 import type { RawObservation, TextMatch } from '@ouroboros/core';
 import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserHost';
 import { runTask, type LoopEvent } from '../lib/agentLoop';
+import { MetricsStore } from '../lib/metricsStore';
 import { confirmWithTimeout, type ConfirmRequest, type ContentRequest } from '../lib/messages';
 
 const SERVER = 'http://localhost:8000';
@@ -35,8 +36,11 @@ async function modelsEnabled(): Promise<boolean> {
 }
 
 export default defineBackground(() => {
+  const metrics = new MetricsStore();
   browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
-    const msg = raw as { type: string; task?: string };
+    const msg = raw as { type: string; task?: string; runId?: string };
+    if (msg.type === 'ouro:metrics:csv') { metrics.csv(msg.runId).then(sendResponse, () => sendResponse('')); return true; }
+    if (msg.type === 'ouro:metrics:clear') { metrics.clear().then(() => sendResponse(true)); return true; }
     if (msg.type !== 'ouro:run' || !msg.task) { sendResponse(undefined); return true; }
     (async () => {
       const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
@@ -65,6 +69,7 @@ export default defineBackground(() => {
         // A9: consequential actions need a click in the popup; closed popup or 60 s silence = decline.
         confirm: (label) => confirmWithTimeout(() => browser.runtime.sendMessage({ type: 'ouro:confirm', label } satisfies ConfirmRequest)),
         log: (e) => events.push(e),
+        record: (r) => { void metrics.add(r); },
       });
       sendResponse({ result, events });
     })();
