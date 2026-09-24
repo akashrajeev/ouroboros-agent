@@ -45,3 +45,8 @@ Every phase ends with measurable acceptance criteria. CI (typecheck + unit tests
 - Qwen2.5-VL-7B on vLLM only after compute is approved; until then stub results are labelled as stub.
 - Five metric experiments + ablations.
 - **Accept:** final results table in eval/results/ with methodology notes.
+
+---
+## Progress log
+- Phase 0-3: done (repo, docs, CI; core detectors, placeholders, leak gate; WXT extension + observe/execute; FastAPI + stub planner; device-loop E2E test).
+- Phase 5 (pulled ahead of Phase 4 wrap-up, since the gate's checks 1, 2 and 4 already shipped in core): eval harness done. `npm run metrics --workspace eval` writes eval/results/baseline-rules.{md,json}.

@@ -1,0 +1,175 @@
+{
+  "pages": 60,
+  "perType": {
+    "AADHAAR": {
+      "tp": 24,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "ACCOUNT": {
+      "tp": 36,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "ADDRESS": {
+      "tp": 0,
+      "fn": 24,
+      "fp": 0,
+      "precision": 1,
+      "recall": 0,
+      "f1": 0
+    },
+    "CARD": {
+      "tp": 24,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "CVV": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "DOB": {
+      "tp": 24,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "EMAIL": {
+      "tp": 48,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "GSTIN": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "IFSC": {
+      "tp": 36,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "NAME": {
+      "tp": 0,
+      "fn": 72,
+      "fp": 0,
+      "precision": 1,
+      "recall": 0,
+      "f1": 0
+    },
+    "OTP": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "PAN": {
+      "tp": 24,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "PASSPORT": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "PASSWORD": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "PHONE": {
+      "tp": 48,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "PINCODE": {
+      "tp": 36,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "UPI": {
+      "tp": 48,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    },
+    "VEHICLE": {
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    }
+  },
+  "micro": {
+    "precision": 1,
+    "recall": 0.813953488372093,
+    "f1": 0.8974358974358974
+  },
+  "structured": {
+    "precision": 1,
+    "recall": 1,
+    "f1": 1
+  },
+  "decoysFlagged": 0,
+  "decoysTotal": 480,
+  "leakedValues": 96,
+  "totalValues": 516,
+  "leakedByType": {
+    "NAME": 72,
+    "ADDRESS": 24
+  },
+  "pagesWithLeak": 48,
+  "gateProdPass": 60,
+  "gateProdPassWithLeak": 48,
+  "gateTestPass": 12,
+  "gateTestPassWithLeak": 0,
+  "msMean": 6.6912762166666555,
+  "msP95": 11.955107999999996,
+  "bytesMean": 1937.3333333333333
+}
