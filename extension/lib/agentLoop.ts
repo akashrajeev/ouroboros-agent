@@ -15,10 +15,15 @@ export interface LoopDeps {
   confirm(label: string): Promise<boolean>;
   log?(e: LoopEvent): void;
   canaries?: string[];
+  /**
+   * A3d+A6 on pixels, only after the planner asks for need_visual. Returns an
+   * already-masked JPEG and the re-OCR text of the masked regions (for the gate).
+   */
+  visual?(raw: RawObservation): Promise<{ jpegB64: string; imageText: string; detections: number } | null>;
 }
 
 export type LoopEvent =
-  | { kind: 'sent'; step: number; sha256: string; bytes: number; ms: Record<string, number> }
+  | { kind: 'sent'; step: number; sha256: string; bytes: number; ms: Record<string, number>; image?: { detections: number } }
   | { kind: 'blocked'; step: number; hits: { kind: string; type?: string }[] }
   | { kind: 'rejected'; step: number; reason: string }
   | { kind: 'executed'; step: number; op: string; element_id?: string | null }
@@ -37,6 +42,7 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
   const history: Action[] = [];
   const safeTask = sanitizeTask(task, map);
   const now = () => performance.now();
+  let wantVisual = false;
   try {
     for (let step = 1; step <= (opts.maxSteps ?? 20); step++) {
       const t0 = now();
@@ -44,6 +50,9 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const t1 = now();
       const { screen } = sanitize(raw, map);
       const t2 = now();
+      const vis = wantVisual && deps.visual ? await deps.visual(raw) : null;
+      wantVisual = false;
+      const tv = now();
       const body = JSON.stringify({
         session_id: opts.sessionId ?? 'local',
         task: safeTask,
@@ -51,8 +60,9 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
         screen_map: screen.elements,
         legend: legend(map),
         history: history.map((h) => ({ op: h.op, element_id: h.element_id ?? null, text: h.text ?? null })),
+        ...(vis ? { image_jpeg_b64: vis.jpegB64 } : {}),
       });
-      const gate = await leakGate(body, map, { canaries: deps.canaries });
+      const gate = await leakGate(body, map, { canaries: deps.canaries, imageText: vis?.imageText });
       const t3 = now();
       if (!gate.pass) {
         deps.log?.({ kind: 'blocked', step, hits: gate.hits.map((h) => ({ kind: h.kind, type: h.type })) });
@@ -60,7 +70,7 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       }
       const res = await deps.post(body);
       const t4 = now();
-      deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, gate: t3 - t2, server: t4 - t3 } });
+      deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, vision: tv - t2, gate: t3 - tv, server: t4 - t3 }, ...(vis ? { image: { detections: vis.detections } } : {}) });
 
       const planned: ScreenMap = screen;
       const needsFresh = ['click', 'type', 'select'].includes((res.action as Action)?.op);
@@ -72,7 +82,8 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       }
       const a = v.action;
       if (a.op === 'done') { deps.log?.({ kind: 'finished', step, reason: a.reason ?? '' }); return { status: 'done', steps: step }; }
-      if (a.op === 'ask_user' || a.op === 'need_visual' || a.op === 'wait' || a.op === 'scroll') {
+      if (a.op === 'need_visual') { wantVisual = true; history.push(a); continue; }
+      if (a.op === 'ask_user' || a.op === 'wait' || a.op === 'scroll') {
         // Stub-era: visual escalation and scrolling land in later phases.
         history.push(a);
         continue;

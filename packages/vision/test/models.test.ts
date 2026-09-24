@@ -25,3 +25,23 @@ describe.skipIf(!have)('vision models', () => {
     expect(after).toContain('22405156');
   }, 30000);
 });
+
+describe.skipIf(!have)('processScreenshot', () => {
+  it('scans only opaque regions and leaves DOM-text areas untouched', async () => {
+    const ort = await import('onnxruntime-node');
+    const sharp = (await import('sharp')).default;
+    const { processScreenshot } = await import('../src/index');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300"><rect width="800" height="300" fill="#fff"/>
+<text x="20" y="60" font-family="DejaVu Sans" font-size="24">PAN: ABCPE1234F</text>
+<rect x="400" y="100" width="380" height="120" fill="#eee"/><text x="420" y="170" font-family="DejaVu Sans" font-size="24">PAN: BXYPK5678Q</text></svg>`;
+    const { data, info } = await sharp(Buffer.from(svg)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    const shot = { data: new Uint8ClampedArray(data), width: info.width, height: info.height } as any;
+    const ocr = await PaddleOcr.create(ort as any, `${M}paddleocr/det.onnx`, `${M}paddleocr/rec.onnx`, readFileSync(`${M}paddleocr/dict.txt`, 'utf8'));
+    const r = await processScreenshot(shot, [{ x: 400, y: 100, w: 380, h: 120 }, { x: 0, y: 0, w: 20, h: 20 }], ocr, undefined);
+    expect(r.regionsProcessed).toBe(1);
+    expect(r.detections.map((d) => d.type)).toContain('PAN');
+    expect(r.imageText).not.toContain('BXYPK5678Q');
+    const full = (await ocr.read(shot)).map((l) => l.text).join(' ');
+    expect(full).toContain('ABCPE1234F'); // outside opaque regions: DOM path's job, not pixels'
+  }, 30000);
+});

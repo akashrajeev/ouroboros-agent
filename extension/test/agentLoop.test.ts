@@ -89,4 +89,29 @@ describe('end-to-end device loop (stub planner)', () => {
     expect(r.status).toBe('blocked');
     expect(bodies).toHaveLength(0);
   });
+
+  it('attaches a masked screenshot only after need_visual, and gates its re-OCR text', async () => {
+    const m = mount();
+    const bodies: string[] = [];
+    let calls = 0;
+    const post = async (b: string) => { bodies.push(b); return { action: bodies.length === 1 ? { op: 'need_visual' } : { op: 'done', reason: 'seen' } }; };
+    const visual = async () => { calls++; return { jpegB64: 'AAAA', imageText: 'Order 22405156', detections: 2 }; };
+    const events: LoopEvent[] = [];
+    const r = await runTask(TASK, { ...m.deps, post, confirm: async () => true, visual, log: (e) => events.push(e) });
+    expect(r.status).toBe('done');
+    expect(calls).toBe(1);
+    expect(JSON.parse(bodies[0]!).image_jpeg_b64).toBeUndefined();
+    expect(JSON.parse(bodies[1]!).image_jpeg_b64).toBe('AAAA');
+    expect(events.find((e) => e.kind === 'sent' && e.step === 2)).toMatchObject({ image: { detections: 2 } });
+  });
+
+  it('blocks the step if PII survives in the masked image text', async () => {
+    const m = mount();
+    const bodies: string[] = [];
+    const post = async (b: string) => { bodies.push(b); return { action: { op: 'need_visual' } }; };
+    const visual = async () => ({ jpegB64: 'AAAA', imageText: 'PAN BXYPK5678Q', detections: 0 });
+    const r = await runTask(TASK, { ...m.deps, post, confirm: async () => true, visual });
+    expect(r.status).toBe('blocked');
+    expect(bodies).toHaveLength(1);
+  });
 });
