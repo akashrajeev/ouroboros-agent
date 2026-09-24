@@ -34,6 +34,7 @@ describe('positives', () => {
   it('dob with context', () => one('DOB: 14/08/1999', 'DOB'));
   it('pincode with context', () => one('Bengaluru, 560001', 'PINCODE'));
   it('pincode with label', () => one('PIN code: 682 001', 'PINCODE'));
+  it('account with context', () => one('Account: 000123456789', 'ACCOUNT'));
 });
 
 describe('negatives (precision)', () => {
@@ -43,6 +44,8 @@ describe('negatives (precision)', () => {
   });
   it('aadhaar cannot start with 0 or 1', () => expect(types('123456789012')).not.toContain('AADHAAR'));
   it('card failing luhn', () => expect(types('4111 1111 1111 1112')).toEqual([]));
+  it('luhn-valid number under an account label is ACCOUNT not CARD', () => expect(types('Account: 4111111111111111')).toEqual(['ACCOUNT']));
+  it('unknown issuer prefix is not a card', () => expect(types('1111 1111 1111 1117')).toEqual([]));
   it('repeated digits are not cards', () => expect(types('0000000000000000')).toEqual([]));
   it('PAN with invalid holder type char', () => expect(types('ABCXE1234F')).toEqual([]));
   it('phone starting with 5', () => expect(types('5876543210')).toEqual([]));
@@ -50,6 +53,7 @@ describe('negatives (precision)', () => {
   it('passport-shaped code without context', () => expect(types('Order K1234567')).toEqual([]));
   it('date without birth context', () => expect(types('Due 14/08/2025')).toEqual([]));
   it('invalid date with context', () => expect(types('DOB 31/02/1999')).toEqual([]));
+  it('long number without account context', () => expect(types('Tracking 000123456789')).toEqual([]));
   it('six-digit number without context', () => expect(types('Order 560001 shipped')).toEqual([]));
   it('invalid ip octets', () => expect(types('version 1.2.300.4')).toEqual([]));
   it('vehicle with unknown state code', () => expect(types('ZZ 01 AB 1234')).toEqual([]));

@@ -22,6 +22,9 @@ function hasContext(text: string, start: number, words: RegExp, window = 40): bo
   return words.test(text.slice(Math.max(0, start - window), start));
 }
 
+/** Issuer prefixes: Visa, Mastercard, Amex, Diners, JCB, Discover, RuPay, Maestro. */
+const CARD_IIN = /^(4|5[1-5]|2[2-7]|3[47]|3[0689]|35|6011|64[4-9]|65|60|81|82|508|5[06-8]|6[37])/;
+
 const STATE_CODES = new Set([
   'AN', 'AP', 'AR', 'AS', 'BR', 'CH', 'CG', 'DD', 'DL', 'DN', 'GA', 'GJ', 'HP', 'HR', 'JH', 'JK',
   'KA', 'KL', 'LA', 'LD', 'MH', 'ML', 'MN', 'MP', 'MZ', 'NL', 'OD', 'OR', 'PB', 'PY', 'RJ', 'SK',
@@ -62,9 +65,13 @@ const RULES: Rule[] = [
   {
     type: 'CARD', priority: 65, confidence: 0.98,
     re: /\b(?:\d[ -]?){12,18}\d\b/g,
-    validate: (raw) => {
+    validate: (raw, text, start) => {
       const d = digitsOnly(raw);
-      return d.length >= 13 && d.length <= 19 && luhnValid(d) && !/^(\d)\1+$/.test(d);
+      if (d.length < 13 || d.length > 19 || !luhnValid(d) || /^(\d)\1+$/.test(d)) return false;
+      if (!CARD_IIN.test(d)) return false;
+      // A Luhn-valid number under an account label is an account number (1 in 10 pass Luhn by chance).
+      const acct = hasContext(text, start, /\b(account|acct|a\/c)\b[^0-9]{0,20}$/i, 40);
+      return !acct || hasContext(text, start, /card/i, 40);
     },
   },
   {
@@ -97,6 +104,12 @@ const RULES: Rule[] = [
       const [d, m, y] = raw.split(/[/.-]/).map(Number) as [number, number, number];
       return validDate(d, m, y) && hasContext(text, start, /\b(dob|d\.o\.b|birth|born)\b/i);
     },
+  },
+  {
+    // Bank account numbers have no checksum; require an account context word.
+    type: 'ACCOUNT', priority: 32, confidence: 0.85,
+    re: /\b\d{9,18}\b/g,
+    validate: (_raw, text, start) => hasContext(text, start, /\b(account|acct|a\/c)\b[^0-9]{0,20}$/i, 40),
   },
   {
     type: 'PINCODE', priority: 30, confidence: 0.85,
