@@ -109,13 +109,13 @@ const RULES: Rule[] = [
     re: /\b(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})\b/g,
     validate: (raw, text, start) => {
       const [d, m, y] = raw.split(/[/.-]/).map(Number) as [number, number, number];
-      return validDate(d, m, y) && hasContext(text, start, /\b(dob|d\.o\.b|birth|born)\b/i);
+      return validDate(d, m, y) && hasContext(text, start, /\b(d[o0]b|d\.[o0]\.b|birth|born)\b/i);
     },
   },
   {
     type: 'DOB', priority: 34, confidence: 0.88,
     re: /\b(?:\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*,?\s+\d{4}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}|\d{4}-\d{2}-\d{2})\b/gi,
-    validate: (_raw, text, start) => hasContext(text, start, /\b(dob|d\.o\.b|birth|born)\b/i),
+    validate: (_raw, text, start) => hasContext(text, start, /\b(d[o0]b|d\.[o0]\.b|birth|born)\b/i),
   },
   {
     // An element whose whole text is one long bare number is an identifier (fail-closed).

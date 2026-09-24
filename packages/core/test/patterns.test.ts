@@ -32,6 +32,7 @@ describe('positives', () => {
   it('passport with context', () => one('Passport No: K1234567', 'PASSPORT'));
   it('ip', () => one('from 192.168.1.20', 'IP'));
   it('dob with context', () => one('DOB: 14/08/1999', 'DOB'));
+  it('dob label misread by OCR as D0B', () => { one('D0B: 29/09/1972', 'DOB'); one('D.0.B 29/09/1972', 'DOB'); });
   it('pincode with context', () => one('Bengaluru, 560001', 'PINCODE'));
   it('pincode with label', () => one('PIN code: 682 001', 'PINCODE'));
   it('phone with dot separator', () => one('Reach me at 98765.43210 after 6', 'PHONE'));

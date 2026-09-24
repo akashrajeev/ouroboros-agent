@@ -103,7 +103,7 @@ export async function run(n: number, seed: number, hard = false) {
       const b = (byType[v.type] ??= { n: 0, rawReadable: 0, afterReadable: 0 });
       b.n++;
       if (readable(rawText, v.value)) b.rawReadable++;
-      if (readable(afterText, v.value)) { b.afterReadable++; leak = true; }
+      if (readable(afterText, v.value)) { b.afterReadable++; leak = true; if (process.env.OURO_DEBUG) console.error(`LEAKIMG card=${i} type=${v.type} value=${JSON.stringify(v.value)} after=${JSON.stringify(afterText)}`); }
     }
     for (const d of c.decoys) { if (readable(rawText, d)) decoysRawReadable++; if (readable(afterText, d)) decoysAfterReadable++; }
     // Production gate on re-OCR text: empty map (image-only), regex on imageText.

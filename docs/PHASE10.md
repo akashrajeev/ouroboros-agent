@@ -38,3 +38,17 @@ Fresh degraded seed 9202 (60 cards):
 | two passes | **1/300** | 0 | 117 | 599 ms |
 
 Cost: about +240 ms per image, and only on steps where the planner asked for the image.
+
+### Found on clean seed 9201: OCR reads "DOB" as "D0B"
+
+On clean seed 9201 (two-pass), 1 of 300 values was still readable and the gate passed it. That was the first time the gate had passed a readable value. Debug output (`OURO_DEBUG=1`, `LEAKIMG` lines) showed the re-OCR text `D0B: 29/09/1972`. OCR had read the label's letter O as a zero, so the DOB context rule (`dob|birth|born`) didn't fire, and the mask and the gate both missed the date. The one-pass run on 9201 had the same miss, so two-pass did not cause it.
+Fix: the context rule accepts `d[o0]b` and `d.[o0].b` (unit test added). 9201 counts as contaminated from here on. Fresh verification:
+
+| Seed | Values readable after masking | Gate passed while readable | p50 |
+|---|--:|--:|--:|
+| 9203 clean, two-pass | **0/300** (296 before) | **0** | 831 ms |
+| 9204 degraded, two-pass | 1/300 (289 before) | **0** (the gate blocked that image) | 595 ms |
+
+## Status
+
+Every open failure from Phase 9 now has a fix measured on fresh seeds. On degraded images one value in 300 still gets past the mask. The gate catches it, so nothing leaks, but that step fails instead of going through.
