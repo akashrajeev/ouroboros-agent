@@ -51,3 +51,18 @@ Contamination: the v2 prompt was tuned by looking at the first 4 pages of seed 2
 ### Kaggle as primary host (2026-09-24)
 
 Kaggle (GPU T4 x2, internet on, account akashrajeevkv) now serves the same model via notebooks/phase9_vlm_kaggle.ipynb; Colab stays as backup. vLLM was ready in 240 s. The seed-90210 replay reproduced on Kaggle: 20/20 done, 120/120 fields, 0/160 leaks, server p50/p95 974/1195 ms. The notebook's smoke test now waits for the new tunnel hostname to resolve (first Kaggle run failed that cell on DNS; the endpoint itself was fine).
+
+### E6: unseen layouts (seed 31337, never used for tuning), Kaggle
+
+`OURO_PAGES=unseen`: profile and bank templates (never in the replay before) plus adversarial label-variant ("Applicant", "Cell", "Aadhar No.") and Hindi-label forms.
+
+| Template | Done | Exact fields | What happened |
+|---|--:|--:|---|
+| hindi-labels | 5/5 | 15/15 | clean |
+| label-variants | 0/5 | 10/25 | validator rejected a placeholder as `token_type_mismatch` on a synonym label, which ends the run |
+| profile | 0/5 | n/a | leak gate blocked step 1: a NAME from the task appeared verbatim in the screen map (`map_exact NAME`) |
+| bank | 0/5 | n/a | same gate block |
+
+Totals: done 5/20, exact fields 25/40, 0/35 request bodies with a real value, 10 gate blocks, server p50/p95 770/1018 ms.
+
+Reading: privacy held; both failures fail closed (nothing leaked, the run stops). The gaps are on the device side, not the model: (1) a value the task supplies can still appear raw in page text that the detectors miss, and the gate catches it; (2) the validator's field typing doesn't know label synonyms. Any fix for these will be re-measured on a fresh seed and the 31337 numbers above stay as the honest first-contact result.

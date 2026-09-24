@@ -12,6 +12,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { runTask } from '../../extension/lib/agentLoop';
 import { executeOnElement } from '../../extension/lib/execute';
 import { NodeRegistry, observe } from '../../extension/lib/observe';
+import { generateAdversarial } from './adversarial';
 import { generatePages, type Page } from './generate';
 
 const SERVER = process.env.OURO_SERVER ?? 'http://127.0.0.1:8000';
@@ -33,8 +34,21 @@ async function withDomAsync<T>(html: string, fn: (doc: Document) => Promise<T>):
   }
 }
 
+function interleave<T>(a: T[], b: T[]): T[] {
+  const out: T[] = [];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) { const x = a[i], y = b[i]; if (x) out.push(x); if (y) out.push(y); }
+  return out;
+}
+
 export async function replay(n: number) {
-  const pages = (generatePages(n * 3, Number(process.env.OURO_SEED ?? 26171)) as Page[]).filter((p) => p.template === 'kyc' || p.template === 'checkout').slice(0, n);
+  const seed = Number(process.env.OURO_SEED ?? 26171);
+  // OURO_PAGES=unseen: layouts the planner prompt was never tuned on (profile/bank templates + adversarial label-variant and Hindi-label forms).
+  const pages: Page[] = process.env.OURO_PAGES === 'unseen'
+    ? interleave(
+        (generatePages(n * 4, seed) as Page[]).filter((p) => p.template === 'profile' || p.template === 'bank').slice(0, Math.ceil(n / 2)),
+        (generateAdversarial(n * 4, seed) as unknown as Page[]).filter((p) => p.template === 'label-variants' || p.template === 'hindi-labels').slice(0, Math.floor(n / 2)),
+      )
+    : (generatePages(n * 3, seed) as Page[]).filter((p) => p.template === 'kyc' || p.template === 'checkout').slice(0, n);
   const health = await fetch(`${SERVER}/health`).then((r) => r.json() as Promise<{ planner: string }>);
   let ner: NerDetector | undefined, loadMs = 0;
   if (existsSync(`${M}bert-small-pii/onnx/model_quantized.onnx`)) {
@@ -45,6 +59,7 @@ export async function replay(n: number) {
   const rows: StepRecord[] = [];
   const outcomes: Record<string, number> = {};
   let filledOk = 0, filledTotal = 0, bodies = 0, bodiesWithValue = 0;
+  const byTpl: Record<string, { ok: number; total: number; done: number; pages: number }> = {};
   for (const [i, page] of pages.entries()) {
     await withDomAsync(page.html, async (doc) => {
       const inputs = Array.from(doc.querySelectorAll('input,textarea')) as HTMLInputElement[];
@@ -75,12 +90,15 @@ export async function replay(n: number) {
         detectText: ner ? async (texts) => { await ner!.prime(texts); return (t: string): TextMatch[] => ner!.lookup(t); } : undefined,
         modelLoadMs: () => (i === 0 ? loadMs : 0),
         record: (r) => rows.push(r),
+        log: process.env.OURO_DEBUG ? (e) => { if (e.kind === 'blocked' || e.kind === 'rejected') console.error(`${page.template} ${JSON.stringify(e)}`); } : undefined,
       }, { runId: `replay-${String(i).padStart(3, '0')}-${page.template}`, maxSteps: 25 });
       outcomes[res.status] = (outcomes[res.status] ?? 0) + 1;
+      const bt = (byTpl[page.template] ??= { ok: 0, total: 0, done: 0, pages: 0 });
+      bt.pages++; if (res.status === 'done') bt.done++;
       for (const [el, v] of want) {
         if (!v || !expected.has(v)) continue;
-        filledTotal++;
-        if (el.value === v) filledOk++;
+        filledTotal++; bt.total++;
+        if (el.value === v) { filledOk++; bt.ok++; }
         else if (process.env.OURO_DEBUG) console.error(`MISS ${page.template} ${el.getAttribute('name')}: want=${JSON.stringify(v)} got=${JSON.stringify(el.value)} inTask=${task.includes(v)}`);
       }
     });
@@ -92,9 +110,10 @@ export async function replay(n: number) {
   const st = Object.entries(s.stages).map(([k, v]) => `| ${k} | ${v.p50.toFixed(2)} | ${v.p95.toFixed(2)} |`).join('\n');
   const md = `# Metrics sample: end-to-end replay (A12)
 
-${pages.length} emptied KYC/checkout pages from the Faker en_IN generator. The device loop runs in Node (happy-dom) against the real FastAPI server (planner: \`${health.planner}\`). The task text carries the real values; the server only sees placeholders.${ner ? ' NER on.' : ' NER off (model not fetched).'} Rows: \`${TAG}.csv\` (${rows.length} steps), viewable in the extension dashboard (load CSV).
+${pages.length} emptied ${process.env.OURO_PAGES === 'unseen' ? 'unseen-layout (profile, bank, label-variants, Hindi labels)' : 'KYC/checkout'} pages from the Faker en_IN generator (seed ${seed}). The device loop runs in Node (happy-dom) against the real FastAPI server (planner: \`${health.planner}\`). The task text carries the real values; the server only sees placeholders.${ner ? ' NER on.' : ' NER off (model not fetched).'} Rows: \`${TAG}.csv\` (${rows.length} steps), viewable in the extension dashboard (load CSV).
 
 - Run outcomes: ${Object.entries(outcomes).map(([k, v]) => `${k} ${v}`).join(', ')}
+- Per template (done / exact fields): ${Object.entries(byTpl).map(([k, v]) => `${k} ${v.done}/${v.pages}, ${v.ok}/${v.total}`).join('; ')}
 - Fields filled with the exact original value after local rehydration: **${filledOk} of ${filledTotal}** (fields whose value the task supplied; password/OTP fields are never filled by design)
 - Steps: ${s.steps}; G1 reused the sanitized screen on ${s.g1SkipPct.toFixed(1)}%; masked image sent on ${s.imageStepPct.toFixed(1)}%
 - Leak-gate blocks: ${s.blocked}. Independent check over every request body sent: **${bodiesWithValue} of ${bodies}** contained a real value (exact or normalized)
