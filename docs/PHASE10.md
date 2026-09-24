@@ -34,7 +34,7 @@ Fresh degraded seed 9202 (60 cards):
 
 | | Values readable after masking | Gate passed while readable | Decoys readable (120 before) | Masking p50 (Node CPU) |
 |---|--:|--:|--:|--:|
-| one pass | 3/284 | 0 | 118 | 362 ms |
-| two passes | **1/284** | 0 | 117 | 599 ms |
+| one pass | 3/300 (284 readable before) | 0 | 118 | 362 ms |
+| two passes | **1/300** | 0 | 117 | 599 ms |
 
 Cost: about +240 ms per image, and only on steps where the planner asked for the image.
