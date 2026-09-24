@@ -40,3 +40,10 @@ The GPU only receives the sanitized request: placeholders and types, element ids
 What changed in v2: a one-shot example (type directly, no click first), "not used yet" placeholders in the legend, and a loop guard that re-asks once when the model repeats its last action or clicks a text field. Server p50 rose because a guarded step costs two model calls.
 
 Contamination: the v2 prompt was tuned by looking at the first 4 pages of seed 26171, so that row is partly contaminated. Seed 90210 has fresh values but the same two templates (KYC, checkout), so it tests new data, not new layouts. Next: unseen layouts (E2+), and gate the submit click behind user confirmation in the extension before real-site use.
+
+### E2 / E3 / E5 from the E1b runs
+
+- E2 (placeholders only): 0 of 320 steps rejected by the validator, 0 ask_user, 0 type/field mismatches (120/120 exact fills on each seed). Every page took the minimum 8 steps (6 types, submit, done). Under prompt v1 the ask_user rate was 12.6% (58/460).
+- E3 (cost per step): about 1.2k prompt tokens per step (p50 1197), server p50 971-1009 ms, p95 1120-1197 ms. Tunnel overhead measured separately: /models round trip p50 141 ms, 1-token completion p50 166 ms. So about 0.8 s per step is model time on the T4, including the loop guard's second call where it fires.
+- E5 (privacy): 0 raw values in 780 request bodies across E1 and E1b; the leak gate never fired.
+- E4 (image) and E6 (adversarial layouts) are still open.
