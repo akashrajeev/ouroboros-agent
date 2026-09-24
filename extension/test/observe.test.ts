@@ -32,6 +32,11 @@ describe('observe', () => {
     expect(obs.opaque[0]!.src).toBe('aadhaar.png');
   });
 
+  it('joins values split across inline tags into one text element', () => {
+    const obs = page(`<p>Phone: <span>98765</span><span>43210</span></p><p>UID: <b>2345</b> <b>6789</b></p><div><p>a</p><span>b</span></div>`);
+    expect(obs.elements.map((e) => e.text)).toEqual(['Phone: 9876543210', 'UID: 2345 6789', 'a', 'b']);
+  });
+
   it('button text is not duplicated as a separate text element', () => {
     const obs = page(`<button><span>Pay now</span></button>`);
     expect(obs.elements).toHaveLength(1);

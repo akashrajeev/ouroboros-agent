@@ -13,6 +13,20 @@ const defaultRect: RectFn = (el) => {
 
 const INTERACTIVE = 'input, textarea, select, button, a[href], [role="button"], [role="link"], [role="checkbox"], [role="textbox"], [contenteditable="true"]';
 const TEXT_TAGS = new Set(['P', 'SPAN', 'LI', 'TD', 'TH', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LABEL', 'DT', 'DD', 'DIV', 'STRONG', 'EM', 'B']);
+const INLINE_TAGS = new Set(['SPAN', 'B', 'I', 'STRONG', 'EM', 'SMALL', 'SUB', 'SUP', 'MARK', 'CODE', 'ABBR', 'TIME', 'BR', 'U', 'S', 'BDI', 'BDO', 'WBR', 'FONT']);
+
+/**
+ * A text block whose children are all inline formatting ("<p>Phone: <span>98765</span><span>43210</span></p>")
+ * is observed as ONE element with its full text, so values split across tags are detected whole.
+ */
+function isInlineOnlyBlock(el: Element): boolean {
+  if (!TEXT_TAGS.has(el.tagName) || INLINE_TAGS.has(el.tagName) || el.children.length === 0) return false;
+  const all = el.querySelectorAll('*');
+  if (all.length > 40) return false;
+  for (const d of Array.from(all)) if (!INLINE_TAGS.has(d.tagName)) return false;
+  return true;
+}
+
 const SENSITIVE_FORM = /otp|pin|cvv|aadha+r|pan|account|ifsc|kyc|payment|card|bank/i;
 
 /** Device-local registry: nodeId -> element, so actions can be executed later. */
@@ -132,8 +146,10 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
   const elements: RawElement[] = [];
   const opaque: OpaqueRegion[] = [];
   const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_ELEMENT);
+  const merged = new Set<Element>();
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     const el = node as Element;
+    if (el.parentElement && merged.has(el.parentElement)) { merged.add(el); continue; }
     if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE'].includes(el.tagName)) continue;
     if (!visible(el, rect, win)) continue;
     const ok = opaqueKind(el, win);
@@ -142,7 +158,9 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
       continue;
     }
     const interactive = el.matches(INTERACTIVE);
-    const text = directText(el);
+    const block = !interactive && isInlineOnlyBlock(el);
+    if (block) merged.add(el);
+    const text = block ? (el.textContent ?? '').replace(/\s+/g, ' ').trim() : directText(el);
     if (!interactive && !(TEXT_TAGS.has(el.tagName) && text)) continue;
     if (!interactive && el.closest('button, a[href], label')) continue; // folded into the control's name
     const input = el as HTMLInputElement;
