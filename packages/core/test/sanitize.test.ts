@@ -40,3 +40,16 @@ describe('sanitize', () => {
     expect(screen.elements[1]!.value).toBe('<NAME_1>');
   });
 });
+
+import { mergeMatches } from '../src/sanitize';
+describe('fusion (A4)', () => {
+  const m = (type: string, start: number, end: number, source: string) => ({ type, start, end, value: '', source, confidence: 1 }) as never;
+  it('rule spans win; an overlapping NER span is cut around them', () => {
+    const out = mergeMatches([[m('PINCODE', 20, 26, 'pattern')], [m('ADDRESS', 0, 26, 'ner')]]);
+    expect(out.map((x: { type: string; start: number; end: number }) => [x.type, x.start, x.end])).toEqual([['ADDRESS', 0, 20], ['PINCODE', 20, 26]]);
+  });
+  it('overlapping NER spans union', () => {
+    const out = mergeMatches([[], [m('NAME', 0, 5, 'ner'), m('NAME', 3, 9, 'ner')]]);
+    expect(out.map((x: { start: number; end: number }) => [x.start, x.end])).toEqual([[0, 9]]);
+  });
+});

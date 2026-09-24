@@ -26,19 +26,46 @@ function fieldOf(el: RawElement): FieldInfo {
   };
 }
 
-function mergeMatches(lists: TextMatch[][]): TextMatch[] {
-  const all = lists.flat().sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+/**
+ * A4 fusion for text. Rule/pattern spans are authoritative. Model (NER) spans never
+ * override them: an overlapping model span is cut into the pieces outside the rule spans.
+ * Remaining overlaps are unioned for recall.
+ */
+export function mergeMatches(lists: TextMatch[][]): TextMatch[] {
+  const flat = lists.flat();
+  const rules = flat.filter((m) => m.source !== 'ner');
+  const pieces: TextMatch[] = [];
+  for (const m of flat.filter((x) => x.source === 'ner')) {
+    let segs: [number, number][] = [[m.start, m.end]];
+    for (const r of rules) {
+      segs = segs.flatMap(([a, b]) => (r.end <= a || r.start >= b ? [[a, b]] : [[a, Math.max(a, r.start)], [Math.min(b, r.end), b]]).filter((seg) => seg[1]! > seg[0]!) as [number, number][]);
+    }
+    for (const [a, b] of segs) pieces.push({ ...m, start: a, end: b });
+  }
+  const all = [...rules, ...pieces].sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
   const out: TextMatch[] = [];
   for (const m of all) {
     const last = out[out.length - 1];
     if (last && m.start < last.end) {
-      // Union for recall: extend the earlier span, keep the pattern type if either is a pattern.
-      if (m.end > last.end) { last.end = m.end; }
+      if (m.end > last.end && last.source === 'ner' && m.source === 'ner') last.end = m.end;
       continue;
     }
     out.push({ ...m });
   }
   return out;
+}
+
+/** Strip surrounding spaces/punctuation from a span so tokens replace only the value. */
+function trimSpan(s: string, m: TextMatch): TextMatch {
+  let { start, end } = m;
+  while (start < end && /[\s,.:;]/.test(s[start]!)) start++;
+  while (end > start && /[\s,.:;]/.test(s[end - 1]!)) end--;
+  if (m.type === 'ADDRESS') {
+    // A cut before a pincode can leave its label behind ("..., Pasan, PIN").
+    const tail = /[\s,]*\b(pin ?code|pin|zip|postal code)$/i.exec(s.slice(start, end));
+    if (tail) end -= tail[0].length;
+  }
+  return { ...m, start, end, value: s.slice(start, end) };
 }
 
 function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[], context = ''): string {
@@ -47,7 +74,9 @@ function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sin
   const pre = context ? `${context}: ` : '';
   const shift = (ms: TextMatch[]) => ms.map((m) => ({ ...m, start: m.start - pre.length, end: m.end - pre.length })).filter((m) => m.start >= 0);
   const lists = [shift(detectPatterns(pre + s)), ...(opts.extraDetectors ?? []).map((d) => d(s))];
-  const merged = mergeMatches(lists).map((m) => ({ ...m, value: s.slice(m.start, m.end) }));
+  const merged = mergeMatches(lists)
+    .map((m) => trimSpan(s, m))
+    .filter((m) => m.source !== 'ner' || (m.value.match(/[A-Za-z0-9]/g) ?? []).length >= 3);
   sink.push(...merged);
   return merged.length ? redactText(s, merged, map) : s;
 }
