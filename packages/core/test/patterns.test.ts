@@ -46,6 +46,11 @@ describe('negatives (precision)', () => {
   it('card failing luhn', () => expect(types('4111 1111 1111 1112')).toEqual([]));
   it('luhn-valid number under an account label is ACCOUNT not CARD', () => expect(types('Account: 4111111111111111')).toEqual(['ACCOUNT']));
   it('unknown issuer prefix is not a card', () => expect(types('1111 1111 1111 1117')).toEqual([]));
+  it('a spaced card is never split into an Aadhaar', () => {
+    expect(types('Saved card 8175 5441 5788 1532')).toEqual(['CARD']);
+    expect(types('Saved card 5219 7555 7570 3934')).toEqual(['CARD']);
+  });
+  it('Verhoeff-valid 12 digits under an account label is ACCOUNT', () => expect(types(`Account: ${AADHAAR}`)).toEqual(['ACCOUNT']));
   it('repeated digits are not cards', () => expect(types('0000000000000000')).toEqual([]));
   it('PAN with invalid holder type char', () => expect(types('ABCXE1234F')).toEqual([]));
   it('phone starting with 5', () => expect(types('5876543210')).toEqual([]));

@@ -10,7 +10,7 @@ export function toMarkdown(name: string, s: Summary): string {
     .join('\n');
   return `# Eval: ${name}
 
-${s.pages} synthetic Faker en_IN pages (seed 26171; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
+${s.pages} synthetic Faker en_IN pages (seed 26171, generated with `npm run metrics --workspace eval -- ${s.pages}`; templates: kyc, profile, bank, checkout, narrative). A detection counts only if both the value and the type match.
 
 ## PII detection (M2)
 
@@ -49,8 +49,9 @@ async function main() {
   const s = summarize(scores, pages[0]!.decoys.length);
   const dir = new URL('../results/', import.meta.url).pathname;
   mkdirSync(dir, { recursive: true });
-  writeFileSync(`${dir}baseline-rules.json`, JSON.stringify(s, null, 2));
-  writeFileSync(`${dir}baseline-rules.md`, toMarkdown('rules + patterns baseline (no models)', s));
+  const tag = n === 60 ? '' : `-${n}`;
+  writeFileSync(`${dir}baseline-rules${tag}.json`, JSON.stringify(s, null, 2));
+  writeFileSync(`${dir}baseline-rules${tag}.md`, toMarkdown('rules + patterns baseline (no models)', s));
   console.log(toMarkdown('rules + patterns baseline (no models)', s));
 }
 

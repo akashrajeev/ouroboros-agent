@@ -59,8 +59,10 @@ const RULES: Rule[] = [
   },
   {
     type: 'AADHAAR', priority: 70, confidence: 0.99,
-    re: /\b[2-9]\d{3}[ -]?\d{4}[ -]?\d{4}\b/g,
-    validate: (raw) => verhoeffValid(digitsOnly(raw)),
+    re: /(?<!\d[ -]?)[2-9]\d{3}[ -]?\d{4}[ -]?\d{4}(?![ -]?\d)/g,
+    // 1 in 10 random 12-digit numbers pass Verhoeff, so an account label wins unless Aadhaar is named.
+    validate: (raw, text, start) => verhoeffValid(digitsOnly(raw)) &&
+      !(hasContext(text, start, /\b(account|acct|a\/c)\b[^0-9]{0,20}$/i, 40) && !hasContext(text, start, /aadha+r|uid/i, 40)),
   },
   {
     type: 'CARD', priority: 65, confidence: 0.98,
