@@ -3,7 +3,7 @@ import type { Box } from '@ouroboros/vision';
 import { ModelHost, toShotBoxes } from './modelHost';
 import { cachedFetch, ensureDownloaded, NER_FILES, type NerSource } from './modelSource';
 
-export const NER_SOURCE: NerSource = ((import.meta as { env?: Record<string, string> }).env?.WXT_NER_SOURCE as NerSource) || 'bundled';
+export const NER_SOURCE: NerSource = ((import.meta as { env?: Record<string, string> }).env?.WXT_NER_SOURCE as NerSource) || 'download';
 
 /** Messages handled by the model host (offscreen document in Chrome, background page in Firefox). */
 export type HostRequest =

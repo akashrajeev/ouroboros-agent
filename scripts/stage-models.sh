@@ -3,8 +3,8 @@
 # extension can load them from its own origin (no model download from third parties at runtime).
 # Run scripts/fetch-models.sh first. extension/public/{models,ort} are gitignored.
 set -euo pipefail
-# Usage: scripts/stage-models.sh [--ner=bundled|download|off]  (match WXT_NER_SOURCE at build time)
-NER=bundled
+# Usage: scripts/stage-models.sh [--ner=download|bundled|off] (default download)  (match WXT_NER_SOURCE at build time)
+NER=download
 for a in "$@"; do case "$a" in --ner=*) NER="${a#--ner=}";; esac; done
 cd "$(dirname "$0")/.."
 dst=extension/public

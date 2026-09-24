@@ -1,7 +1,7 @@
 /**
  * Where on-device model files come from. Build-time option (WXT_NER_SOURCE):
- *  - 'bundled'  : NER files ship inside the extension (+28.7 MB zip). Default.
- *  - 'download' : NER files are fetched once from pinned Hugging Face URLs, verified by
+ *  - 'bundled'  : NER files ship inside the extension (+28.7 MB zip), fully offline.
+ *  - 'download' : default. NER files are fetched once from pinned Hugging Face URLs, verified by
  *                 SHA-256, and kept in Cache Storage. Only these fixed URLs are contacted;
  *                 no user data is involved. Vision models (10.5 MB) always ship bundled.
  *  - 'off'      : rules + vision only.
