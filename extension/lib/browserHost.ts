@@ -1,6 +1,9 @@
 import type { TextMatch } from '@ouroboros/core';
 import type { Box } from '@ouroboros/vision';
 import { ModelHost, toShotBoxes } from './modelHost';
+import { cachedFetch, ensureDownloaded, NER_FILES, type NerSource } from './modelSource';
+
+export const NER_SOURCE: NerSource = ((import.meta as { env?: Record<string, string> }).env?.WXT_NER_SOURCE as NerSource) || 'bundled';
 
 /** Messages handled by the model host (offscreen document in Chrome, background page in Firefox). */
 export type HostRequest =
@@ -23,10 +26,16 @@ async function getHost(): Promise<ModelHost> {
     ort: ort as never,
     bytes: async (p) => new Uint8Array(await (await get(p)).arrayBuffer()),
     text: async (p) => (await get(p)).text(),
-    ner: async () => {
+    ner: NER_SOURCE === 'off' ? undefined : async () => {
+      if (NER_SOURCE === 'download') {
+        const cache = await caches.open('ouro-models-v1');
+        await ensureDownloaded(NER_FILES, `${base}models/`, cache);
+        globalThis.fetch = cachedFetch(`${base}models/`, cache, globalThis.fetch.bind(globalThis));
+      }
       const [{ NerDetector }, tf] = await Promise.all([import('@ouroboros/ner'), import('@huggingface/transformers')]);
       tf.env.backends.onnx.wasm!.wasmPaths = `${base}ort/`;
       tf.env.backends.onnx.wasm!.numThreads = 1;
+      tf.env.useBrowserCache = false; // files are local (bundled) or already in our verified cache
       return NerDetector.create({ localModelPath: `${base}models/` });
     },
   });
