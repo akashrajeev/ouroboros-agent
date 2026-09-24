@@ -154,7 +154,8 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
     if (!visible(el, rect, win)) continue;
     const ok = opaqueKind(el, win);
     if (ok) {
-      opaque.push({ nodeId: registry.idFor(el), kind: ok, bbox: rect(el), ...(el.getAttribute('src') ? { src: el.getAttribute('src')! } : {}) });
+      const alt = (el.getAttribute('alt') ?? el.getAttribute('aria-label') ?? '').trim();
+      opaque.push({ nodeId: registry.idFor(el), kind: ok, bbox: rect(el), ...(el.getAttribute('src') ? { src: el.getAttribute('src')! } : {}), ...(alt ? { name: alt } : {}) });
       continue;
     }
     const interactive = el.matches(INTERACTIVE);
@@ -183,6 +184,7 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
       ...(el.getAttribute('contenteditable') === 'true' ? { contentEditable: true } : {}),
       ...(SENSITIVE_FORM.test(formHay) ? { insideSensitiveForm: true } : {}),
       ...(columnHeader(el) ? { context: columnHeader(el)! } : {}),
+      ...(el.tagName === 'SELECT' ? { options: Array.from((el as HTMLSelectElement).options).map((o) => (o.textContent ?? '').replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 30) } : {}),
       bbox: rect(el),
     });
   }

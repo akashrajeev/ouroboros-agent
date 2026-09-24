@@ -61,7 +61,9 @@ async function main(n: number, seed: number) {
             const r = await fetch(`${SERVER}/step`, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
             A.server.push(performance.now() - t);
             if (!r.ok) throw new Error(`server ${r.status}: ${await r.text()}`);
-            return r.json() as Promise<{ action: unknown }>;
+            const j = await r.json() as { action: unknown };
+            if (process.env.OURO_DEBUG) console.error(`ACT ${arm} ${i} ${JSON.stringify(j.action)}${process.env.OURO_DEBUG === '2' ? ' BODY ' + body.slice(0, 1500) : ''}`);
+            return j;
           },
           confirm: async () => true,
           settle: async () => {},

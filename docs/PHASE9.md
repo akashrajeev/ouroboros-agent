@@ -85,3 +85,26 @@ Fixes, all found on the E6 seeds (31337, 4242), so those seeds are now contamina
 Totals: 0/60 request bodies with a real value, 0 gate blocks, 40/40 fields, server p50/p95 803/961 ms.
 
 Profile and bank pages have no inputs; they show every value as text. So they are a strong privacy test (all values on screen, none reached the model), but "fill this form" is the wrong task for them. The model tried to type into text and the executor stopped the run (`not_editable`), which fails safe. The right behavior is done or ask_user; that is a planner-prompt gap left open on purpose, since fixing it by reading these pages would contaminate them too.
+
+### E4: does the masked image help? (Kaggle, 7B)
+
+Setup (`eval/src/visual.ts`): each page has an uploaded ID-card image and a "Document type" select with 3 options. The right option depends only on the card header, which exists only in the pixels. Half the cards are degraded (rotation, blur, downscale, JPEG). Arm A: text only. Arm B: when the planner asks need_visual, the device sends the card JPEG with PII blacked out and faces pixelated, and gates the re-OCR text.
+
+First run (seed 4444): 0/12 in both arms. The planner never asked for the image because the wire format dropped images and select options entirely. It could not know an image existed. Product fixes:
+1. Images and canvases now go on the wire as `image` elements: kind, sanitized alt text and box only. The src URL is never sent, since URLs can carry PII.
+2. Select options go on the wire, sanitized like labels.
+3. The validator now treats "click" with an exact option text on a combobox as select, because the 7B model does this constantly.
+4. Prompt rules: use need_visual first when a choice depends on an image; never click an image.
+These were tuned on seed 4444, which is now contaminated. Fresh seed 5151 (`eval/results/phase9-e4-5151.md`):
+
+| Arm | Right option | Clean finish (done) | Bodies with a card value | Image p50 | Device vision p50 | Round-trip p50 / p95 |
+|---|--:|--:|--:|--:|--:|--:|
+| text only | 6/12 (chance 4/12; it guesses) | 12/12 | 0/36 | - | - | 785 / 1651 ms |
+| masked image on need_visual | **10/12** | 3/12 | 0/62 | 19 KB | 803 ms | 842 / 1685 ms |
+
+What this shows:
+- The image helps: 10/12 vs 6/12, and the text-only arm is right only by guessing. Masking leaves the non-PII header readable.
+- Ending the task is bad with the image arm: 3/12. After choosing correctly, the model kept going. In 5 runs it typed `<PAN_1>`, a placeholder that doesn't exist, into a text element; the validator rejected it (`unknown_token`). 3 runs hit the step limit. None of this was unsafe, but it is a task failure. It is the next planner-prompt fix, and it needs a new fresh seed.
+- The leak gate caught 1 of 12 image steps: on a degraded card, re-OCR could still read an Aadhaar number after masking, so the gate blocked the step before sending. That is the backstop doing its job. It also means pixel masking alone missed 1 of 12 on degraded cards.
+- A visual check of the masked sample shows the mask box starts about one character late: the first character of Aadhaar, PAN and mobile is still visible. Open fix: widen the left pad in `spanBox`.
+- Request bodies are about 2x bigger than they need to be, because the element list is sent twice (`elements` and `screen_map`). Open fix.

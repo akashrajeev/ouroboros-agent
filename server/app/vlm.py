@@ -28,6 +28,8 @@ Rules:
 - Never invent personal data. If you need something that is not in the legend, use ask_user.
 - Use need_visual only if the answer depends on an image, canvas or chart you cannot read from the list.
 - To fill a text field, use type on it directly; do not click it first.
+- For a combobox, use select with "text" set to one of its listed options, exactly as written.
+- An "image" element is only a box to you. To read what it shows, reply need_visual (element_id null); do not click it. If the right choice depends on what an image shows, reply need_visual FIRST, before choosing anything; never guess. After need_visual the next step includes the image, with personal data blacked out; then make or correct the choice to match it.
 - Fill each field once. Skip fields that already show a value or appear in "Done so far". Never repeat the same action twice in a row.
 - Match placeholders to fields by type (e.g. <PAN_1> goes in the PAN field, <PHONE_1> in the mobile/phone field). A field with no fitting placeholder is left empty unless the task gives plain text for it.
 - Password, OTP and CAPTCHA fields: use ask_user.
@@ -58,6 +60,8 @@ def render_screen(req: StepRequest, max_elements: int) -> str:
             parts.append(f"type={el.field_type}")
         if el.value:
             parts.append(f"value={json.dumps(el.value, ensure_ascii=False)}")
+        if el.options:
+            parts.append("options=" + json.dumps(el.options, ensure_ascii=False))
         flags = [k for k, v in el.state.items() if v]
         if flags:
             parts.append("[" + ",".join(flags) + "]")

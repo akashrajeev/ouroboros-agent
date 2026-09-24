@@ -30,7 +30,12 @@ function isAction(x: unknown): x is Action {
  */
 export function validateAction(raw: unknown, planned: ScreenMap, current: ScreenMap, map: PlaceholderMap): Verdict {
   if (!isAction(raw)) return { ok: false, reason: 'schema' };
-  const a = raw;
+  let a = raw;
+  // Repair: "click" with an exact option text on a combobox means select (small VLMs do this often).
+  if (a.op === 'click' && a.text) {
+    const el = current.elements.find((e) => e.id === a.element_id);
+    if (el?.role === 'combobox' && el.options?.includes(a.text)) a = { ...a, op: 'select' };
+  }
   if (NEEDS_ELEMENT.includes(a.op)) {
     const id = a.element_id;
     if (!id) return { ok: false, reason: 'missing_element' };

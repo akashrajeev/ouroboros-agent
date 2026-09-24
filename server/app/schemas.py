@@ -15,6 +15,7 @@ class Element(BaseModel):
     field_type: Optional[str] = None
     value: str = ""
     state: dict[str, bool] = Field(default_factory=dict)
+    options: Optional[list[str]] = None
     bbox: tuple[float, float, float, float]
 
 

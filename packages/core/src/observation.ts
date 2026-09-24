@@ -19,12 +19,14 @@ export interface RawElement {
   insideSensitiveForm?: boolean;
   /** Nearby label text that is not part of the element (e.g. table column header). Used only as detector context. */
   context?: string;
+  /** <select> option texts (real page content; sanitized before sending). */
+  options?: string[];
   bbox: BBox;
 }
 
 export type OpaqueKind = 'img' | 'canvas' | 'video' | 'svg' | 'iframe' | 'background';
 
-export interface OpaqueRegion { nodeId: string; kind: OpaqueKind; bbox: BBox; src?: string }
+export interface OpaqueRegion { nodeId: string; kind: OpaqueKind; bbox: BBox; src?: string; /** alt / aria-label, sanitized before sending */ name?: string }
 
 export interface RawObservation {
   url: string;
@@ -41,6 +43,7 @@ export interface ScreenElement {
   field_type?: string;
   value: string;
   state: Record<string, boolean>;
+  options?: string[];
   bbox: [number, number, number, number];
 }
 

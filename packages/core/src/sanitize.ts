@@ -135,11 +135,26 @@ export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: Sanitiz
     elements.push({
       id, role: el.role, label: fullLabel,
       ...(el.inputType ? { field_type: el.inputType } : el.tag === 'textarea' ? { field_type: 'textarea' } : {}),
-      value, state, bbox,
+      value, state,
+      ...(el.options?.length ? { options: el.options.map((o) => redactString(o, map, opts, hits, el.name)) } : {}),
+      bbox,
     });
     nodeOf[id] = el.nodeId;
     fingerprint[id] = `${el.role}|${fullLabel}|${bbox.map((n) => n.toFixed(2)).join(',')}`;
     accepts[id] = compatibleTokenTypes(field);
+  });
+
+  // Images/canvases: the planner must know they exist to ask for need_visual. Only kind + sanitized alt + box; never src (URLs can carry PII).
+  obs.opaque.forEach((o, j) => {
+    const id = `e${obs.elements.length + j + 1}`;
+    const hits: TextMatch[] = [];
+    const alt = o.name ? redactString(o.name, map, opts, hits) : '';
+    const bbox: [number, number, number, number] = [round(o.bbox.x / w), round(o.bbox.y / h), round(o.bbox.w / w), round(o.bbox.h / h)];
+    const label = `${alt || o.kind} (${o.kind}: pixels not in this list; use need_visual to see it)`;
+    elements.push({ id, role: 'image', label, value: '', state: {}, bbox });
+    nodeOf[id] = o.nodeId;
+    fingerprint[id] = `image|${label}|${bbox.map((n) => n.toFixed(2)).join(',')}`;
+    accepts[id] = [];
   });
 
   let origin = '';
