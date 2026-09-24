@@ -37,7 +37,7 @@
 
 ## Cost
 
-- Observe + sanitize per page (Node, happy-dom, no models): mean 10.61 ms, p95 21.15 ms
+- Observe + sanitize per page (Node, happy-dom, no models): mean 7.79 ms, p95 15.41 ms
 - Mean sanitized payload: 1937 bytes
 
 ## Caveats

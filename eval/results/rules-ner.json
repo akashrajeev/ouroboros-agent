@@ -76,10 +76,10 @@
     "NAME": {
       "tp": 72,
       "fn": 0,
-      "fp": 8,
-      "precision": 0.9,
+      "fp": 4,
+      "precision": 0.9473684210526315,
       "recall": 1,
-      "f1": 0.9473684210526316
+      "f1": 0.972972972972973
     },
     "OTP": {
       "tp": 12,
@@ -147,9 +147,9 @@
     }
   },
   "micro": {
-    "precision": 0.9770992366412213,
+    "precision": 0.9846153846153847,
     "recall": 0.9922480620155039,
-    "f1": 0.9846153846153846
+    "f1": 0.9884169884169884
   },
   "structured": {
     "precision": 1,
@@ -162,11 +162,11 @@
   "totalValues": 516,
   "leakedByType": {},
   "pagesWithLeak": 0,
-  "gateProdPass": 56,
+  "gateProdPass": 60,
   "gateProdPassWithLeak": 0,
-  "gateTestPass": 56,
+  "gateTestPass": 60,
   "gateTestPassWithLeak": 0,
-  "msMean": 89.12888421666678,
-  "msP95": 144.80084399999987,
-  "bytesMean": 1923.5
+  "msMean": 71.42969315000002,
+  "msP95": 99.74062299999969,
+  "bytesMean": 1923.1666666666667
 }
