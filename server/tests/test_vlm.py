@@ -62,3 +62,21 @@ def test_loop_guard_reasks_on_textbox_click():
                       screen_map=[{"id": "e2", "role": "textbox", "label": "Full name", "bbox": (0, 0, 10, 10)}], history=[])
     a = p.plan(req)
     assert a.op == "type" and a.text == "<NAME_1>" and len(calls) == 2
+
+
+def seq(*replies):
+    it = iter(replies)
+    return lambda url, body, headers, timeout: {"choices": [{"message": {"content": next(it)}}], "usage": {}}
+
+
+def test_guard_reasks_on_invented_placeholder():
+    p = VlmPlanner("http://gpu.test/v1", "m", transport=seq('{"op":"type","element_id":"e1","text":"<AADHAAR_1>"}', '{"op":"done","reason":"met"}'))
+    a = p.plan(REQ)
+    assert a.op == "done" and p.last.get("guard")
+
+
+def test_guard_reasks_on_typing_into_non_input():
+    req = StepRequest(**{**REQ.model_dump(), "screen_map": [e.model_dump() for e in REQ.screen_map] + [{"id": "e3", "role": "text", "label": "Your document:", "bbox": (0, 0.3, 0.1, 0.1)}]})
+    p = VlmPlanner("http://gpu.test/v1", "m", transport=seq('{"op":"type","element_id":"e3","text":"<PAN_1>"}', '{"op":"type","element_id":"e1","text":"<PAN_1>"}'))
+    a = p.plan(req)
+    assert (a.op, a.element_id) == ("type", "e1")

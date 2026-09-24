@@ -33,6 +33,7 @@ Rules:
 - Fill each field once. Skip fields that already show a value or appear in "Done so far". Never repeat the same action twice in a row.
 - Match placeholders to fields by type (e.g. <PAN_1> goes in the PAN field, <PHONE_1> in the mobile/phone field). A field with no fitting placeholder is left empty unless the task gives plain text for it.
 - Password, OTP and CAPTCHA fields: use ask_user.
+- If the page has no input fields the task could fill (e.g. a read-only profile or statement), reply done with reason "nothing to fill"; never type into text.
 - When every field you can fill is filled, click the submit/continue button once, then use done.
 - Use done when the task is complete. Once the task's request is met (e.g. the one choice it asks for is made), reply done immediately; do not look for more work.
 - Never use a placeholder that is not in the legend. "text" elements and images cannot be typed into.
@@ -114,6 +115,14 @@ class VlmPlanner:
             h = req.history[-1]
             if h.op == action.op and h.element_id == action.element_id and (h.text or None) == (action.text or None):
                 return "That repeats your previous action. Choose a different next action (JSON only)."
+        if action.text:
+            bad = [t for t in re.findall(r"<[A-Z_]+_\d+>", action.text) if t not in req.legend]
+            if bad:
+                return f"{', '.join(bad)} is not in the legend; never invent placeholders. Use one from the legend, ask_user, or done if the task is already met (JSON only)."
+        if action.op in ("type", "select") and action.element_id:
+            el = next((e for e in req.screen_map if e.id == action.element_id), None)
+            if el is not None and el.role not in ("textbox", "combobox", "searchbox", "spinbutton"):
+                return f"{action.element_id} is a {el.role}, not an input; it cannot be typed into. Pick an input, or done if nothing is left to fill (JSON only)."
         if action.op == "click" and action.element_id:
             el = next((e for e in req.screen_map if e.id == action.element_id), None)
             if el is not None and el.role == "textbox":
