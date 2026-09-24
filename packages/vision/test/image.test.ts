@@ -36,7 +36,7 @@ describe('redactImage', () => {
     ];
     // 2345 6789 0124 is not Verhoeff-valid? use span box directly for determinism
     const b = spanBox(lines[0]!, { start: 8, end: 22 });
-    expect(b.x).toBeCloseTo(80);
+    expect(b.x).toBeCloseTo(70); // one average char of padding on the left
     const dets = await redactImage(im, lines, []);
     expect(dets.some((d) => d.type === 'LOW_CONF_TEXT')).toBe(true);
     expect(im.data[(70 * 400 + 50) * 4]).toBe(0);

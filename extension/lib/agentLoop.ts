@@ -1,5 +1,5 @@
 import {
-  observationKey, leakGate, estimateTokens, type StepRecord, legend, PlaceholderMap, rehydrate, sanitize, validateAction, wireScreenMap,
+  observationKey, leakGate, estimateTokens, type StepRecord, legend, PlaceholderMap, rehydrate, sanitize, validateAction,
   type Action, type RawObservation, type ScreenMap, type TextDetector,
 } from '@ouroboros/core';
 
@@ -73,7 +73,7 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const body = JSON.stringify({
         session_id: opts.sessionId ?? 'local',
         task: safeTask,
-        ...wireScreenMap(screen),
+        url_origin: screen.url_origin, // elements are sent once, as screen_map (the server ignores anything else)
         screen_map: screen.elements,
         legend: legend(map),
         history: history.map((h) => ({ op: h.op, element_id: h.element_id ?? null, text: h.text ?? null })),

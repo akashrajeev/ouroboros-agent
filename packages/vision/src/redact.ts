@@ -17,8 +17,12 @@ export interface RedactImageOptions {
 /** Proportional sub-box for a character span of an OCR line (monospace approximation, padded later). */
 export function spanBox(line: OcrLine, m: { start: number; end: number }): Box {
   const n = Math.max(1, line.text.length);
-  const x = line.box.x + (line.box.w * m.start) / n;
-  return { x, y: line.box.y, w: (line.box.w * (m.end - m.start)) / n, h: line.box.h };
+  // Proportional fonts break the monospace estimate by up to a character either way, so widen by one
+  // average character on each side (clamped to the line). Found visually in Phase 9 E4: first digit showed.
+  const cw = line.box.w / n;
+  const x0 = Math.max(line.box.x, line.box.x + cw * m.start - cw);
+  const x1 = Math.min(line.box.x + line.box.w, line.box.x + cw * m.end + cw);
+  return { x: x0, y: line.box.y, w: x1 - x0, h: line.box.h };
 }
 
 /**

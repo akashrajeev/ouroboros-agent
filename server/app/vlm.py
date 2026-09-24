@@ -34,7 +34,8 @@ Rules:
 - Match placeholders to fields by type (e.g. <PAN_1> goes in the PAN field, <PHONE_1> in the mobile/phone field). A field with no fitting placeholder is left empty unless the task gives plain text for it.
 - Password, OTP and CAPTCHA fields: use ask_user.
 - When every field you can fill is filled, click the submit/continue button once, then use done.
-- Use done when the task is complete.
+- Use done when the task is complete. Once the task's request is met (e.g. the one choice it asks for is made), reply done immediately; do not look for more work.
+- Never use a placeholder that is not in the legend. "text" elements and images cannot be typed into.
 
 Example. Elements: e2 textbox "Full name", e3 textbox "Mobile", e4 button "Submit". Legend: <NAME_1>=NAME, <PHONE_1>=PHONE. Done so far: (none).
 Good replies, one per step: {"op":"type","element_id":"e2","text":"<NAME_1>","reason":"name"} then {"op":"type","element_id":"e3","text":"<PHONE_1>","reason":"mobile"} then {"op":"click","element_id":"e4","text":null,"reason":"submit"} then {"op":"done","element_id":null,"text":null,"reason":"submitted"}.
