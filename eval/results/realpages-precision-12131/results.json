@@ -1,0 +1,430 @@
+[
+  {
+    "index": 0,
+    "url": "https://www.irctc.co.in/eticket/profile/user-signup",
+    "status": 403,
+    "finalUrl": "https://www.irctc.co.in/eticket/profile/user-signup",
+    "title": "Access Denied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 1,
+    "url": "https://signup.zerodha.com/",
+    "status": 200,
+    "finalUrl": "https://signup.zerodha.com/",
+    "title": "Open a free demat & trading account online | Signup to open a zerodha account",
+    "inputs": 1,
+    "filled": 1,
+    "fields": [
+      {
+        "type": "PHONE",
+        "label": "Enter your mobile number",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      }
+    ],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 2,
+    "url": "https://groww.in/login",
+    "status": 200,
+    "finalUrl": "https://groww.in/login",
+    "title": "Log in to your account",
+    "inputs": 1,
+    "filled": 1,
+    "fields": [
+      {
+        "type": "EMAIL",
+        "label": "",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      }
+    ],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 3,
+    "url": "https://www.flipkart.com/account/login?signup=true",
+    "status": 200,
+    "finalUrl": "https://www.flipkart.com/login?signup=true",
+    "title": "Here's the amazing journey that you've had with Flipkart",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 4,
+    "url": "https://www.naukri.com/registration/createAccount",
+    "status": 403,
+    "finalUrl": "https://www.naukri.com/registration/createAccount",
+    "title": "Access Denied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 5,
+    "url": "https://www.linkedin.com/signup",
+    "status": 200,
+    "finalUrl": "https://www.linkedin.com/signup",
+    "title": "Sign Up | LinkedIn",
+    "inputs": 3,
+    "filled": 2,
+    "fields": [
+      {
+        "type": "EMAIL",
+        "label": "Email",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      },
+      {
+        "type": "PASSWORD",
+        "label": "Password",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      }
+    ],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 6,
+    "url": "https://www.bajajfinserv.in/personal-loan",
+    "status": 403,
+    "finalUrl": "https://www.bajajfinserv.in/personal-loan",
+    "title": "Access Denied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 7,
+    "url": "https://www.hdfcbank.com/personal/borrow/popular-loans/personal-loan",
+    "status": 403,
+    "finalUrl": "https://www.hdfc.bank.in/personal-loan",
+    "title": "ERROR: The request could not be satisfied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 8,
+    "url": "https://www.policybazaar.com/",
+    "status": 0,
+    "finalUrl": "about:blank",
+    "title": "",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 9,
+    "url": "https://www.digilocker.gov.in/web/signup",
+    "status": 200,
+    "finalUrl": "https://www.digilocker.gov.in/web/signup",
+    "title": "DigiLocker | Access, Share & Verify Digital Documents",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 10,
+    "url": "https://www.sbicard.com/en/eapply.page",
+    "status": 200,
+    "finalUrl": "https://www.sbicard.com/en/personal/credit-cards.html?isonline=yes",
+    "title": "Credit Card - Best Credit Cards in India & their Types | SBI Card",
+    "inputs": 1,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 11,
+    "url": "https://www.shine.com/registration/",
+    "status": 200,
+    "finalUrl": "https://www.shine.com/registration/",
+    "title": "Register Free on Shine.com | Apply Jobs Online",
+    "inputs": 7,
+    "filled": 4,
+    "fields": [
+      {
+        "type": "NAME",
+        "label": "",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      },
+      {
+        "type": "EMAIL",
+        "label": "",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      },
+      {
+        "type": "PHONE",
+        "label": "",
+        "found": false,
+        "masked": true,
+        "leaked": false
+      },
+      {
+        "type": "PASSWORD",
+        "label": "",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      }
+    ],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 12,
+    "url": "https://internshala.com/registration/student/",
+    "status": 200,
+    "finalUrl": "https://internshala.com/registration/student/",
+    "title": "Search Internships, Jobs, & Courses | Hire Candidates | Internshala",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 13,
+    "url": "https://www.canva.com/signup/",
+    "status": 403,
+    "finalUrl": "https://www.canva.com/signup/?__cf_chl_rt_tk=wU7na9fQ280ZFPk6UkufwF9_GT0HHlW_lV_Vh3ccWVs-1790319855-1.0.1.1-xdEJiOXeLdBkl6McuhmXsL4eiGsY2S26xBtPKyqVHek",
+    "title": "Canva",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 14,
+    "url": "https://zoom.us/signup",
+    "status": 200,
+    "finalUrl": "https://zoom.us/signup",
+    "title": "Sign Up Free | Zoom",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 15,
+    "url": "https://www.dropbox.com/register",
+    "status": 200,
+    "finalUrl": "https://www.dropbox.com/register",
+    "title": "Login or Sign Up - Dropbox",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 16,
+    "url": "https://www.spotify.com/in-en/signup",
+    "status": 200,
+    "finalUrl": "https://www.spotify.com/in-en/signup",
+    "title": "Sign up - Spotify",
+    "inputs": 1,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 17,
+    "url": "https://www.figma.com/signup?locale=en",
+    "status": 200,
+    "finalUrl": "https://www.figma.com/signup?locale=en",
+    "title": "Sign Up for Figma",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 18,
+    "url": "https://www.netflix.com/SignUp",
+    "status": 200,
+    "finalUrl": "https://www.netflix.com/SignUp",
+    "title": "Netflix",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 19,
+    "url": "https://www.reddit.com/register/",
+    "status": 200,
+    "finalUrl": "https://www.reddit.com/register/",
+    "title": "Reddit - Prove your humanity",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 20,
+    "url": "https://www.adobe.com/acrobat/online/sign-up.html",
+    "status": 0,
+    "finalUrl": "about:blank",
+    "title": "www.adobe.com",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 21,
+    "url": "https://www.airbnb.com/signup_login",
+    "status": 200,
+    "finalUrl": "https://www.airbnb.com/signup_login",
+    "title": "Log In / Sign Up - Airbnb",
+    "inputs": 1,
+    "filled": 1,
+    "fields": [
+      {
+        "type": "EMAIL",
+        "label": "Phone number or email",
+        "found": true,
+        "masked": true,
+        "leaked": false
+      }
+    ],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 22,
+    "url": "https://www.booking.com/",
+    "status": 202,
+    "finalUrl": "https://www.booking.com/",
+    "title": "",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 23,
+    "url": "https://www.uber.com/in/en/drive/",
+    "status": 200,
+    "finalUrl": "https://www.uber.com/in/en/drive/",
+    "title": "Drive with Uber - Be Your Own Boss | Uber",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 24,
+    "url": "https://www.olx.in/",
+    "status": 403,
+    "finalUrl": "https://www.olx.in/",
+    "title": "Access Denied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 25,
+    "url": "https://www.ajio.com/login",
+    "status": 403,
+    "finalUrl": "https://www.ajio.com/login",
+    "title": "Access Denied",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 26,
+    "url": "https://www.myntra.com/login",
+    "status": 200,
+    "finalUrl": "https://www.myntra.com/login",
+    "title": "Site Maintenance",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 27,
+    "url": "https://www.paytm.com/",
+    "status": 200,
+    "finalUrl": "https://paytm.com/",
+    "title": "Paytm: Secure & Fast UPI Payments, Recharge Mobile & Pay Bills",
+    "inputs": 2,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 28,
+    "url": "https://www.amazon.in/ap/register?openid.assoc_handle=inflex",
+    "status": 404,
+    "finalUrl": "https://www.amazon.in/ap/register?openid.assoc_handle=inflex",
+    "title": "Amazon Two-Step Verification",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  },
+  {
+    "index": 29,
+    "url": "https://www.makemytrip.com/",
+    "status": 0,
+    "finalUrl": "about:blank",
+    "title": "",
+    "inputs": 0,
+    "filled": 0,
+    "fields": [],
+    "otherPlaceholders": [],
+    "result": "scored"
+  }
+]
