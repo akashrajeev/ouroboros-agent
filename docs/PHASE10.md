@@ -52,3 +52,7 @@ Fix: the context rule accepts `d[o0]b` and `d.[o0].b` (unit test added). 9201 co
 ## Status
 
 Every open failure from Phase 9 now has a fix measured on fresh seeds. On degraded images one value in 300 still gets past the mask. The gate catches it, so nothing leaks, but that step fails instead of going through.
+
+### Follow-up (2026-09-25): three more fresh degraded seeds
+
+After the D0B fix I ran two-pass masking on degraded seeds 9301, 9302 and 9303 (180 cards, 900 values). Result: **0/900 readable after masking** (849 were readable before), and the gate never passed an image with a readable value. For comparison, before the fixes it was 3/300 (9202, one pass) and 1/300 (9204). Next stress test: stronger degradations (perspective, glare) as their own set.
