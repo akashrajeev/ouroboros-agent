@@ -1,0 +1,32 @@
+{
+  "slug": "naukri",
+  "url": "https://www.naukri.com/registration/createAccount",
+  "source": "cloud browser",
+  "screenshot": "https://api.instinct.com/-/api/r/01M3BFAYBE45G6XMPZ38XDV40N/cloud-browser-20260925-050646.png?e=1790399206&s=19a785d55833d99cc5660c6a6e668643",
+  "screenshotPath": "/tmp/rp-naukri.png",
+  "elements": 36,
+  "filled": 2,
+  "fields": [
+    {
+      "type": "NAME",
+      "name": "Full name",
+      "masked": true,
+      "leaked": false
+    },
+    {
+      "type": "PHONE",
+      "name": "Mobile number (+91 India)",
+      "masked": true,
+      "leaked": false
+    }
+  ],
+  "leaks": 0,
+  "sanitizeMs": 219.42987300000004,
+  "visionMs": 3547.443246,
+  "bytes": 5401,
+  "img": {
+    "visibleBefore": 2,
+    "readableAfter": [],
+    "boxes": 5
+  }
+}

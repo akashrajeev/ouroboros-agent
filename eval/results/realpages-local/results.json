@@ -1,0 +1,940 @@
+[
+ {
+  "cat": "gov",
+  "url": "https://www.irctc.co.in/nget/profile/user-signup",
+  "slug": "irctc-co-in-0",
+  "status": 403,
+  "title": "Access Denied",
+  "inputs": 0,
+  "elements": 3,
+  "filled": 0,
+  "observeMs": 2.1,
+  "sanitizeMs": 33.3,
+  "bytes": 443,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 995,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 1
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://eportal.incometax.gov.in/iec/foservices/#/pre-login/register",
+  "slug": "eportal-incometax-gov-in-1",
+  "status": 0,
+  "ok": false,
+  "error": "Error: page budget 150s"
+ },
+ {
+  "cat": "gov",
+  "url": "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html",
+  "slug": "onlineservices-nsdl-com-2",
+  "status": 0,
+  "title": "www.onlineservices.nsdl.com",
+  "inputs": 0,
+  "elements": 4,
+  "filled": 0,
+  "observeMs": 3,
+  "sanitizeMs": 40.1,
+  "bytes": 520,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 928,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 1
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://www.passportindia.gov.in/AppOnlineProject/user/userRegistration",
+  "slug": "passportindia-gov-in-3",
+  "status": 404,
+  "title": "404 Not Found",
+  "inputs": 0,
+  "elements": 2,
+  "filled": 0,
+  "observeMs": 2.6,
+  "sanitizeMs": 12.9,
+  "bytes": 304,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 684,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 0
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://accounts.digilocker.gov.in/signup/smart_v2/",
+  "slug": "accounts-digilocker-gov-in-4",
+  "status": 200,
+  "title": "DigiLocker | Access, Share & Verify Digital Documents",
+  "inputs": 0,
+  "elements": 159,
+  "filled": 0,
+  "observeMs": 26.9,
+  "sanitizeMs": 363.9,
+  "bytes": 23442,
+  "fields": [],
+  "ok": false,
+  "error": "TypeError: Cannot read properties of undefined (reading 'name')"
+ },
+ {
+  "cat": "gov",
+  "url": "https://abha.abdm.gov.in/abha/v3/register",
+  "slug": "abha-abdm-gov-in-5",
+  "status": 403,
+  "title": "ERROR: The request could not be satisfied",
+  "inputs": 0,
+  "elements": 2,
+  "filled": 0,
+  "observeMs": 2.6,
+  "sanitizeMs": 7.7,
+  "bytes": 287,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 1238,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 2
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://myaadhaar.uidai.gov.in/check-aadhaar-validity/en",
+  "slug": "myaadhaar-uidai-gov-in-6",
+  "status": 0,
+  "title": "myaadhaar.uidai.gov.in",
+  "inputs": 0,
+  "elements": 8,
+  "filled": 0,
+  "observeMs": 4.9,
+  "sanitizeMs": 43.5,
+  "bytes": 937,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 1612,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 0
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://parivahan.gov.in/rcdlstatus/?pur_cd=101",
+  "slug": "parivahan-gov-in-7",
+  "status": 404,
+  "title": "parivahan.gov.in",
+  "inputs": 0,
+  "elements": 4,
+  "filled": 0,
+  "observeMs": 3.5,
+  "sanitizeMs": 55.7,
+  "bytes": 556,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 1518,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 0
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://scholarships.gov.in/fresh/newstdRegfrmInstruction",
+  "slug": "scholarships-gov-in-8",
+  "status": 404,
+  "title": "National Scholarship Portal",
+  "inputs": 0,
+  "elements": 3,
+  "filled": 0,
+  "observeMs": 3,
+  "sanitizeMs": 16.7,
+  "bytes": 538,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 736,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 0
+  },
+  "ok": true
+ },
+ {
+  "cat": "gov",
+  "url": "https://unifiedportal-mem.epfindia.gov.in/memberinterface/",
+  "slug": "unifiedportal-mem-epfindia-gov-in-9",
+  "status": 0,
+  "title": "Member Home",
+  "ok": false,
+  "error": "TypeError: Failed to execute 'createTreeWalker' on 'Document': parameter 1 is not of type 'Node'."
+ },
+ {
+  "cat": "fin",
+  "url": "https://signup.zerodha.com/",
+  "slug": "signup-zerodha-com-10",
+  "status": 200,
+  "title": "Open a free demat & trading account online | Signup to open a zerodha account",
+  "inputs": 1,
+  "elements": 81,
+  "filled": 1,
+  "observeMs": 8.2,
+  "sanitizeMs": 407,
+  "bytes": 12881,
+  "fields": [
+   {
+    "type": "PHONE",
+    "label": "Enter your mobile number",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PHONE_1>",
+    "leaked": false
+   }
+  ],
+  "falseMasks": [
+   {
+    "ph": "<NAME_1>",
+    "raw": "NRI demat account "
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: De"
+   },
+   {
+    "ph": "<ADDRESS_2>",
+    "raw": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: De"
+   },
+   {
+    "ph": "<ADDRESS_3>",
+    "raw": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: De"
+   },
+   {
+    "ph": "<EMAIL_1>",
+    "raw": "complaints@zerodha.com "
+   },
+   {
+    "ph": "<EMAIL_2>",
+    "raw": "dp@zerodha.com "
+   }
+  ],
+  "visionMs": 2130,
+  "img": {
+   "visibleBefore": 1,
+   "readableAfter": [],
+   "boxes": 3
+  },
+  "ok": true
+ },
+ {
+  "cat": "fin",
+  "url": "https://groww.in/login",
+  "slug": "groww-in-11",
+  "status": 200,
+  "title": "Log in to your account",
+  "inputs": 1,
+  "elements": 14,
+  "filled": 1,
+  "observeMs": 4.2,
+  "sanitizeMs": 35.4,
+  "bytes": 2481,
+  "fields": [
+   {
+    "type": "EMAIL",
+    "label": "",
+    "found": true,
+    "masked": true,
+    "placeholder": "<EMAIL_1>",
+    "leaked": false
+   }
+  ],
+  "falseMasks": [],
+  "visionMs": 1281,
+  "img": {
+   "visibleBefore": 1,
+   "readableAfter": [],
+   "boxes": 3
+  },
+  "ok": true
+ },
+ {
+  "cat": "fin",
+  "url": "https://www.kotak.com/en/digital-banking/ways-to-bank/kotak811.html",
+  "slug": "kotak-com-12",
+  "status": 404,
+  "title": "404",
+  "inputs": 0,
+  "elements": 158,
+  "filled": 0,
+  "observeMs": 68.2,
+  "sanitizeMs": 404.6,
+  "bytes": 19612,
+  "fields": [],
+  "falseMasks": [
+   {
+    "ph": "<NAME_1>",
+    "raw": "RBI Kehta Hai "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Personal Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_3>",
+    "raw": "Personal Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Car Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Home Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Home Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Fixed Deposit Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Recurring Deposit Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Life Insurance Calculator "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Business Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Business Loan EMI Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Retirement Calculator Retirement Calculator"
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Simple Interest Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Compound Interest Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Sip Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Mutual Fund Calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Lump Sum Calculator "
+   },
+   {
+    "ph": "<NAME_5>",
+    "raw": "Copyright Kotak Mahindra Bank Limited. Copyright Kotak Mahindra Bank Limited."
+   }
+  ],
+  "visionMs": 2824,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 7
+  },
+  "ok": true
+ },
+ {
+  "cat": "fin",
+  "url": "https://www.hdfcbank.com/personal/borrow/popular-loans/personal-loan",
+  "slug": "hdfcbank-com-13",
+  "status": 200,
+  "title": "Apply for Instant Personal Loan up to ₹50 Lakh starting at 9.99%* | HDFC Bank",
+  "inputs": 1,
+  "elements": 187,
+  "filled": 0,
+  "observeMs": 109.7,
+  "sanitizeMs": 939,
+  "bytes": 25676,
+  "fields": [],
+  "falseMasks": [
+   {
+    "ph": "<NAME_1>",
+    "raw": "Swipe left / right to select an option from the suggestion list. Swipe left / right to sel"
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Search - swipe left or right to select an option from the suggestion list "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Personal Loan EMI calculator "
+   },
+   {
+    "ph": "<NAME_3>",
+    "raw": "Personal Loan EMI calculator "
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Chat "
+   },
+   {
+    "ph": "<NAME_5>",
+    "raw": "RBI Kehta Hai "
+   },
+   {
+    "ph": "<NAME_6>",
+    "raw": "Demat Account(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Personal Loan EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_7>",
+    "raw": "Personal Loan EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Car Loan EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_8>",
+    "raw": "Two Wheeler EMI Calculator "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Two Wheeler EMI Calculator "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Gold Loan EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_9>",
+    "raw": "Gold Loan EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Credit Card EMI Calculator(opens in a new tab) "
+   },
+   {
+    "ph": "<NAME_10>",
+    "raw": "NPS Vatsalya Calculator(opens in a new tab) "
+   }
+  ],
+  "visionMs": 2984,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 4
+  },
+  "ok": true
+ },
+ {
+  "cat": "fin",
+  "url": "https://www.bajajfinserv.in/personal-loan",
+  "slug": "bajajfinserv-in-14",
+  "status": 200,
+  "title": "Apply for Instant Personal Loan up to ₹55 lakh at 10% p.a.* | Bajaj Finance",
+  "inputs": 6,
+  "elements": 377,
+  "filled": 1,
+  "observeMs": 85.9,
+  "sanitizeMs": 1700.3,
+  "bytes": 54168,
+  "fields": [
+   {
+    "type": "PHONE",
+    "label": "Enter Mobile Number",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PHONE_1>",
+    "leaked": false
+   }
+  ],
+  "ok": false,
+  "error": "TypeError: Cannot read properties of undefined (reading 'name')"
+ },
+ {
+  "cat": "fin",
+  "url": "https://www.policybazaar.com/",
+  "slug": "policybazaar-com-15",
+  "status": 200,
+  "title": "Insurance - Compare & Buy Insurance Plans - Health, Term, Life, Car, Bike, Inves",
+  "inputs": 0,
+  "elements": 277,
+  "filled": 0,
+  "observeMs": 64,
+  "sanitizeMs": 973.1,
+  "bytes": 51111,
+  "fields": [],
+  "falseMasks": [
+   {
+    "ph": "<NAME_1>",
+    "raw": "Let's find you the Best Insurance for NRIs Let's find you the Best Insurance for NRIs"
+   },
+   {
+    "ph": "<NAME_2>",
+    "raw": "Two Wheeler Insurance "
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Term Life Insurance for NRIs Get ₹ 2 Crore Term insurance plan starting @802/month* "
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Retirement Plans Retirement plans for NRIs Invest ₹20,000/month & build a corpus of ₹2 Cro"
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Term Life Insurance for NRIs Get ₹ 2 Crore Term insurance plan starting @802/month* "
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Retirement Plans Retirement plans for NRIs Invest ₹20,000/month & build a corpus of ₹2 Cro"
+   },
+   {
+    "ph": "<NAME_1>",
+    "raw": "Term Life Insurance for NRIs Get ₹ 2 Crore Term insurance plan starting @802/month* "
+   },
+   {
+    "ph": "<NAME_3>",
+    "raw": "What makes Policybazaar one of India's favourite places to buy insurance? What makes Polic"
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "What makes Policybazaar one of India's favourite places to buy insurance? What makes Polic"
+   },
+   {
+    "ph": "<NAME_4>",
+    "raw": "Prabhat Yadav Prabhat Yadav"
+   },
+   {
+    "ph": "<NAME_5>",
+    "raw": "Sonia Khanna Sonia Khanna"
+   },
+   {
+    "ph": "<NAME_6>",
+    "raw": "Neha Jain Neha Jain"
+   },
+   {
+    "ph": "<NAME_7>",
+    "raw": "Bhaaskar Lokhande Bhaaskar Lokhande"
+   },
+   {
+    "ph": "<NAME_8>",
+    "raw": "Shraddha Sharma Shraddha Sharma"
+   },
+   {
+    "ph": "<NAME_9>",
+    "raw": "Ananth Narayan Ananth Narayan"
+   },
+   {
+    "ph": "<NAME_10>",
+    "raw": "Rashmi Sirsath Rashmi Sirsath"
+   },
+   {
+    "ph": "<NAME_11>",
+    "raw": "Parag Lele Parag Lele"
+   },
+   {
+    "ph": "<NAME_12>",
+    "raw": "Urvashi Solanki Urvashi Solanki"
+   },
+   {
+    "ph": "<NAME_13>",
+    "raw": "Aditya Birla Health Insurance "
+   },
+   {
+    "ph": "<NAME_13>",
+    "raw": "Aditya Birla Life Insurance "
+   },
+   {
+    "ph": "<NAME_14>",
+    "raw": "Bajaj Life Insurance "
+   },
+   {
+    "ph": "<NAME_14>",
+    "raw": "Bajaj General Insurance "
+   },
+   {
+    "ph": "<NAME_15>",
+    "raw": "Bandhan Life Insurance "
+   },
+   {
+    "ph": "<NAME_16>",
+    "raw": "Bharti AXA Life Insurance "
+   },
+   {
+    "ph": "<NAME_17>",
+    "raw": "Canara HSBC Life Insurance "
+   },
+   {
+    "ph": "<NAME_18>",
+    "raw": "Chola MS General Insurance "
+   },
+   {
+    "ph": "<NAME_19>",
+    "raw": "Edelweiss Life Insurance "
+   },
+   {
+    "ph": "<NAME_20>",
+    "raw": "Kotak Life Insurance "
+   },
+   {
+    "ph": "<NAME_21>",
+    "raw": "Manipal Cigna General Insurance "
+   },
+   {
+    "ph": "<NAME_22>",
+    "raw": "Niva Bupa Health Insurance "
+   },
+   {
+    "ph": "<NAME_23>",
+    "raw": "Raheja QBE General Insurance "
+   },
+   {
+    "ph": "<NAME_24>",
+    "raw": "Shriram General Insurance "
+   },
+   {
+    "ph": "<NAME_24>",
+    "raw": "Shriram Life Insurance "
+   },
+   {
+    "ph": "<NAME_25>",
+    "raw": "Tata AIA Life Insurance "
+   },
+   {
+    "ph": "<NAME_26>",
+    "raw": "Tata AIG General Insurance "
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "New India Insurance "
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "United India General Insurance "
+   },
+   {
+    "ph": "<NAME_27>",
+    "raw": "ZUNO Health Insurance "
+   },
+   {
+    "ph": "<ADDRESS_2>",
+    "raw": "Zurich Kotak Health Insurance "
+   },
+   {
+    "ph": "<NAME_20>",
+    "raw": "Zurich Kotak Health Insurance "
+   },
+   {
+    "ph": "<EMAIL_1>",
+    "raw": "General Enquiries care@policybazaar.com "
+   },
+   {
+    "ph": "<NAME_28>",
+    "raw": "IRDAI "
+   },
+   {
+    "ph": "<NAME_29>",
+    "raw": "Bima Bharosa "
+   },
+   {
+    "ph": "<ADDRESS_3>",
+    "raw": "Policybazaar Insurance Brokers Private Limited CIN: U74999HR2014PTC053454 Registered Offic"
+   },
+   {
+    "ph": "<ADDRESS_4>",
+    "raw": "Policybazaar Insurance Brokers Private Limited CIN: U74999HR2014PTC053454 Registered Offic"
+   },
+   {
+    "ph": "<EMAIL_1>",
+    "raw": "Policybazaar Insurance Brokers Private Limited CIN: U74999HR2014PTC053454 Registered Offic"
+   },
+   {
+    "ph": "<ADDRESS_5>",
+    "raw": "Policybazaar is registered as a Composite Broker | Registration No. 742, Registration Code"
+   },
+   {
+    "ph": "<NAME_28>",
+    "raw": "BEWARE OF SPURIOUS PHONE CALLS AND FICTITIOUS / FRAUDULENT OFFERS IRDAI or its officials d"
+   }
+  ],
+  "visionMs": 4635,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 20
+  },
+  "ok": true
+ },
+ {
+  "cat": "comm",
+  "url": "https://www.amazon.in/ap/register?openid.assoc_handle=inflex",
+  "slug": "amazon-in-16",
+  "status": 404,
+  "title": "Amazon Two-Step Verification",
+  "inputs": 0,
+  "elements": 3,
+  "filled": 0,
+  "observeMs": 2.4,
+  "sanitizeMs": 17.1,
+  "bytes": 436,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 864,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 1
+  },
+  "ok": true
+ },
+ {
+  "cat": "comm",
+  "url": "https://www.flipkart.com/account/login?signup=true",
+  "slug": "flipkart-com-17",
+  "status": 200,
+  "title": "Here's the amazing journey that you've had with Flipkart",
+  "inputs": 2,
+  "elements": 72,
+  "filled": 1,
+  "observeMs": 12.2,
+  "sanitizeMs": 181.8,
+  "bytes": 10679,
+  "fields": [
+   {
+    "type": "PHONE",
+    "label": "Phone Number",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PHONE_1>",
+    "leaked": false
+   }
+  ],
+  "falseMasks": [
+   {
+    "ph": "<NAME_1>",
+    "raw": "Myntra "
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "Buildings Alyssa, Begonia & Buildings Alyssa, Begonia &"
+   },
+   {
+    "ph": "<ADDRESS_2>",
+    "raw": "Outer Ring Road, Devarabeesanahalli Village, Outer Ring Road, Devarabeesanahalli Village,"
+   },
+   {
+    "ph": "<ADDRESS_3>",
+    "raw": "Outer Ring Road, Devarabeesanahalli Village, Outer Ring Road, Devarabeesanahalli Village,"
+   },
+   {
+    "ph": "<ADDRESS_4>",
+    "raw": "Bengaluru, 560103, Bengaluru, 560103,"
+   },
+   {
+    "ph": "<PINCODE_1>",
+    "raw": "Bengaluru, 560103, Bengaluru, 560103,"
+   },
+   {
+    "ph": "<ADDRESS_5>",
+    "raw": "Karnataka, India Karnataka, India"
+   },
+   {
+    "ph": "<ADDRESS_1>",
+    "raw": "Buildings Alyssa, Begonia & Buildings Alyssa, Begonia &"
+   },
+   {
+    "ph": "<ADDRESS_2>",
+    "raw": "Outer Ring Road, Devarabeesanahalli Village, Outer Ring Road, Devarabeesanahalli Village,"
+   },
+   {
+    "ph": "<ADDRESS_3>",
+    "raw": "Outer Ring Road, Devarabeesanahalli Village, Outer Ring Road, Devarabeesanahalli Village,"
+   },
+   {
+    "ph": "<ADDRESS_4>",
+    "raw": "Bengaluru, 560103, Bengaluru, 560103,"
+   },
+   {
+    "ph": "<PINCODE_1>",
+    "raw": "Bengaluru, 560103, Bengaluru, 560103,"
+   },
+   {
+    "ph": "<ADDRESS_5>",
+    "raw": "Karnataka, India Karnataka, India"
+   }
+  ],
+  "visionMs": 4730,
+  "img": {
+   "visibleBefore": 1,
+   "readableAfter": [],
+   "boxes": 24
+  },
+  "ok": true
+ },
+ {
+  "cat": "jobs",
+  "url": "https://www.naukri.com/registration/createAccount",
+  "slug": "naukri-com-18",
+  "status": 200,
+  "title": "Register on Naukri.com: Apply to Millions of Jobs Online",
+  "inputs": 4,
+  "elements": 36,
+  "filled": 4,
+  "observeMs": 5.3,
+  "sanitizeMs": 143,
+  "bytes": 5517,
+  "fields": [
+   {
+    "type": "NAME",
+    "label": "Full name",
+    "found": true,
+    "masked": true,
+    "placeholder": "<NAME_1>",
+    "leaked": false
+   },
+   {
+    "type": "EMAIL",
+    "label": "Email ID",
+    "found": true,
+    "masked": true,
+    "placeholder": "<EMAIL_1>",
+    "leaked": false
+   },
+   {
+    "type": "PASSWORD",
+    "label": "Password",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PASSWORD_1>",
+    "leaked": false
+   },
+   {
+    "type": "PHONE",
+    "label": "Mobile number (+91 India)",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PHONE_1>",
+    "leaked": false
+   }
+  ],
+  "ok": false,
+  "error": "TypeError: Cannot read properties of undefined (reading 'name')"
+ },
+ {
+  "cat": "travel",
+  "url": "https://www.makemytrip.com/",
+  "slug": "makemytrip-com-19",
+  "status": 0,
+  "title": "www.makemytrip.com",
+  "inputs": 0,
+  "elements": 3,
+  "filled": 0,
+  "observeMs": 2.9,
+  "sanitizeMs": 23.6,
+  "bytes": 485,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 1324,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 0
+  },
+  "ok": true
+ },
+ {
+  "cat": "intl",
+  "url": "https://github.com/signup",
+  "slug": "github-com-20",
+  "status": 403,
+  "title": "github.com",
+  "inputs": 0,
+  "elements": 0,
+  "filled": 0,
+  "observeMs": 6.1,
+  "sanitizeMs": 0.1,
+  "bytes": 192,
+  "fields": [],
+  "falseMasks": [],
+  "visionMs": 1846,
+  "img": {
+   "visibleBefore": 0,
+   "readableAfter": [],
+   "boxes": 4
+  },
+  "ok": true
+ },
+ {
+  "cat": "intl",
+  "url": "https://www.linkedin.com/signup",
+  "slug": "linkedin-com-21",
+  "status": 200,
+  "title": "Sign Up | LinkedIn",
+  "inputs": 3,
+  "elements": 30,
+  "filled": 2,
+  "observeMs": 6.4,
+  "sanitizeMs": 107.2,
+  "bytes": 4235,
+  "fields": [
+   {
+    "type": "EMAIL",
+    "label": "Email",
+    "found": true,
+    "masked": true,
+    "placeholder": "<EMAIL_1>",
+    "leaked": false
+   },
+   {
+    "type": "PASSWORD",
+    "label": "Password",
+    "found": true,
+    "masked": true,
+    "placeholder": "<PASSWORD_1>",
+    "leaked": false
+   }
+  ],
+  "falseMasks": [],
+  "visionMs": 2737,
+  "img": {
+   "visibleBefore": 1,
+   "readableAfter": [],
+   "boxes": 1
+  },
+  "ok": true
+ }
+]

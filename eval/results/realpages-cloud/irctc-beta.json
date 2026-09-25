@@ -1,0 +1,50 @@
+{
+  "slug": "irctc-beta",
+  "url": "https://www.irctc.co.in/eticket/profile/user-signup",
+  "source": "cloud browser",
+  "screenshot": "https://api.instinct.com/-/api/r/01M3BF74GQYYNBKHJJHBBSTKPT/cloud-browser-20260925-050441.png?e=1790399082&s=8e8357ae8d69ff34b5cc13027efd1dd7",
+  "screenshotPath": "/tmp/rp-irctc.png",
+  "elements": 44,
+  "filled": 5,
+  "fields": [
+    {
+      "type": "NAME",
+      "name": "Full Name as per Govt. ID",
+      "masked": true,
+      "leaked": false
+    },
+    {
+      "type": "PASSWORD",
+      "name": "Password",
+      "masked": true,
+      "leaked": false
+    },
+    {
+      "type": "PASSWORD",
+      "name": "Confirm Password",
+      "masked": true,
+      "leaked": false
+    },
+    {
+      "type": "PHONE",
+      "name": "Mobile Number",
+      "masked": true,
+      "leaked": false
+    },
+    {
+      "type": "EMAIL",
+      "name": "Email",
+      "masked": true,
+      "leaked": false
+    }
+  ],
+  "leaks": 0,
+  "sanitizeMs": 435.79223399999955,
+  "visionMs": 5138.955791,
+  "bytes": 8328,
+  "img": {
+    "visibleBefore": 3,
+    "readableAfter": [],
+    "boxes": 10
+  }
+}

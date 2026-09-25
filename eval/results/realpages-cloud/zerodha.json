@@ -1,0 +1,26 @@
+{
+  "slug": "zerodha",
+  "url": "https://signup.zerodha.com/",
+  "source": "cloud browser",
+  "screenshot": "https://api.instinct.com/-/api/r/01M3BF9JFK9YNMEBVA7EAA51HM/cloud-browser-20260925-050601.png?e=1790399161&s=a12955d15d988b75c55b7f338710aa54",
+  "screenshotPath": "/tmp/rp-zerodha.png",
+  "elements": 81,
+  "filled": 1,
+  "fields": [
+    {
+      "type": "PHONE",
+      "name": "Enter your mobile number",
+      "masked": true,
+      "leaked": false
+    }
+  ],
+  "leaks": 0,
+  "sanitizeMs": 404.62452900000017,
+  "visionMs": 1899.4045679999995,
+  "bytes": 12852,
+  "img": {
+    "visibleBefore": 1,
+    "readableAfter": [],
+    "boxes": 4
+  }
+}
