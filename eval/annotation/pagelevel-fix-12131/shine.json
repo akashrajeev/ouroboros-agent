@@ -1,0 +1,48 @@
+{
+  "site": "shine",
+  "capture": "shine.capture.json",
+  "annotatedBy": "manual review of all 37 observed elements + viewport screenshot; re-located on fixed pipeline capture",
+  "positives": [
+    {
+      "element": 9,
+      "field": "value",
+      "type": "NAME",
+      "value": "Arjun Varman",
+      "note": "typed synthetic full name"
+    },
+    {
+      "element": 10,
+      "field": "value",
+      "type": "EMAIL",
+      "value": "satish.70@gmail.com",
+      "note": "typed synthetic email"
+    },
+    {
+      "element": 12,
+      "field": "value",
+      "type": "PHONE",
+      "value": "0832967736",
+      "note": "typed synthetic mobile; site split it into country-code box '91' + this 10-digit field"
+    },
+    {
+      "element": 13,
+      "field": "value",
+      "type": "PASSWORD",
+      "value": "Qxs6dEnkpe#7",
+      "note": "typed synthetic password"
+    }
+  ],
+  "benign_lookalikes": [
+    {
+      "element": 14,
+      "field": "text",
+      "value": "Min 8 - Max 15 characters",
+      "kind": "password rule hint with digits",
+      "expect": "unmasked"
+    }
+  ],
+  "notes": [
+    "Element 11 holds country code '91' after the site's own split; a bare country code is not independently identifying and is not scored as a positive.",
+    "Detector masked the mobile under type ACCOUNT, not PHONE: value protected, type label wrong. Counted as value-level TP; type accuracy reported separately."
+  ]
+}
