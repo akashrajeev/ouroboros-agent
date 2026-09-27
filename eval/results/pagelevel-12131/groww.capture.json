@@ -1,0 +1,524 @@
+{
+  "index": 1,
+  "url": "https://groww.in/login",
+  "finalUrl": "https://groww.in/login",
+  "status": 200,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "fills": [
+    {
+      "type": "EMAIL",
+      "value": "girindra.40@gmail.com",
+      "nodeId": "n9",
+      "label": ""
+    }
+  ],
+  "raw": [
+    {
+      "nodeId": "n15",
+      "tag": "a",
+      "role": "link",
+      "name": "",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 557.5,
+        "y": 45,
+        "w": 150,
+        "h": 79
+      }
+    },
+    {
+      "nodeId": "n3",
+      "tag": "div",
+      "role": "text",
+      "name": "Simple, Free",
+      "text": "Simple, Free",
+      "value": "",
+      "bbox": {
+        "x": 222.5,
+        "y": 227,
+        "w": 175.265625,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n4",
+      "tag": "div",
+      "role": "text",
+      "name": "Investing.",
+      "text": "Investing.",
+      "value": "",
+      "bbox": {
+        "x": 222.5,
+        "y": 271,
+        "w": 175.265625,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n17",
+      "tag": "div",
+      "role": "text",
+      "name": "Stocks",
+      "text": "Stocks",
+      "value": "",
+      "bbox": {
+        "x": 222.5,
+        "y": 560,
+        "w": 175.265625,
+        "h": 39
+      }
+    },
+    {
+      "nodeId": "n5",
+      "tag": "h1",
+      "role": "heading",
+      "name": "Welcome to Groww",
+      "text": "Welcome to Groww",
+      "value": "",
+      "bbox": {
+        "x": 692.5,
+        "y": 219,
+        "w": 330,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n7",
+      "tag": "div",
+      "role": "text",
+      "name": "Continue with Google",
+      "text": "Continue with Google",
+      "value": "",
+      "bbox": {
+        "x": 790.515625,
+        "y": 307,
+        "w": 158.953125,
+        "h": 22
+      }
+    },
+    {
+      "nodeId": "n8",
+      "tag": "div",
+      "role": "text",
+      "name": "Or",
+      "text": "Or",
+      "value": "",
+      "bbox": {
+        "x": 849.484375,
+        "y": 383,
+        "w": 16.046875,
+        "h": 22
+      }
+    },
+    {
+      "nodeId": "n9",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "girindra.40@gmail.com",
+      "inputType": "text",
+      "autocomplete": "on",
+      "htmlId": "login_email1",
+      "bbox": {
+        "x": 692.5,
+        "y": 449,
+        "w": 330,
+        "h": 42
+      }
+    },
+    {
+      "nodeId": "n10",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 692.5,
+        "y": 557.953125,
+        "w": 331,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n11",
+      "tag": "div",
+      "role": "text",
+      "name": "By proceeding, I agree to,&",
+      "text": "By proceeding, I agree to,&",
+      "value": "",
+      "bbox": {
+        "x": 632.5,
+        "y": 604.953125,
+        "w": 450,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n12",
+      "tag": "a",
+      "role": "link",
+      "name": "T&C",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 830.640625,
+        "y": 602.953125,
+        "w": 27.75,
+        "h": 22
+      }
+    },
+    {
+      "nodeId": "n13",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 861.140625,
+        "y": 602.953125,
+        "w": 78.015625,
+        "h": 22
+      }
+    },
+    {
+      "nodeId": "n14",
+      "tag": "a",
+      "role": "link",
+      "name": "Tariff Rates",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 946.6875,
+        "y": 602.953125,
+        "w": 65.203125,
+        "h": 22
+      }
+    }
+  ],
+  "opaque": [
+    {
+      "nodeId": "n1",
+      "kind": "background",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "w": 1265,
+        "h": 900
+      }
+    },
+    {
+      "nodeId": "n16",
+      "kind": "img",
+      "bbox": {
+        "x": 557.5,
+        "y": 59.5,
+        "w": 150,
+        "h": 50
+      },
+      "src": "https://resources.groww.in/web-assets/img/website-logo/groww-logo-dark.svg",
+      "name": "Groww Logo"
+    },
+    {
+      "nodeId": "n2",
+      "kind": "img",
+      "bbox": {
+        "x": 182.5,
+        "y": 169,
+        "w": 450,
+        "h": 483.953125
+      },
+      "src": "//assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/patternImg.f93bd17c.svg",
+      "name": "pattern groww"
+    },
+    {
+      "nodeId": "n6",
+      "kind": "img",
+      "bbox": {
+        "x": 765.515625,
+        "y": 305.5,
+        "w": 25,
+        "h": 25
+      },
+      "src": "//assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/googleIcon.655faad1.svg",
+      "name": "Gmail Logo"
+    },
+    {
+      "nodeId": "n18",
+      "kind": "svg",
+      "bbox": {
+        "x": 998.5,
+        "y": 461,
+        "w": 20,
+        "h": 20
+      }
+    }
+  ],
+  "screen": [
+    {
+      "id": "e1",
+      "role": "link",
+      "label": "",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.436,
+        0.05,
+        0.117,
+        0.088
+      ]
+    },
+    {
+      "id": "e2",
+      "role": "text",
+      "label": "Simple, Free",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.174,
+        0.252,
+        0.137,
+        0.049
+      ]
+    },
+    {
+      "id": "e3",
+      "role": "text",
+      "label": "Investing.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.174,
+        0.301,
+        0.137,
+        0.049
+      ]
+    },
+    {
+      "id": "e4",
+      "role": "text",
+      "label": "Stocks",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.174,
+        0.622,
+        0.137,
+        0.043
+      ]
+    },
+    {
+      "id": "e5",
+      "role": "heading",
+      "label": "Welcome to Groww",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.541,
+        0.243,
+        0.258,
+        0.049
+      ]
+    },
+    {
+      "id": "e6",
+      "role": "text",
+      "label": "Continue with Google",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.618,
+        0.341,
+        0.124,
+        0.024
+      ]
+    },
+    {
+      "id": "e7",
+      "role": "text",
+      "label": "Or",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.664,
+        0.426,
+        0.013,
+        0.024
+      ]
+    },
+    {
+      "id": "e8",
+      "role": "textbox",
+      "label": "",
+      "field_type": "text",
+      "value": "<EMAIL_1>",
+      "state": {},
+      "bbox": [
+        0.541,
+        0.499,
+        0.258,
+        0.047
+      ]
+    },
+    {
+      "id": "e9",
+      "role": "button",
+      "label": "Continue",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.541,
+        0.62,
+        0.259,
+        0.044
+      ]
+    },
+    {
+      "id": "e10",
+      "role": "text",
+      "label": "By proceeding, I agree to,&",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.494,
+        0.672,
+        0.352,
+        0.02
+      ]
+    },
+    {
+      "id": "e11",
+      "role": "link",
+      "label": "T&C",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.649,
+        0.67,
+        0.022,
+        0.024
+      ]
+    },
+    {
+      "id": "e12",
+      "role": "link",
+      "label": "Privacy Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.673,
+        0.67,
+        0.061,
+        0.024
+      ]
+    },
+    {
+      "id": "e13",
+      "role": "link",
+      "label": "Tariff Rates",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.74,
+        0.67,
+        0.051,
+        0.024
+      ]
+    },
+    {
+      "id": "e14",
+      "role": "image",
+      "label": "background (background: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0,
+        0,
+        0.988,
+        1
+      ]
+    },
+    {
+      "id": "e15",
+      "role": "image",
+      "label": "Groww Logo (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.436,
+        0.066,
+        0.117,
+        0.056
+      ]
+    },
+    {
+      "id": "e16",
+      "role": "image",
+      "label": "pattern groww (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.143,
+        0.188,
+        0.352,
+        0.538
+      ]
+    },
+    {
+      "id": "e17",
+      "role": "image",
+      "label": "Gmail Logo (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.598,
+        0.339,
+        0.02,
+        0.028
+      ]
+    },
+    {
+      "id": "e18",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.78,
+        0.512,
+        0.016,
+        0.022
+      ]
+    }
+  ],
+  "detections": [
+    {
+      "id": "d1",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n9",
+      "bbox": {
+        "x": 692.5,
+        "y": 449,
+        "w": 330,
+        "h": 42
+      }
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "<EMAIL_1>",
+      "type": "EMAIL",
+      "value": "girindra.40@gmail.com"
+    }
+  ]
+}
