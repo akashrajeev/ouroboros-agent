@@ -75,7 +75,11 @@ def render_screen(req: StepRequest, max_elements: int) -> str:
     unused = [k for k in req.legend if k not in used]
     legend += "\nNot used yet: " + (", ".join(unused) if unused else "(all used)")
     hist = "\n".join(f"- {h.op} {h.element_id or ''} {h.text or ''}".rstrip() for h in req.history[-10:]) or "(none)"
-    return f"Task: {req.task}\nSite: {req.url_origin}\nLegend (placeholder=type): {legend}\n\nElements:\n" + "\n".join(lines) + f"\n\nDone so far:\n{hist}\n\nNext action JSON:"
+    hint = (f"\nOptional local image classifier (experimental, five fixed UI states): {req.semantic_hint.label}; "
+            f"cosine score {req.semantic_hint.score:.3f}, top-two margin {req.semantic_hint.margin:.3f}. "
+            "May be wrong; use the elements and masked image as primary evidence."
+            if req.semantic_hint and req.image_jpeg_b64 else "")
+    return f"Task: {req.task}\nSite: {req.url_origin}\nLegend (placeholder=type): {legend}\n\nElements:\n" + "\n".join(lines) + f"{hint}\n\nDone so far:\n{hist}\n\nNext action JSON:"
 
 
 def parse_action(text: str) -> Optional[Action]:
