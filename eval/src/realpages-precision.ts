@@ -69,7 +69,7 @@ for(const [index,url] of urls.entries()) {
   // Wait only on reachable 2xx pages whose first-step inputs may mount after DOMContentLoaded.
   // Observe a visible, enabled native input; do not click consent, authenticate, or bypass a wall.
   if (r.status>=200 && r.status<300) {
-   await page.waitForFunction(() => [...document.querySelectorAll('input,textarea')].some(e =>
+   await page.waitForFunction(() => Array.from(document.querySelectorAll('input,textarea')).some(e =>
     e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement ?
      e.getClientRects().length>0 && !e.disabled && !e.readOnly &&
      !['hidden','checkbox','radio','search','button','submit','file'].includes((e as HTMLInputElement).type) : false
