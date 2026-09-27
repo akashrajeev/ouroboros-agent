@@ -1,0 +1,48 @@
+{
+  "site": "shine",
+  "capture": "shine.capture.json",
+  "annotatedBy": "auto-derived positives from recorded fills + manual benign list re-located by value; page text verified unchanged vs run 1; re-located on fixed pipeline capture",
+  "positives": [
+    {
+      "element": 9,
+      "field": "value",
+      "type": "NAME",
+      "value": "Jagdeep Saini",
+      "note": "auto-derived from recorded fill (typed 'Jagdeep Saini'); seed 12133"
+    },
+    {
+      "element": 10,
+      "field": "value",
+      "type": "EMAIL",
+      "value": "girija.71@gmail.com",
+      "note": "auto-derived from recorded fill (typed 'girija.71@gmail.com'); seed 12133"
+    },
+    {
+      "element": 12,
+      "field": "value",
+      "type": "PHONE",
+      "value": "0612685725",
+      "note": "auto-derived from recorded fill (typed '06126857253'); seed 12133"
+    },
+    {
+      "element": 13,
+      "field": "value",
+      "type": "PASSWORD",
+      "value": "QxdkAHoaAD#7",
+      "note": "auto-derived from recorded fill (typed 'QxdkAHoaAD#7'); seed 12133"
+    }
+  ],
+  "benign_lookalikes": [
+    {
+      "element": 14,
+      "field": "text",
+      "value": "Min 8 - Max 15 characters",
+      "kind": "password rule hint with digits",
+      "expect": "unmasked"
+    }
+  ],
+  "notes": [
+    "Element 11 holds country code '91' after the site's own split; a bare country code is not independently identifying and is not scored as a positive.",
+    "Detector masked the mobile under type ACCOUNT, not PHONE: value protected, type label wrong. Counted as value-level TP; type accuracy reported separately."
+  ]
+}
