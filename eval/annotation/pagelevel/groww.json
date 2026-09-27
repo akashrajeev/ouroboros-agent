@@ -1,0 +1,10 @@
+{
+  "site": "groww",
+  "capture": "groww.capture.json",
+  "annotatedBy": "manual review of all 13 observed elements + viewport screenshot",
+  "positives": [
+    { "element": 7, "field": "value", "type": "EMAIL", "value": "girindra.40@gmail.com", "note": "typed synthetic email" }
+  ],
+  "benign_lookalikes": [],
+  "notes": ["No other PII or lookalikes on the page."]
+}
