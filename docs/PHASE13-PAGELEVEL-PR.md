@@ -61,3 +61,24 @@ npx tsx eval/src/pagelevel-score.ts pagelevel-12131
 - NER over-masking of footer boilerplate is now the dominant precision cost on real pages; the synthetic-corpus redaction precision (0/480 decoys) did not expose it because synthetic pages lack regulatory footers.
 
 No form was submitted, no account created, no paid compute used.
+
+## Follow-up (same day): boilerplate/contact gating fix
+
+The six false positives above were all inside the page's `<footer>`: uncorroborated NER-only spans (corporate address, "I demat") and pattern-masked `mailto:` contact emails. Fix, in `extension/lib/observe.ts` + `packages/core/src/sanitize.ts`:
+
+1. `observe` tags each element with `boilerplate` (inside `<footer>` or `[role=contentinfo]`) and `contact` (`mailto:`/`tel:` link). Raw context only; never serialized.
+2. `sanitize` drops uncorroborated NER-only spans in boilerplate text/labels/options. Pattern and DOM-rule matches still mask there, and field **values are never gated** - a newsletter input in a footer still masks. Values already tokenized (`known` source) still mask everywhere, so real user data that appears in a footer stays protected.
+3. A `mailto:`/`tel:` link's visible text is treated as the site's own published contact endpoint, not user data (EMAIL/PHONE masking skipped on the link label).
+
+Post-fix, same harness, same two seeds, same annotations:
+
+| Run | TP | FN | FP | Micro precision | Micro recall | Macro P / R |
+|---|---:|---:|---:|---|---|---|
+| pagelevel-fix-12131 | 9 | 0 | 0 | **100%** | **100%** | 100% / 100% |
+| pagelevel-fix-12133 | 9 | 0 | 0 | **100%** | **100%** | 100% / 100% |
+
+No verbatim leaks in either wire map. Type accuracy unchanged (8/9; Shine mobile still tokenized as ACCOUNT - the site-split 10-digit string with a leading 0 is not a valid Indian mobile format, so the account pattern legitimately wins; noted, not tuned).
+
+Regression checks: synthetic 60-page ablation (seed 26171) unchanged - structured 100/100, all types 98.5/99.2, 0/480 decoys, 0/516 leaks (the generator emits no footer regions, so the gate never fires there; that is a coverage gap for the synthetic corpus, noted for Phase 14). Core suite 105/105 including six new gating tests; extension 22 pass/1 skip; eval 4/4; typecheck clean.
+
+New artifacts: `eval/results/pagelevel-fix-1213{1,3}/` (captures + scores), `eval/annotation/pagelevel-fix-1213{1,3}/`. Known tradeoff, stated honestly: an NER-only name printed inside a real footer (rare, e.g. a "logged in as" line with no pattern shape) would now be missed unless the value is already tokenized from a field.
