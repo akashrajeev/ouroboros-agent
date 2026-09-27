@@ -1,0 +1,978 @@
+{
+  "index": 2,
+  "url": "https://www.linkedin.com/signup",
+  "finalUrl": "https://www.linkedin.com/signup",
+  "status": 200,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "fills": [
+    {
+      "type": "EMAIL",
+      "value": "dharitri.10@gmail.com",
+      "nodeId": "n2",
+      "label": "Email"
+    },
+    {
+      "type": "PASSWORD",
+      "value": "Qxir5QVrln#7",
+      "nodeId": "n3",
+      "label": "Password"
+    }
+  ],
+  "raw": [
+    {
+      "nodeId": "n1",
+      "tag": "h1",
+      "role": "heading",
+      "name": "Join LinkedIn now — it’s free!",
+      "text": "Join LinkedIn now — it’s free!",
+      "value": "",
+      "bbox": {
+        "x": 92,
+        "y": 58,
+        "w": 1096,
+        "h": 86.390625
+      }
+    },
+    {
+      "nodeId": "n2",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Email",
+      "text": "",
+      "value": "dharitri.10@gmail.com",
+      "inputType": "email",
+      "htmlName": "email-address",
+      "htmlId": "email-address",
+      "placeholder": "Email",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 464,
+        "y": 208.375,
+        "w": 352,
+        "h": 32
+      }
+    },
+    {
+      "nodeId": "n3",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Password",
+      "text": "",
+      "value": "Qxir5QVrln#7",
+      "inputType": "password",
+      "autocomplete": "new-password",
+      "htmlName": "password",
+      "htmlId": "password",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 464,
+        "y": 280.359375,
+        "w": 352,
+        "h": 32
+      }
+    },
+    {
+      "nodeId": "n4",
+      "tag": "button",
+      "role": "button",
+      "name": "Show your LinkedIn password",
+      "text": "",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 757.3125,
+        "y": 280.359375,
+        "w": 50.6875,
+        "h": 32
+      }
+    },
+    {
+      "nodeId": "n5",
+      "tag": "input",
+      "role": "checkbox",
+      "name": "Remember me",
+      "text": "",
+      "value": "",
+      "inputType": "checkbox",
+      "htmlName": "remember-me-checkbox",
+      "htmlId": "remember-me-checkbox",
+      "checked": true,
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 468,
+        "y": 331.359375,
+        "w": 18,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n6",
+      "tag": "p",
+      "role": "text",
+      "name": "By clicking Agree & Join or Continue, you agree to the LinkedIn , , and .",
+      "text": "By clicking Agree & Join or Continue, you agree to the LinkedIn , , and .",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 464,
+        "y": 368.359375,
+        "w": 352,
+        "h": 47.953125
+      }
+    },
+    {
+      "nodeId": "n7",
+      "tag": "a",
+      "role": "link",
+      "name": "User Agreement",
+      "text": "",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 521.359375,
+        "y": 384.34375,
+        "w": 110.125,
+        "h": 14
+      }
+    },
+    {
+      "nodeId": "n8",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy Policy",
+      "text": "",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 639.125,
+        "y": 384.34375,
+        "w": 94.0625,
+        "h": 14
+      }
+    },
+    {
+      "nodeId": "n9",
+      "tag": "a",
+      "role": "link",
+      "name": "Cookie Policy",
+      "text": "",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 617.984375,
+        "y": 384.34375,
+        "w": 194.765625,
+        "h": 29.984375
+      }
+    },
+    {
+      "nodeId": "n10",
+      "tag": "button",
+      "role": "button",
+      "name": "Agree & Join",
+      "text": "",
+      "value": "",
+      "htmlId": "join-form-submit",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 464,
+        "y": 432.3125,
+        "w": 352,
+        "h": 48
+      }
+    },
+    {
+      "nodeId": "n11",
+      "tag": "div",
+      "role": "text",
+      "name": "or",
+      "text": "or",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 464,
+        "y": 496.3125,
+        "w": 352,
+        "h": 24
+      }
+    },
+    {
+      "nodeId": "n12",
+      "tag": "div",
+      "role": "button",
+      "name": "Continue with google",
+      "text": "",
+      "value": "",
+      "insideSensitiveForm": true,
+      "bbox": {
+        "x": 477.5,
+        "y": 540.3125,
+        "w": 325,
+        "h": 2
+      }
+    },
+    {
+      "nodeId": "n13",
+      "tag": "p",
+      "role": "text",
+      "name": "Already on LinkedIn?",
+      "text": "Already on LinkedIn?",
+      "value": "",
+      "bbox": {
+        "x": 440,
+        "y": 564.3125,
+        "w": 400,
+        "h": 64
+      }
+    },
+    {
+      "nodeId": "n14",
+      "tag": "a",
+      "role": "link",
+      "name": "Sign in",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 694.65625,
+        "y": 582.3125,
+        "w": 62.296875,
+        "h": 19
+      }
+    },
+    {
+      "nodeId": "n15",
+      "tag": "p",
+      "role": "text",
+      "name": "Looking to create a page for a business?",
+      "text": "Looking to create a page for a business?",
+      "value": "",
+      "bbox": {
+        "x": 92,
+        "y": 628.3125,
+        "w": 1096,
+        "h": 37
+      }
+    },
+    {
+      "nodeId": "n16",
+      "tag": "a",
+      "role": "link",
+      "name": "Get help",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 750.765625,
+        "y": 646.3125,
+        "w": 66.84375,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n17",
+      "tag": "span",
+      "role": "text",
+      "name": "LinkedIn",
+      "text": "LinkedIn",
+      "value": "",
+      "bbox": {
+        "x": 138.671875,
+        "y": 839,
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "nodeId": "n18",
+      "tag": "span",
+      "role": "text",
+      "name": "© 2026",
+      "text": "© 2026",
+      "value": "",
+      "bbox": {
+        "x": 148,
+        "y": 840,
+        "w": 46.359375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n19",
+      "tag": "a",
+      "role": "link",
+      "name": "About",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 210.359375,
+        "y": 840,
+        "w": 40.40625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n20",
+      "tag": "a",
+      "role": "link",
+      "name": "Accessibility",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 266.765625,
+        "y": 840,
+        "w": 84.546875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n21",
+      "tag": "a",
+      "role": "link",
+      "name": "User Agreement",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 367.3125,
+        "y": 840,
+        "w": 110.125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n22",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 493.4375,
+        "y": 840,
+        "w": 94.0625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n23",
+      "tag": "a",
+      "role": "link",
+      "name": "Your California Privacy Choices",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 603.5,
+        "y": 840,
+        "w": 209.890625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n24",
+      "tag": "a",
+      "role": "link",
+      "name": "Cookie Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 829.390625,
+        "y": 840,
+        "w": 89.90625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n25",
+      "tag": "a",
+      "role": "link",
+      "name": "Copyright Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 935.296875,
+        "y": 840,
+        "w": 110.75,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n26",
+      "tag": "a",
+      "role": "link",
+      "name": "Brand Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1062.046875,
+        "y": 840,
+        "w": 84.6875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n27",
+      "tag": "a",
+      "role": "link",
+      "name": "Guest Controls",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 84,
+        "y": 874,
+        "w": 100.34375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n28",
+      "tag": "a",
+      "role": "link",
+      "name": "Community Guidelines",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 200.34375,
+        "y": 874,
+        "w": 152.28125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n29",
+      "tag": "button",
+      "role": "button",
+      "name": "Language",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 368.625,
+        "y": 874,
+        "w": 88.25,
+        "h": 16
+      }
+    }
+  ],
+  "opaque": [
+    {
+      "nodeId": "n30",
+      "kind": "svg",
+      "bbox": {
+        "x": 92,
+        "y": 24,
+        "w": 135,
+        "h": 33.75
+      }
+    },
+    {
+      "nodeId": "n31",
+      "kind": "svg",
+      "bbox": {
+        "x": 469,
+        "y": 332.359375,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n32",
+      "kind": "svg",
+      "bbox": {
+        "x": 84,
+        "y": 842,
+        "w": 56,
+        "h": 14
+      }
+    },
+    {
+      "nodeId": "n33",
+      "kind": "svg",
+      "bbox": {
+        "x": 439.875,
+        "y": 875,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ],
+  "screen": [
+    {
+      "id": "e1",
+      "role": "heading",
+      "label": "Join LinkedIn now — it’s free!",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.072,
+        0.064,
+        0.856,
+        0.096
+      ]
+    },
+    {
+      "id": "e2",
+      "role": "textbox",
+      "label": "Email",
+      "field_type": "email",
+      "value": "<EMAIL_1>",
+      "state": {},
+      "bbox": [
+        0.363,
+        0.232,
+        0.275,
+        0.036
+      ]
+    },
+    {
+      "id": "e3",
+      "role": "textbox",
+      "label": "Password",
+      "field_type": "password",
+      "value": "<PASSWORD_1>",
+      "state": {},
+      "bbox": [
+        0.363,
+        0.312,
+        0.275,
+        0.036
+      ]
+    },
+    {
+      "id": "e4",
+      "role": "button",
+      "label": "Show your LinkedIn password",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.592,
+        0.312,
+        0.04,
+        0.036
+      ]
+    },
+    {
+      "id": "e5",
+      "role": "checkbox",
+      "label": "Remember me",
+      "field_type": "checkbox",
+      "value": "",
+      "state": {
+        "checked": true
+      },
+      "bbox": [
+        0.366,
+        0.368,
+        0.014,
+        0.02
+      ]
+    },
+    {
+      "id": "e6",
+      "role": "text",
+      "label": "By clicking Agree & Join or Continue, you agree to the LinkedIn , , and .",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.363,
+        0.409,
+        0.275,
+        0.053
+      ]
+    },
+    {
+      "id": "e7",
+      "role": "link",
+      "label": "User Agreement",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.407,
+        0.427,
+        0.086,
+        0.016
+      ]
+    },
+    {
+      "id": "e8",
+      "role": "link",
+      "label": "Privacy Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.499,
+        0.427,
+        0.073,
+        0.016
+      ]
+    },
+    {
+      "id": "e9",
+      "role": "link",
+      "label": "Cookie Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.483,
+        0.427,
+        0.152,
+        0.033
+      ]
+    },
+    {
+      "id": "e10",
+      "role": "button",
+      "label": "Agree & Join",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.363,
+        0.48,
+        0.275,
+        0.053
+      ]
+    },
+    {
+      "id": "e11",
+      "role": "text",
+      "label": "or",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.363,
+        0.551,
+        0.275,
+        0.027
+      ]
+    },
+    {
+      "id": "e12",
+      "role": "button",
+      "label": "Continue with google",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.373,
+        0.6,
+        0.254,
+        0.002
+      ]
+    },
+    {
+      "id": "e13",
+      "role": "text",
+      "label": "Already on LinkedIn?",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.344,
+        0.627,
+        0.313,
+        0.071
+      ]
+    },
+    {
+      "id": "e14",
+      "role": "link",
+      "label": "Sign in",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.543,
+        0.647,
+        0.049,
+        0.021
+      ]
+    },
+    {
+      "id": "e15",
+      "role": "text",
+      "label": "Looking to create a page for a business?",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.072,
+        0.698,
+        0.856,
+        0.041
+      ]
+    },
+    {
+      "id": "e16",
+      "role": "link",
+      "label": "Get help",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.587,
+        0.718,
+        0.052,
+        0.018
+      ]
+    },
+    {
+      "id": "e17",
+      "role": "text",
+      "label": "LinkedIn",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.108,
+        0.932,
+        0.001,
+        0.001
+      ]
+    },
+    {
+      "id": "e18",
+      "role": "text",
+      "label": "© 2026",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.116,
+        0.933,
+        0.036,
+        0.02
+      ]
+    },
+    {
+      "id": "e19",
+      "role": "link",
+      "label": "About",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.164,
+        0.933,
+        0.032,
+        0.02
+      ]
+    },
+    {
+      "id": "e20",
+      "role": "link",
+      "label": "Accessibility",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.208,
+        0.933,
+        0.066,
+        0.02
+      ]
+    },
+    {
+      "id": "e21",
+      "role": "link",
+      "label": "User Agreement",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.287,
+        0.933,
+        0.086,
+        0.02
+      ]
+    },
+    {
+      "id": "e22",
+      "role": "link",
+      "label": "Privacy Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.385,
+        0.933,
+        0.073,
+        0.02
+      ]
+    },
+    {
+      "id": "e23",
+      "role": "link",
+      "label": "Your California Privacy Choices",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.471,
+        0.933,
+        0.164,
+        0.02
+      ]
+    },
+    {
+      "id": "e24",
+      "role": "link",
+      "label": "Cookie Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.648,
+        0.933,
+        0.07,
+        0.02
+      ]
+    },
+    {
+      "id": "e25",
+      "role": "link",
+      "label": "Copyright Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.731,
+        0.933,
+        0.087,
+        0.02
+      ]
+    },
+    {
+      "id": "e26",
+      "role": "link",
+      "label": "Brand Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.83,
+        0.933,
+        0.066,
+        0.02
+      ]
+    },
+    {
+      "id": "e27",
+      "role": "link",
+      "label": "Guest Controls",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.066,
+        0.971,
+        0.078,
+        0.02
+      ]
+    },
+    {
+      "id": "e28",
+      "role": "link",
+      "label": "Community Guidelines",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.157,
+        0.971,
+        0.119,
+        0.02
+      ]
+    },
+    {
+      "id": "e29",
+      "role": "button",
+      "label": "Language",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.288,
+        0.971,
+        0.069,
+        0.018
+      ]
+    },
+    {
+      "id": "e30",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.072,
+        0.027,
+        0.105,
+        0.038
+      ]
+    },
+    {
+      "id": "e31",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.366,
+        0.369,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e32",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.066,
+        0.936,
+        0.044,
+        0.016
+      ]
+    },
+    {
+      "id": "e33",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.344,
+        0.972,
+        0.013,
+        0.018
+      ]
+    }
+  ],
+  "detections": [
+    {
+      "id": "d1",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n2",
+      "bbox": {
+        "x": 464,
+        "y": 208.375,
+        "w": 352,
+        "h": 32
+      }
+    },
+    {
+      "id": "d2",
+      "type": "PASSWORD",
+      "sources": [
+        "dom_rule"
+      ],
+      "confidence": 1,
+      "nodeId": "n3",
+      "bbox": {
+        "x": 464,
+        "y": 280.359375,
+        "w": 352,
+        "h": 32
+      }
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "<EMAIL_1>",
+      "type": "EMAIL",
+      "value": "dharitri.10@gmail.com"
+    },
+    {
+      "token": "<PASSWORD_1>",
+      "type": "PASSWORD",
+      "value": "Qxir5QVrln#7"
+    }
+  ]
+}
