@@ -3,6 +3,7 @@ import { leakGate } from '../src/leakGate';
 import { PlaceholderMap } from '../src/placeholders';
 import { sanitize, wireScreenMap } from '../src/sanitize';
 import { AADHAAR, kycObservation } from './fixtures';
+import type { RawElement, RawObservation } from '../src/observation';
 
 describe('sanitize', () => {
   it('replaces every real value and the wire payload passes the leak gate', async () => {
@@ -64,5 +65,54 @@ describe('known values (A6b)', () => {
     const wire = JSON.stringify(wireScreenMap(screen));
     expect(wire).not.toContain('Ishaan Verma');
     expect(wire).toContain(tok);
+  });
+});
+
+
+describe('boilerplate + contact gating (Phase 13 follow-up)', () => {
+  const el = (e: Partial<RawElement>): RawElement => ({
+    nodeId: 'n1', tag: 'p', role: 'text', name: '', text: '', value: '', bbox: { x: 0, y: 0, w: 100, h: 20 }, ...e,
+  });
+  const obs = (...elements: RawElement[]): RawObservation => ({ url: 'https://site.example/', viewport: { w: 1280, h: 900 }, elements, opaque: [] });
+  const nerAddr = (s: string) => {
+    const i = s.indexOf('Dollars Colony');
+    return i < 0 ? [] : [{ type: 'ADDRESS' as const, start: i, end: i + 14, value: 'Dollars Colony', source: 'ner' as const, confidence: 0.8 }];
+  };
+  const nerName = (s: string) => {
+    const i = s.indexOf('Ravi Kumar');
+    return i < 0 ? [] : [{ type: 'NAME' as const, start: i, end: i + 10, value: 'Ravi Kumar', source: 'ner' as const, confidence: 0.9 }];
+  };
+
+  it('drops uncorroborated NER-only spans in boilerplate text (registered corporate address)', () => {
+    const { screen } = sanitize(obs(el({ text: 'Registered Address: Zerodha Broking Ltd., Dollars Colony, Bengaluru - 560078', name: 'Registered Address: Zerodha Broking Ltd., Dollars Colony, Bengaluru - 560078', boilerplate: true })), new PlaceholderMap(), { extraDetectors: [nerAddr] });
+    expect(screen.elements[0]!.label).toContain('Dollars Colony');
+    expect(screen.elements[0]!.label).not.toContain('<ADDRESS_');
+  });
+
+  it('keeps NER masking outside boilerplate', () => {
+    const { screen } = sanitize(obs(el({ tag: 'input', role: 'textbox', name: 'Name', value: 'Ravi Kumar' })), new PlaceholderMap(), { extraDetectors: [nerName] });
+    expect(screen.elements[0]!.value).toBe('<NAME_1>');
+  });
+
+  it('never gates field values, even in a footer (newsletter signup)', () => {
+    const { screen } = sanitize(obs(el({ tag: 'input', role: 'textbox', name: 'Email', value: 'user@example.com', boilerplate: true })), new PlaceholderMap());
+    expect(screen.elements[0]!.value).toBe('<EMAIL_1>');
+  });
+
+  it('does not mask a mailto link’s visible contact email', () => {
+    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: 'complaints@zerodha.com', contact: 'mailto', boilerplate: true })), new PlaceholderMap());
+    expect(screen.elements[0]!.label).toBe('complaints@zerodha.com');
+  });
+
+  it('does not mask a tel link’s visible contact phone', () => {
+    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: '080 4718 1888', contact: 'tel' })), new PlaceholderMap());
+    expect(screen.elements[0]!.label).toBe('080 4718 1888');
+  });
+
+  it('still masks a user-known value when it appears inside boilerplate', () => {
+    const map = new PlaceholderMap();
+    map.tokenFor('EMAIL', 'akash@example.com');
+    const { screen } = sanitize(obs(el({ tag: 'input', role: 'textbox', name: 'Email', value: 'akash@example.com' }), el({ text: 'Logged in as akash@example.com', name: 'Logged in as akash@example.com', boilerplate: true })), map);
+    expect(screen.elements[1]!.label).toBe('Logged in as <EMAIL_1>');
   });
 });
