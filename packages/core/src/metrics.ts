@@ -19,13 +19,21 @@ export interface StepRecord {
   bytes: number;            // payload bytes after gate (M4)
   tokens_est: number;       // bytes / 4 (text) + 1 image = 765 (M4)
   gate_hits: number;        // leak-gate hits (blocked if > 0)
-  ms_observe: number; ms_sanitize: number; ms_vision: number; ms_gate: number; ms_server: number; ms_total: number; // M5
+  ms_observe: number; ms_sanitize: number; ms_vision: number; ms_gate: number; ms_server: number;
+  /** Fresh re-observe + A9 validation (stale-state check) after the server reply. */
+  ms_validate: number;
+  /** A9 user confirmation round-trip; 0 unless a consequential action asked. */
+  ms_confirm: number;
+  /** A10 rehydrate + A11 in-page execution, including DOM settle. */
+  ms_execute: number;
+  ms_total: number; // M5: observe -> execute, everything the task waited on this step
   model_load_ms: number;    // first step only (M4)
 }
 
 export const STEP_COLUMNS: (keyof StepRecord)[] = [
   'run_id', 'step', 'ts', 'origin', 'outcome', 'action', 'reused', 'elements', 'opaque', 'placeholders', 'image_detections', 'image_sent',
   'bytes', 'tokens_est', 'gate_hits', 'ms_observe', 'ms_sanitize', 'ms_vision', 'ms_gate', 'ms_server', 'ms_total', 'model_load_ms',
+  'ms_validate', 'ms_confirm', 'ms_execute',
 ];
 
 const cell = (v: unknown) => {
@@ -69,13 +77,14 @@ export interface MetricsSummary {
   runs: number; steps: number;
   g1SkipPct: number; imageStepPct: number; blocked: number;
   bytesMean: number; tokensMean: number; tokensTotal: number;
-  stages: Record<'observe' | 'sanitize' | 'vision' | 'gate' | 'server' | 'total', { p50: number; p95: number }>;
+  stages: Record<'observe' | 'sanitize' | 'vision' | 'gate' | 'server' | 'validate' | 'confirm' | 'execute' | 'total', { p50: number; p95: number }>;
   modelLoadMs: number;
 }
 
 export function summarizeSteps(rows: StepRecord[]): MetricsSummary {
   const n = Math.max(1, rows.length);
-  const st = (k: keyof StepRecord) => { const xs = rows.map((r) => r[k] as number); return { p50: quantile(xs, 0.5), p95: quantile(xs, 0.95) }; };
+  // Number(... ?? 0): rows written before ms_validate/ms_confirm/ms_execute existed read back as undefined/''.
+  const st = (k: keyof StepRecord) => { const xs = rows.map((r) => Number(r[k] ?? 0) || 0); return { p50: quantile(xs, 0.5), p95: quantile(xs, 0.95) }; };
   return {
     runs: new Set(rows.map((r) => r.run_id)).size,
     steps: rows.length,
@@ -85,9 +94,42 @@ export function summarizeSteps(rows: StepRecord[]): MetricsSummary {
     bytesMean: rows.reduce((a, r) => a + r.bytes, 0) / n,
     tokensMean: rows.reduce((a, r) => a + r.tokens_est, 0) / n,
     tokensTotal: rows.reduce((a, r) => a + r.tokens_est, 0),
-    stages: { observe: st('ms_observe'), sanitize: st('ms_sanitize'), vision: st('ms_vision'), gate: st('ms_gate'), server: st('ms_server'), total: st('ms_total') },
+    stages: {
+      observe: st('ms_observe'), sanitize: st('ms_sanitize'), vision: st('ms_vision'), gate: st('ms_gate'),
+      server: st('ms_server'), validate: st('ms_validate'), confirm: st('ms_confirm'), execute: st('ms_execute'), total: st('ms_total'),
+    },
     modelLoadMs: Math.max(0, ...rows.map((r) => r.model_load_ms)),
   };
+}
+
+export interface RunSummary {
+  run_id: string;
+  steps: number;
+  /** Outcome of the last recorded step. */
+  outcome: StepRecord['outcome'];
+  /** Whole-task latency: sum of per-step ms_total (observe -> execute, incl. server and user confirm). */
+  ms_task: number;
+  /** Server share of the task, for the client/server split judges ask about. */
+  ms_server: number;
+  blocked: boolean;
+}
+
+/** M5 at task granularity: one row per agent run, the number the 15% latency score needs. */
+export function summarizeRuns(rows: StepRecord[]): RunSummary[] {
+  const byRun = new Map<string, StepRecord[]>();
+  for (const r of rows) byRun.set(r.run_id, [...(byRun.get(r.run_id) ?? []), r]);
+  return [...byRun].map(([run_id, rs]) => {
+    const sorted = [...rs].sort((a, b) => a.step - b.step);
+    const last = sorted[sorted.length - 1]!;
+    return {
+      run_id,
+      steps: sorted.length,
+      outcome: last.outcome,
+      ms_task: sorted.reduce((a, r) => a + (Number(r.ms_total) || 0), 0),
+      ms_server: sorted.reduce((a, r) => a + (Number(r.ms_server) || 0), 0),
+      blocked: sorted.some((r) => r.outcome === 'blocked'),
+    };
+  });
 }
 
 /** Rough token estimate: ~4 bytes/token for JSON text; a masked JPEG counts as one 765-token image tile set. */
