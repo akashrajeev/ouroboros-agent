@@ -1,6 +1,7 @@
 import type { TextMatch } from '@ouroboros/core';
 import type { Box } from '@ouroboros/vision';
 import { ModelHost, toShotBoxes } from './modelHost';
+import { classifyMasked, type SemanticHint } from './guiclipHint';
 import { cachedFetch, ensureDownloaded, NER_FILES, type NerSource } from './modelSource';
 
 export const NER_SOURCE: NerSource = ((import.meta as { env?: Record<string, string> }).env?.WXT_NER_SOURCE as NerSource) || 'download';
@@ -11,7 +12,7 @@ export type HostRequest =
   | { type: 'ouro:host:visual'; target: 'host'; dataUrl: string; regions: Box[]; viewportW: number };
 
 export type PrimeResponse = Record<string, TextMatch[]>;
-export interface VisualResponse { jpegB64: string; imageText: string; detections: number; regions: number; cacheHits: number; ms: Record<string, number> }
+export interface VisualResponse { jpegB64: string; imageText: string; detections: number; regions: number; cacheHits: number; ms: Record<string, number>; semanticHint?: SemanticHint }
 
 let host: ModelHost | undefined;
 
@@ -60,9 +61,12 @@ export async function handleHostRequest(msg: HostRequest): Promise<PrimeResponse
   const shot = { data: img.data, width: img.width, height: img.height };
   const r = await h.visual(shot, toShotBoxes(msg.regions, msg.viewportW, img.width));
   ctx.putImageData(img, 0, 0);
+  // Only the redacted pixels enter GUIClip. Missing/failed optional assets never bypass the gate.
+  let semanticHint: SemanticHint | undefined;
+  try { semanticHint = await classifyMasked(canvas); } catch { /* optional semantic hint unavailable */ }
   const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.8 });
   const bytes = new Uint8Array(await blob.arrayBuffer());
   let bin = '';
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return { jpegB64: btoa(bin), imageText: r.imageText, detections: r.detections, regions: r.regions, cacheHits: r.cacheHits, ms: r.ms };
+  return { jpegB64: btoa(bin), imageText: r.imageText, detections: r.detections, regions: r.regions, cacheHits: r.cacheHits, ms: r.ms, ...(semanticHint ? { semanticHint } : {}) };
 }
