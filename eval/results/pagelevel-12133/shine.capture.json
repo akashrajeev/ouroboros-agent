@@ -1,0 +1,1225 @@
+{
+  "index": 3,
+  "url": "https://www.shine.com/registration/",
+  "finalUrl": "https://www.shine.com/registration/",
+  "status": 200,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "fills": [
+    {
+      "type": "NAME",
+      "value": "Jagdeep Saini",
+      "nodeId": "n13",
+      "label": ""
+    },
+    {
+      "type": "EMAIL",
+      "value": "girija.71@gmail.com",
+      "nodeId": "n14",
+      "label": ""
+    },
+    {
+      "type": "PHONE",
+      "value": "06126857253",
+      "nodeId": "n16",
+      "label": ""
+    },
+    {
+      "type": "PASSWORD",
+      "value": "QxdkAHoaAD#7",
+      "nodeId": "n17",
+      "label": ""
+    }
+  ],
+  "raw": [
+    {
+      "nodeId": "n2",
+      "tag": "a",
+      "role": "link",
+      "name": "Login",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1078.5,
+        "y": 25,
+        "w": 35.5,
+        "h": 19
+      }
+    },
+    {
+      "nodeId": "n5",
+      "tag": "h1",
+      "role": "heading",
+      "name": "Register with Resume",
+      "text": "Register with Resume",
+      "value": "",
+      "bbox": {
+        "x": 263,
+        "y": 397.5,
+        "w": 215,
+        "h": 31
+      }
+    },
+    {
+      "nodeId": "n6",
+      "tag": "div",
+      "role": "text",
+      "name": "We will autofill your details",
+      "text": "We will autofill your details",
+      "value": "",
+      "bbox": {
+        "x": 263,
+        "y": 438.5,
+        "w": 215,
+        "h": 19
+      }
+    },
+    {
+      "nodeId": "n7",
+      "tag": "div",
+      "role": "text",
+      "name": "Supported formats- pdf, doc, docx, csv, rtf, txt files File size should not exceed 5 MB",
+      "text": "Supported formats- pdf, doc, docx, csv, rtf, txt files File size should not exceed 5 MB",
+      "value": "",
+      "bbox": {
+        "x": 263,
+        "y": 487.5,
+        "w": 215,
+        "h": 79
+      }
+    },
+    {
+      "nodeId": "n8",
+      "tag": "span",
+      "role": "text",
+      "name": "Upload Resume",
+      "text": "Upload Resume",
+      "value": "",
+      "htmlId": "id_resume_file",
+      "bbox": {
+        "x": 278,
+        "y": 487.5,
+        "w": 185,
+        "h": 35
+      }
+    },
+    {
+      "nodeId": "n9",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "",
+      "inputType": "file",
+      "htmlName": "resume_file",
+      "htmlId": "id_file",
+      "bbox": {
+        "x": 263,
+        "y": 487.5,
+        "w": 253,
+        "h": 35
+      }
+    },
+    {
+      "nodeId": "n10",
+      "tag": "span",
+      "role": "text",
+      "name": "Or",
+      "text": "Or",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 437,
+        "w": 36.34375,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n11",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Let’s get started, tell us about yourself.",
+      "text": "Let’s get started, tell us about yourself.",
+      "value": "",
+      "bbox": {
+        "x": 657,
+        "y": 164,
+        "w": 473,
+        "h": 28
+      }
+    },
+    {
+      "nodeId": "n12",
+      "tag": "p",
+      "role": "text",
+      "name": "It only takes a couple of minutes to get started",
+      "text": "It only takes a couple of minutes to get started",
+      "value": "",
+      "bbox": {
+        "x": 657,
+        "y": 197,
+        "w": 473,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n13",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "Jagdeep Saini",
+      "inputType": "text",
+      "htmlId": "id_name",
+      "bbox": {
+        "x": 657,
+        "y": 232,
+        "w": 378.390625,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n14",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "girija.71@gmail.com",
+      "inputType": "text",
+      "htmlId": "id_email",
+      "bbox": {
+        "x": 657,
+        "y": 292,
+        "w": 378.390625,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n15",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "91",
+      "inputType": "number",
+      "htmlId": "id_countrycode",
+      "bbox": {
+        "x": 657,
+        "y": 352,
+        "w": 47.296875,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n16",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "0612685725",
+      "inputType": "number",
+      "htmlId": "id_cell_phone",
+      "bbox": {
+        "x": 704.296875,
+        "y": 352,
+        "w": 331.09375,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n17",
+      "tag": "input",
+      "role": "textbox",
+      "name": "",
+      "text": "",
+      "value": "QxdkAHoaAD#7",
+      "inputType": "password",
+      "autocomplete": "new-password",
+      "htmlId": "id_password",
+      "bbox": {
+        "x": 657,
+        "y": 427,
+        "w": 378.390625,
+        "h": 44
+      }
+    },
+    {
+      "nodeId": "n37",
+      "tag": "span",
+      "role": "text",
+      "name": "Min 8 - Max 15 characters",
+      "text": "Min 8 - Max 15 characters",
+      "value": "",
+      "bbox": {
+        "x": 668,
+        "y": 504,
+        "w": 171.0625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n38",
+      "tag": "span",
+      "role": "text",
+      "name": "Special characters",
+      "text": "Special characters",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 504,
+        "w": 171.0625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n39",
+      "tag": "span",
+      "role": "text",
+      "name": "Alpha-Numeric",
+      "text": "Alpha-Numeric",
+      "value": "",
+      "bbox": {
+        "x": 668,
+        "y": 525,
+        "w": 171.0625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n40",
+      "tag": "span",
+      "role": "text",
+      "name": "Upper-Lower case",
+      "text": "Upper-Lower case",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 525,
+        "w": 171.0625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n18",
+      "tag": "input",
+      "role": "checkbox",
+      "name": "",
+      "text": "",
+      "value": "",
+      "inputType": "checkbox",
+      "htmlId": "id_privacy",
+      "checked": false,
+      "bbox": {
+        "x": 657,
+        "y": 571,
+        "w": 13,
+        "h": 13
+      }
+    },
+    {
+      "nodeId": "n19",
+      "tag": "a",
+      "role": "link",
+      "name": "By registering, you agree to our &",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 835.546875,
+        "y": 572,
+        "w": 98.234375,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n20",
+      "tag": "a",
+      "role": "link",
+      "name": "By registering, you agree to our &",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 949.96875,
+        "y": 572,
+        "w": 69.671875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n21",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue",
+      "text": "",
+      "value": "",
+      "htmlId": "registerButton",
+      "bbox": {
+        "x": 661.609375,
+        "y": 603,
+        "w": 378.390625,
+        "h": 45
+      }
+    },
+    {
+      "nodeId": "n22",
+      "tag": "div",
+      "role": "text",
+      "name": "or Register with",
+      "text": "or Register with",
+      "value": "",
+      "bbox": {
+        "x": 657,
+        "y": 679,
+        "w": 378.390625,
+        "h": 1
+      }
+    },
+    {
+      "nodeId": "n23",
+      "tag": "div",
+      "role": "text",
+      "name": "Google",
+      "text": "Google",
+      "value": "",
+      "bbox": {
+        "x": 702,
+        "y": 721,
+        "w": 71.109375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n24",
+      "tag": "a",
+      "role": "link",
+      "name": "Linkedin",
+      "text": "",
+      "value": "",
+      "htmlId": "id_linkedIn",
+      "bbox": {
+        "x": 783.140625,
+        "y": 710,
+        "w": 116.109375,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n25",
+      "tag": "div",
+      "role": "text",
+      "name": "Facebook",
+      "text": "Facebook",
+      "value": "",
+      "bbox": {
+        "x": 954.28125,
+        "y": 721,
+        "w": 81.109375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n26",
+      "tag": "div",
+      "role": "text",
+      "name": "You hereby authorize Shine.com and/or its representatives to call you, e-mail you, or SMS you. This consent will supersede any registration for any Do Not Call (DNC) / National Do Not Call (NDNC).",
+      "text": "You hereby authorize Shine.com and/or its representatives to call you, e-mail you, or SMS you. This consent will supersede any registration for any Do Not Call (DNC) / National Do Not Call (NDNC).",
+      "value": "",
+      "htmlId": "LegalNotification",
+      "bbox": {
+        "x": 201,
+        "y": 800,
+        "w": 878,
+        "h": 38
+      }
+    },
+    {
+      "nodeId": "n27",
+      "tag": "a",
+      "role": "link",
+      "name": "Feedback",
+      "text": "",
+      "value": "",
+      "htmlName": "anc_feedback",
+      "bbox": {
+        "x": 158,
+        "y": 874,
+        "w": 48.3125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n28",
+      "tag": "a",
+      "role": "link",
+      "name": "FAQs",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 223.3125,
+        "y": 874,
+        "w": 26.1875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n29",
+      "tag": "a",
+      "role": "link",
+      "name": "About Us",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 266.5,
+        "y": 874,
+        "w": 46.5625,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n30",
+      "tag": "a",
+      "role": "link",
+      "name": "Contact Us",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 330.0625,
+        "y": 874,
+        "w": 55.015625,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n31",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy Policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 402.078125,
+        "y": 874,
+        "w": 69.25,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n32",
+      "tag": "a",
+      "role": "link",
+      "name": "Security Advice",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 488.328125,
+        "y": 874,
+        "w": 77.28125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n33",
+      "tag": "a",
+      "role": "link",
+      "name": "Business News",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 582.609375,
+        "y": 874,
+        "w": 75.625,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n34",
+      "tag": "a",
+      "role": "link",
+      "name": "Terms & Conditions",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 675.234375,
+        "y": 874,
+        "w": 100.71875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n35",
+      "tag": "a",
+      "role": "link",
+      "name": "Disclaimer",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 792.953125,
+        "y": 874,
+        "w": 54.125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n36",
+      "tag": "div",
+      "role": "text",
+      "name": "© 2026 HT Media Limited",
+      "text": "© 2026 HT Media Limited",
+      "value": "",
+      "bbox": {
+        "x": 150,
+        "y": 874,
+        "w": 980,
+        "h": 14
+      }
+    }
+  ],
+  "opaque": [
+    {
+      "nodeId": "n1",
+      "kind": "background",
+      "bbox": {
+        "x": 150,
+        "y": 0,
+        "w": 100,
+        "h": 57
+      }
+    },
+    {
+      "nodeId": "n3",
+      "kind": "background",
+      "bbox": {
+        "x": 150,
+        "y": 110,
+        "w": 980,
+        "h": 670
+      }
+    },
+    {
+      "nodeId": "n4",
+      "kind": "background",
+      "bbox": {
+        "x": 335.5,
+        "y": 317.5,
+        "w": 70,
+        "h": 70
+      }
+    }
+  ],
+  "screen": [
+    {
+      "id": "e1",
+      "role": "link",
+      "label": "Login",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.843,
+        0.028,
+        0.028,
+        0.021
+      ]
+    },
+    {
+      "id": "e2",
+      "role": "heading",
+      "label": "Register with Resume",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.205,
+        0.442,
+        0.168,
+        0.034
+      ]
+    },
+    {
+      "id": "e3",
+      "role": "text",
+      "label": "We will autofill your details",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.205,
+        0.487,
+        0.168,
+        0.021
+      ]
+    },
+    {
+      "id": "e4",
+      "role": "text",
+      "label": "Supported formats- pdf, doc, docx, csv, rtf, txt files File size should not exceed 5 MB",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.205,
+        0.542,
+        0.168,
+        0.088
+      ]
+    },
+    {
+      "id": "e5",
+      "role": "text",
+      "label": "Upload Resume",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.217,
+        0.542,
+        0.145,
+        0.039
+      ]
+    },
+    {
+      "id": "e6",
+      "role": "textbox",
+      "label": "",
+      "field_type": "file",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.205,
+        0.542,
+        0.198,
+        0.039
+      ]
+    },
+    {
+      "id": "e7",
+      "role": "text",
+      "label": "Or",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        0.486,
+        0.028,
+        0.044
+      ]
+    },
+    {
+      "id": "e8",
+      "role": "heading",
+      "label": "Let’s get started, tell us about yourself.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.182,
+        0.37,
+        0.031
+      ]
+    },
+    {
+      "id": "e9",
+      "role": "text",
+      "label": "It only takes a couple of minutes to get started",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.219,
+        0.37,
+        0.02
+      ]
+    },
+    {
+      "id": "e10",
+      "role": "textbox",
+      "label": "",
+      "field_type": "text",
+      "value": "<NAME_1>",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.258,
+        0.296,
+        0.049
+      ]
+    },
+    {
+      "id": "e11",
+      "role": "textbox",
+      "label": "",
+      "field_type": "text",
+      "value": "<EMAIL_1>",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.324,
+        0.296,
+        0.049
+      ]
+    },
+    {
+      "id": "e12",
+      "role": "textbox",
+      "label": "",
+      "field_type": "number",
+      "value": "91",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.391,
+        0.037,
+        0.049
+      ]
+    },
+    {
+      "id": "e13",
+      "role": "textbox",
+      "label": "",
+      "field_type": "number",
+      "value": "<ACCOUNT_1>",
+      "state": {},
+      "bbox": [
+        0.55,
+        0.391,
+        0.259,
+        0.049
+      ]
+    },
+    {
+      "id": "e14",
+      "role": "textbox",
+      "label": "",
+      "field_type": "password",
+      "value": "<PASSWORD_1>",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.474,
+        0.296,
+        0.049
+      ]
+    },
+    {
+      "id": "e15",
+      "role": "text",
+      "label": "Min 8 - Max 15 characters",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.522,
+        0.56,
+        0.134,
+        0.019
+      ]
+    },
+    {
+      "id": "e16",
+      "role": "text",
+      "label": "Special characters",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        0.56,
+        0.134,
+        0.019
+      ]
+    },
+    {
+      "id": "e17",
+      "role": "text",
+      "label": "Alpha-Numeric",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.522,
+        0.583,
+        0.134,
+        0.019
+      ]
+    },
+    {
+      "id": "e18",
+      "role": "text",
+      "label": "Upper-Lower case",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        0.583,
+        0.134,
+        0.019
+      ]
+    },
+    {
+      "id": "e19",
+      "role": "checkbox",
+      "label": "",
+      "field_type": "checkbox",
+      "value": "",
+      "state": {
+        "checked": false
+      },
+      "bbox": [
+        0.513,
+        0.634,
+        0.01,
+        0.014
+      ]
+    },
+    {
+      "id": "e20",
+      "role": "link",
+      "label": "By registering, you agree to our &",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.653,
+        0.636,
+        0.077,
+        0.017
+      ]
+    },
+    {
+      "id": "e21",
+      "role": "link",
+      "label": "By registering, you agree to our &",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.742,
+        0.636,
+        0.054,
+        0.017
+      ]
+    },
+    {
+      "id": "e22",
+      "role": "button",
+      "label": "Continue",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.517,
+        0.67,
+        0.296,
+        0.05
+      ]
+    },
+    {
+      "id": "e23",
+      "role": "text",
+      "label": "or Register with",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.513,
+        0.754,
+        0.296,
+        0.001
+      ]
+    },
+    {
+      "id": "e24",
+      "role": "text",
+      "label": "Google",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.548,
+        0.801,
+        0.056,
+        0.02
+      ]
+    },
+    {
+      "id": "e25",
+      "role": "link",
+      "label": "Linkedin",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.612,
+        0.789,
+        0.091,
+        0.044
+      ]
+    },
+    {
+      "id": "e26",
+      "role": "text",
+      "label": "Facebook",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.746,
+        0.801,
+        0.063,
+        0.02
+      ]
+    },
+    {
+      "id": "e27",
+      "role": "text",
+      "label": "You hereby authorize Shine.com and/or its representatives to call you, e-mail you, or SMS you. This consent will supersede any registration for any Do Not Call (DNC) / National Do Not Call (NDNC).",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.157,
+        0.889,
+        0.686,
+        0.042
+      ]
+    },
+    {
+      "id": "e28",
+      "role": "link",
+      "label": "Feedback",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.123,
+        0.971,
+        0.038,
+        0.017
+      ]
+    },
+    {
+      "id": "e29",
+      "role": "link",
+      "label": "FAQs",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.174,
+        0.971,
+        0.02,
+        0.017
+      ]
+    },
+    {
+      "id": "e30",
+      "role": "link",
+      "label": "About Us",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.208,
+        0.971,
+        0.036,
+        0.017
+      ]
+    },
+    {
+      "id": "e31",
+      "role": "link",
+      "label": "Contact Us",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.258,
+        0.971,
+        0.043,
+        0.017
+      ]
+    },
+    {
+      "id": "e32",
+      "role": "link",
+      "label": "Privacy Policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.314,
+        0.971,
+        0.054,
+        0.017
+      ]
+    },
+    {
+      "id": "e33",
+      "role": "link",
+      "label": "Security Advice",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.382,
+        0.971,
+        0.06,
+        0.017
+      ]
+    },
+    {
+      "id": "e34",
+      "role": "link",
+      "label": "Business News",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.455,
+        0.971,
+        0.059,
+        0.017
+      ]
+    },
+    {
+      "id": "e35",
+      "role": "link",
+      "label": "Terms & Conditions",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.528,
+        0.971,
+        0.079,
+        0.017
+      ]
+    },
+    {
+      "id": "e36",
+      "role": "link",
+      "label": "Disclaimer",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.619,
+        0.971,
+        0.042,
+        0.017
+      ]
+    },
+    {
+      "id": "e37",
+      "role": "text",
+      "label": "© 2026 HT Media Limited",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.117,
+        0.971,
+        0.766,
+        0.016
+      ]
+    },
+    {
+      "id": "e38",
+      "role": "image",
+      "label": "background (background: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.117,
+        0,
+        0.078,
+        0.063
+      ]
+    },
+    {
+      "id": "e39",
+      "role": "image",
+      "label": "background (background: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.117,
+        0.122,
+        0.766,
+        0.744
+      ]
+    },
+    {
+      "id": "e40",
+      "role": "image",
+      "label": "background (background: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.262,
+        0.353,
+        0.055,
+        0.078
+      ]
+    }
+  ],
+  "detections": [
+    {
+      "id": "d1",
+      "type": "NAME",
+      "sources": [
+        "ner"
+      ],
+      "confidence": 0.8928982218106588,
+      "nodeId": "n13",
+      "bbox": {
+        "x": 657,
+        "y": 232,
+        "w": 378.390625,
+        "h": 44
+      }
+    },
+    {
+      "id": "d2",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n14",
+      "bbox": {
+        "x": 657,
+        "y": 292,
+        "w": 378.390625,
+        "h": 44
+      }
+    },
+    {
+      "id": "d3",
+      "type": "ACCOUNT",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.7,
+      "nodeId": "n16",
+      "bbox": {
+        "x": 704.296875,
+        "y": 352,
+        "w": 331.09375,
+        "h": 44
+      }
+    },
+    {
+      "id": "d4",
+      "type": "PASSWORD",
+      "sources": [
+        "dom_rule"
+      ],
+      "confidence": 1,
+      "nodeId": "n17",
+      "bbox": {
+        "x": 657,
+        "y": 427,
+        "w": 378.390625,
+        "h": 44
+      }
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "<NAME_1>",
+      "type": "NAME",
+      "value": "Jagdeep Saini"
+    },
+    {
+      "token": "<EMAIL_1>",
+      "type": "EMAIL",
+      "value": "girija.71@gmail.com"
+    },
+    {
+      "token": "<ACCOUNT_1>",
+      "type": "ACCOUNT",
+      "value": "0612685725"
+    },
+    {
+      "token": "<PASSWORD_1>",
+      "type": "PASSWORD",
+      "value": "QxdkAHoaAD#7"
+    }
+  ]
+}
