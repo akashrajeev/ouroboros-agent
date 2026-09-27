@@ -24,7 +24,7 @@ function classify(e: RawObservation['elements'][number]): T | null {
   if (it === 'password') return 'PASSWORD';
   const s = [e.name, e.htmlName, e.htmlId, e.placeholder, e.autocomplete].filter(Boolean).join(' ').toLowerCase();
   if (/captcha|security code|verification code shown|search/.test(s)) return null;
-  if (/e-?mail/.test(s)) return 'EMAIL';
+  if (/e-?mail/.test(s) || it === 'email') return 'EMAIL';
   if (/aadha?ar|\buid\b|vid\b/.test(s)) return 'AADHAAR';
   if (/\bpan\b|pan card|pan number|pan no/.test(s)) return 'PAN';
   if (/ifsc/.test(s)) return 'IFSC';
@@ -66,9 +66,19 @@ for(const [index,url] of urls.entries()) {
  page.setDefaultTimeout(7000);
  try {
   const resp=await page.goto(url,{waitUntil:'domcontentloaded',timeout:12000}).catch(()=>null);r.status=resp?.status()??0;
+  // Wait only on reachable 2xx pages whose first-step inputs may mount after DOMContentLoaded.
+  // Observe a visible, enabled native input; do not click consent, authenticate, or bypass a wall.
+  if (r.status>=200 && r.status<300) {
+   await page.waitForFunction(() => [...document.querySelectorAll('input,textarea')].some(e =>
+    e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement ?
+     e.getClientRects().length>0 && !e.disabled && !e.readOnly &&
+     !['hidden','checkbox','radio','search','button','submit','file'].includes((e as HTMLInputElement).type) : false
+   ), {timeout:8000,polling:250}).catch(()=>{});
+  }
   r.finalUrl=page.url();r.title=(await page.title()).slice(0,90);
   await page.evaluate(inpage);const pre=await page.evaluate('window.__ouro.observe()') as RawObservation;
   r.inputs=pre.elements.filter(x=>x.tag==='input'||x.tag==='textarea').length;
+  r.candidates=pre.elements.filter(x=>classify(x)).length;
   const truth:{type:T;value:string;nodeId:string;label:string}[]=[];
   for(const e of pre.elements) { const t=classify(e);if(!t)continue;const value=valueFor(t,e);
    if(await page.evaluate(`window.__ouro.fill(${JSON.stringify(e.nodeId)},${JSON.stringify(value)})`)) truth.push({type:t,value,nodeId:e.nodeId,label:e.name||e.placeholder||''});
@@ -81,7 +91,8 @@ for(const [index,url] of urls.entries()) {
   r.fields=truth.map(x=>{const i=raw.elements.findIndex(e=>e.nodeId===x.nodeId);const se=screen.elements[i];return {type:x.type,label:x.label,found:raw.elements[i]?.value===x.value,masked:/<[A-Z_]+_\d+>/.test(se?.value??''),leaked:normalized.includes(normalizeValue(x.value))};});
   const filled=new Set(truth.map(x=>x.nodeId));
   r.otherPlaceholders=screen.elements.flatMap((se,i)=>filled.has(raw.elements[i]?.nodeId??'')?[]:[...(se.value??'').matchAll(/<[A-Z_]+_\d+>/g)].map(m=>({token:m[0],rawText:raw.elements[i]?.value??raw.elements[i]?.text??'',label:raw.elements[i]?.name??''})));
-  r.result='scored';
+  r.result=truth.length?'scored':'no_persistent_fill';
+  r.reason=truth.length?'filled':r.status===403?'access_denied':r.status===404?'not_found':r.inputs===0?'no_visible_inputs':r.candidates===0?'no_target_fields':'fill_rejected';
  } catch(e) {r.error=String(e).slice(0,180);r.result='unscored_error';}
  await page.close().catch(()=>{});result.push(r);console.log(JSON.stringify({index,url:r.finalUrl??url,status:r.status,result:r.result,fields:r.fields?.length??0,masked:r.fields?.filter((x:any)=>x.masked&&!x.leaked&&x.found).length??0,other:r.otherPlaceholders?.length??0,error:r.error}));
  writeFileSync(`${OUT}results.json`,JSON.stringify(result,null,2));
