@@ -81,7 +81,16 @@ function knownValues(s: string, map: PlaceholderMap): TextMatch[] {
   return out;
 }
 
-function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[], context = ''): string {
+interface RedactCtx {
+  /** Element sits in a boilerplate region (footer/contentinfo). */
+  boilerplate?: boolean;
+  /** Link whose visible text is the site's own contact endpoint. */
+  contact?: 'mailto' | 'tel';
+  /** True when redacting a field value (what the user typed). */
+  isValue?: boolean;
+}
+
+function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sink: TextMatch[], context = '', rctx?: RedactCtx): string {
   if (!s) return s;
   // Context (e.g. a column header) is prepended for detection only, then offsets are shifted back.
   const pre = context ? `${context}: ` : '';
@@ -89,7 +98,19 @@ function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sin
   const lists = [knownValues(s, map), shift(detectPatterns(pre + s)), ...(opts.extraDetectors ?? []).map((d) => d(s))];
   const merged = mergeMatches(lists)
     .map((m) => trimSpan(s, m))
-    .filter((m) => m.source !== 'ner' || (m.value.match(/[A-Za-z0-9]/g) ?? []).length >= 3);
+    .filter((m) => m.source !== 'ner' || (m.value.match(/[A-Za-z0-9]/g) ?? []).length >= 3)
+    .filter((m) => {
+      // A mailto:/tel: link's visible text is the site's own published contact endpoint, not user data.
+      if (rctx?.contact === 'mailto' && m.type === 'EMAIL') return false;
+      if (rctx?.contact === 'tel' && m.type === 'PHONE') return false;
+      // Boilerplate regions (footer/contentinfo) are dominated by site-owned corporate text
+      // (registered addresses, regulatory disclosures, navigation); uncorroborated NER-only spans
+      // there are mostly false positives. Pattern/DOM-rule matches still mask. Field values are
+      // never gated: what the user typed is user data wherever the field sits. Values already
+      // tokenized (source 'known') also still mask everywhere - real user data in a footer stays protected.
+      if (!rctx?.isValue && rctx?.boilerplate && m.source === 'ner') return false;
+      return true;
+    });
   sink.push(...merged);
   return merged.length ? redactText(s, merged, map) : s;
 }
@@ -118,11 +139,11 @@ export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: Sanitiz
         value = map.tokenFor(rule, value);
         detections.push({ id: `d${detections.length + 1}`, type: rule, sources: ['dom_rule'], confidence: 1, nodeId: el.nodeId, bbox: el.bbox });
       } else {
-        value = redactString(value, map, opts, hits, el.name);
+        value = redactString(value, map, opts, hits, el.name, { isValue: true, boilerplate: el.boilerplate, contact: el.contact });
       }
     }
-    const label = redactString(el.name, map, opts, hits, el.context);
-    const text = el.text && el.text !== el.name ? redactString(el.text, map, opts, hits, el.context) : '';
+    const label = redactString(el.name, map, opts, hits, el.context, { boilerplate: el.boilerplate, contact: el.contact });
+    const text = el.text && el.text !== el.name ? redactString(el.text, map, opts, hits, el.context, { boilerplate: el.boilerplate, contact: el.contact }) : '';
     for (const m of hits) {
       detections.push({ id: `d${detections.length + 1}`, type: m.type, sources: [m.source], confidence: m.confidence, nodeId: el.nodeId, bbox: el.bbox });
     }
@@ -136,7 +157,7 @@ export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: Sanitiz
       id, role: el.role, label: fullLabel,
       ...(el.inputType ? { field_type: el.inputType } : el.tag === 'textarea' ? { field_type: 'textarea' } : {}),
       value, state,
-      ...(el.options?.length ? { options: el.options.map((o) => redactString(o, map, opts, hits, el.name)) } : {}),
+      ...(el.options?.length ? { options: el.options.map((o) => redactString(o, map, opts, hits, el.name, { boilerplate: el.boilerplate, contact: el.contact })) } : {}),
       bbox,
     });
     nodeOf[id] = el.nodeId;
