@@ -1,0 +1,6 @@
+# Phase 12C usable pages (seed 12131 run): the five first-step pages that yielded fillable fields.
+https://signup.zerodha.com/
+https://groww.in/login
+https://www.linkedin.com/signup
+https://www.shine.com/registration/
+https://www.airbnb.com/signup_login
