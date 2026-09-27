@@ -1,0 +1,1811 @@
+{
+  "index": 4,
+  "url": "https://www.airbnb.com/signup_login",
+  "finalUrl": "https://www.airbnb.com/signup_login",
+  "status": 200,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "fills": [
+    {
+      "type": "EMAIL",
+      "value": "bhooshan.20@gmail.com",
+      "nodeId": "n13",
+      "label": "Phone number or email"
+    }
+  ],
+  "raw": [
+    {
+      "nodeId": "n1",
+      "tag": "a",
+      "role": "link",
+      "name": "Skip to content",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": -1,
+        "y": -1,
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "nodeId": "n3",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb Homepage",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 0,
+        "w": 102,
+        "h": 80
+      }
+    },
+    {
+      "nodeId": "n5",
+      "tag": "a",
+      "role": "link",
+      "name": "Become a host",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1022.71875,
+        "y": 20,
+        "w": 121.28125,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n6",
+      "tag": "a",
+      "role": "link",
+      "name": "Choose a language and currency",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1156,
+        "y": 20,
+        "w": 40,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n8",
+      "tag": "a",
+      "role": "link",
+      "name": "Main navigation menu",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1208,
+        "y": 20,
+        "w": 40,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n12",
+      "tag": "h1",
+      "role": "heading",
+      "name": "Log in or sign up",
+      "text": "Log in or sign up",
+      "value": "",
+      "htmlId": "auth-modal-title",
+      "bbox": {
+        "x": 545.0625,
+        "y": 366,
+        "w": 189.859375,
+        "h": 30
+      }
+    },
+    {
+      "nodeId": "n13",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Phone number or email",
+      "text": "",
+      "value": "bhooshan.20@gmail.com",
+      "inputType": "text",
+      "autocomplete": "tel-national",
+      "htmlId": "phone-or-email",
+      "bbox": {
+        "x": 424,
+        "y": 428,
+        "w": 432,
+        "h": 55
+      }
+    },
+    {
+      "nodeId": "n14",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 424,
+        "y": 504,
+        "w": 432,
+        "h": 48
+      }
+    },
+    {
+      "nodeId": "n15",
+      "tag": "div",
+      "role": "text",
+      "name": "or",
+      "text": "or",
+      "value": "",
+      "bbox": {
+        "x": 623,
+        "y": 567,
+        "w": 37.75,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n16",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue with Google",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 601,
+        "w": 60,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n18",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue with Apple",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 646,
+        "y": 601,
+        "w": 60,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n20",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Site Footer",
+      "text": "Site Footer",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 900,
+        "w": 1,
+        "h": 30.015625
+      }
+    },
+    {
+      "nodeId": "n21",
+      "tag": "h3",
+      "role": "heading",
+      "name": "Support",
+      "text": "Support",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 932,
+        "w": 394.65625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n22",
+      "tag": "a",
+      "role": "link",
+      "name": "Help Center",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 967,
+        "w": 78.140625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n23",
+      "tag": "a",
+      "role": "link",
+      "name": "Get help with a safety issue",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1003.015625,
+        "w": 176.34375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n24",
+      "tag": "a",
+      "role": "link",
+      "name": "AirCover",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1039.03125,
+        "w": 57.4375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n25",
+      "tag": "a",
+      "role": "link",
+      "name": "Travel insurance",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1075.046875,
+        "w": 103.921875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n26",
+      "tag": "a",
+      "role": "link",
+      "name": "Anti-discrimination",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1111.0625,
+        "w": 123.234375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n27",
+      "tag": "a",
+      "role": "link",
+      "name": "Disability support",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1147.078125,
+        "w": 114,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n28",
+      "tag": "a",
+      "role": "link",
+      "name": "Cancellation options",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1183.09375,
+        "w": 132.71875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n29",
+      "tag": "a",
+      "role": "link",
+      "name": "Report neighborhood concern",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1219.109375,
+        "w": 196.765625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n30",
+      "tag": "h3",
+      "role": "heading",
+      "name": "Hosting",
+      "text": "Hosting",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 932,
+        "w": 394.671875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n31",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb your home",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 967,
+        "w": 116.265625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n32",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb your experience",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1003.015625,
+        "w": 151.4375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n33",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb your service",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1039.03125,
+        "w": 125.359375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n34",
+      "tag": "a",
+      "role": "link",
+      "name": "AirCover for Hosts",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1075.046875,
+        "w": 119.78125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n35",
+      "tag": "a",
+      "role": "link",
+      "name": "Earnings Protection",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1111.0625,
+        "w": 126.390625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n36",
+      "tag": "a",
+      "role": "link",
+      "name": "Hosting resources",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1147.078125,
+        "w": 117.140625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n37",
+      "tag": "a",
+      "role": "link",
+      "name": "Community forum",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1183.09375,
+        "w": 118.828125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n38",
+      "tag": "a",
+      "role": "link",
+      "name": "Hosting responsibly",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1219.109375,
+        "w": 127.734375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n39",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb-friendly apartments",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1255.125,
+        "w": 177.5625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n40",
+      "tag": "a",
+      "role": "link",
+      "name": "Join a free hosting class",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1291.140625,
+        "w": 153.59375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n41",
+      "tag": "a",
+      "role": "link",
+      "name": "Find a co‑host",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1327.15625,
+        "w": 90.671875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n42",
+      "tag": "a",
+      "role": "link",
+      "name": "Refer a host",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 442.65625,
+        "y": 1363.171875,
+        "w": 77.40625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n43",
+      "tag": "h3",
+      "role": "heading",
+      "name": "Airbnb",
+      "text": "Airbnb",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 932,
+        "w": 394.65625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n44",
+      "tag": "a",
+      "role": "link",
+      "name": "2026 Summer Release",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 967,
+        "w": 142.546875,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n45",
+      "tag": "a",
+      "role": "link",
+      "name": "Newsroom",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 1003.015625,
+        "w": 70.515625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n46",
+      "tag": "a",
+      "role": "link",
+      "name": "Careers",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 1039.03125,
+        "w": 50.8125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n47",
+      "tag": "a",
+      "role": "link",
+      "name": "Investors",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 1075.046875,
+        "w": 59,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n48",
+      "tag": "a",
+      "role": "link",
+      "name": "Gift cards",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 1111.0625,
+        "w": 64.0625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n49",
+      "tag": "a",
+      "role": "link",
+      "name": "Airbnb.org emergency stays",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 853.328125,
+        "y": 1147.078125,
+        "w": 182.265625,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n50",
+      "tag": "span",
+      "role": "text",
+      "name": "Footer section",
+      "text": "Footer section",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1439.1875,
+        "w": 1,
+        "h": 1
+      }
+    },
+    {
+      "nodeId": "n51",
+      "tag": "div",
+      "role": "text",
+      "name": "© 2026 Airbnb, Inc.",
+      "text": "© 2026 Airbnb, Inc.",
+      "value": "",
+      "bbox": {
+        "x": 32,
+        "y": 1445,
+        "w": 123.28125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n52",
+      "tag": "span",
+      "role": "text",
+      "name": "·",
+      "text": "·",
+      "value": "",
+      "bbox": {
+        "x": 155.28125,
+        "y": 1445,
+        "w": 19.359375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n53",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 174.640625,
+        "y": 1445,
+        "w": 46.3125,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n54",
+      "tag": "span",
+      "role": "text",
+      "name": "·",
+      "text": "·",
+      "value": "",
+      "bbox": {
+        "x": 220.953125,
+        "y": 1445,
+        "w": 19.359375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n55",
+      "tag": "a",
+      "role": "link",
+      "name": "Terms",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 240.3125,
+        "y": 1445,
+        "w": 39.984375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n56",
+      "tag": "span",
+      "role": "text",
+      "name": "·",
+      "text": "·",
+      "value": "",
+      "bbox": {
+        "x": 280.296875,
+        "y": 1445,
+        "w": 19.359375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n57",
+      "tag": "a",
+      "role": "link",
+      "name": "Your Privacy Choices",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 299.65625,
+        "y": 1445,
+        "w": 167.84375,
+        "h": 18
+      }
+    },
+    {
+      "nodeId": "n59",
+      "tag": "button",
+      "role": "button",
+      "name": "Choose a language",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 958.28125,
+        "y": 1439.1875,
+        "w": 116.953125,
+        "h": 30
+      }
+    },
+    {
+      "nodeId": "n61",
+      "tag": "button",
+      "role": "button",
+      "name": "Choose a currency",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1079.234375,
+        "y": 1439.1875,
+        "w": 60.765625,
+        "h": 30
+      }
+    },
+    {
+      "nodeId": "n62",
+      "tag": "a",
+      "role": "link",
+      "name": "Navigate to Facebook",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1152,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n64",
+      "tag": "a",
+      "role": "link",
+      "name": "Navigate to Twitter",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1192,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n66",
+      "tag": "a",
+      "role": "link",
+      "name": "Navigate to Instagram",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1232,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ],
+  "opaque": [
+    {
+      "nodeId": "n2",
+      "kind": "svg",
+      "bbox": {
+        "x": -1,
+        "y": 59.046875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n4",
+      "kind": "svg",
+      "bbox": {
+        "x": 32,
+        "y": 24,
+        "w": 102,
+        "h": 32
+      }
+    },
+    {
+      "nodeId": "n7",
+      "kind": "svg",
+      "bbox": {
+        "x": 1168,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n9",
+      "kind": "svg",
+      "bbox": {
+        "x": 1220,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n10",
+      "kind": "img",
+      "bbox": {
+        "x": 0,
+        "y": 80,
+        "w": 1280,
+        "h": 820
+      },
+      "src": "https://a0.muscache.com/im/pictures/AirbnbPlatformAssets/AirbnbPlatformAssets-signup-and-login/original/2d46d9a0-5218-4fa7-91da-356eb8bb130b.jpeg?im_w=720"
+    },
+    {
+      "nodeId": "n11",
+      "kind": "svg",
+      "bbox": {
+        "x": 620,
+        "y": 310,
+        "w": 40,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n17",
+      "kind": "svg",
+      "bbox": {
+        "x": 594,
+        "y": 621,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n19",
+      "kind": "svg",
+      "bbox": {
+        "x": 666,
+        "y": 621,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n58",
+      "kind": "svg",
+      "bbox": {
+        "x": 441.5,
+        "y": 1448.375,
+        "w": 26,
+        "h": 12
+      }
+    },
+    {
+      "nodeId": "n60",
+      "kind": "svg",
+      "bbox": {
+        "x": 966.28125,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n63",
+      "kind": "svg",
+      "bbox": {
+        "x": 1152,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n65",
+      "kind": "svg",
+      "bbox": {
+        "x": 1192,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    },
+    {
+      "nodeId": "n67",
+      "kind": "svg",
+      "bbox": {
+        "x": 1232,
+        "y": 1446.1875,
+        "w": 16,
+        "h": 16
+      }
+    }
+  ],
+  "screen": [
+    {
+      "id": "e1",
+      "role": "link",
+      "label": "Skip to content",
+      "value": "",
+      "state": {},
+      "bbox": [
+        -0.001,
+        -0.001,
+        0.001,
+        0.001
+      ]
+    },
+    {
+      "id": "e2",
+      "role": "link",
+      "label": "Airbnb Homepage",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        0,
+        0.08,
+        0.089
+      ]
+    },
+    {
+      "id": "e3",
+      "role": "link",
+      "label": "Become a host",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.799,
+        0.022,
+        0.095,
+        0.044
+      ]
+    },
+    {
+      "id": "e4",
+      "role": "link",
+      "label": "Choose a language and currency",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.903,
+        0.022,
+        0.031,
+        0.044
+      ]
+    },
+    {
+      "id": "e5",
+      "role": "link",
+      "label": "Main navigation menu",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.944,
+        0.022,
+        0.031,
+        0.044
+      ]
+    },
+    {
+      "id": "e6",
+      "role": "heading",
+      "label": "Log in or sign up",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.426,
+        0.407,
+        0.148,
+        0.033
+      ]
+    },
+    {
+      "id": "e7",
+      "role": "textbox",
+      "label": "Phone number or email",
+      "field_type": "text",
+      "value": "<EMAIL_1>",
+      "state": {},
+      "bbox": [
+        0.331,
+        0.476,
+        0.338,
+        0.061
+      ]
+    },
+    {
+      "id": "e8",
+      "role": "button",
+      "label": "Continue",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.331,
+        0.56,
+        0.338,
+        0.053
+      ]
+    },
+    {
+      "id": "e9",
+      "role": "text",
+      "label": "or",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.487,
+        0.63,
+        0.029,
+        0.02
+      ]
+    },
+    {
+      "id": "e10",
+      "role": "button",
+      "label": "Continue with Google",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        0.668,
+        0.047,
+        0.067
+      ]
+    },
+    {
+      "id": "e11",
+      "role": "button",
+      "label": "Continue with Apple",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.505,
+        0.668,
+        0.047,
+        0.067
+      ]
+    },
+    {
+      "id": "e12",
+      "role": "heading",
+      "label": "Site Footer",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1,
+        0.001,
+        0.033
+      ]
+    },
+    {
+      "id": "e13",
+      "role": "heading",
+      "label": "Support",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.036,
+        0.308,
+        0.02
+      ]
+    },
+    {
+      "id": "e14",
+      "role": "link",
+      "label": "Help Center",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.074,
+        0.061,
+        0.02
+      ]
+    },
+    {
+      "id": "e15",
+      "role": "link",
+      "label": "Get help with a safety issue",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.114,
+        0.138,
+        0.02
+      ]
+    },
+    {
+      "id": "e16",
+      "role": "link",
+      "label": "AirCover",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.154,
+        0.045,
+        0.02
+      ]
+    },
+    {
+      "id": "e17",
+      "role": "link",
+      "label": "Travel insurance",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.194,
+        0.081,
+        0.02
+      ]
+    },
+    {
+      "id": "e18",
+      "role": "link",
+      "label": "Anti-discrimination",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.235,
+        0.096,
+        0.02
+      ]
+    },
+    {
+      "id": "e19",
+      "role": "link",
+      "label": "Disability support",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.275,
+        0.089,
+        0.02
+      ]
+    },
+    {
+      "id": "e20",
+      "role": "link",
+      "label": "Cancellation options",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.315,
+        0.104,
+        0.02
+      ]
+    },
+    {
+      "id": "e21",
+      "role": "link",
+      "label": "Report neighborhood concern",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.355,
+        0.154,
+        0.02
+      ]
+    },
+    {
+      "id": "e22",
+      "role": "heading",
+      "label": "Hosting",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.036,
+        0.308,
+        0.02
+      ]
+    },
+    {
+      "id": "e23",
+      "role": "link",
+      "label": "Airbnb your home",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.074,
+        0.091,
+        0.02
+      ]
+    },
+    {
+      "id": "e24",
+      "role": "link",
+      "label": "Airbnb your experience",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.114,
+        0.118,
+        0.02
+      ]
+    },
+    {
+      "id": "e25",
+      "role": "link",
+      "label": "Airbnb your service",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.154,
+        0.098,
+        0.02
+      ]
+    },
+    {
+      "id": "e26",
+      "role": "link",
+      "label": "AirCover for Hosts",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.194,
+        0.094,
+        0.02
+      ]
+    },
+    {
+      "id": "e27",
+      "role": "link",
+      "label": "Earnings Protection",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.235,
+        0.099,
+        0.02
+      ]
+    },
+    {
+      "id": "e28",
+      "role": "link",
+      "label": "Hosting resources",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.275,
+        0.092,
+        0.02
+      ]
+    },
+    {
+      "id": "e29",
+      "role": "link",
+      "label": "Community forum",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.315,
+        0.093,
+        0.02
+      ]
+    },
+    {
+      "id": "e30",
+      "role": "link",
+      "label": "Hosting responsibly",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.355,
+        0.1,
+        0.02
+      ]
+    },
+    {
+      "id": "e31",
+      "role": "link",
+      "label": "Airbnb-friendly apartments",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.395,
+        0.139,
+        0.02
+      ]
+    },
+    {
+      "id": "e32",
+      "role": "link",
+      "label": "Join a free hosting class",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.435,
+        0.12,
+        0.02
+      ]
+    },
+    {
+      "id": "e33",
+      "role": "link",
+      "label": "Find a co‑host",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.475,
+        0.071,
+        0.02
+      ]
+    },
+    {
+      "id": "e34",
+      "role": "link",
+      "label": "Refer a host",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.346,
+        1.515,
+        0.06,
+        0.02
+      ]
+    },
+    {
+      "id": "e35",
+      "role": "heading",
+      "label": "Airbnb",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.036,
+        0.308,
+        0.02
+      ]
+    },
+    {
+      "id": "e36",
+      "role": "link",
+      "label": "2026 Summer Release",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.074,
+        0.111,
+        0.02
+      ]
+    },
+    {
+      "id": "e37",
+      "role": "link",
+      "label": "Newsroom",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.114,
+        0.055,
+        0.02
+      ]
+    },
+    {
+      "id": "e38",
+      "role": "link",
+      "label": "Careers",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.154,
+        0.04,
+        0.02
+      ]
+    },
+    {
+      "id": "e39",
+      "role": "link",
+      "label": "Investors",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.194,
+        0.046,
+        0.02
+      ]
+    },
+    {
+      "id": "e40",
+      "role": "link",
+      "label": "Gift cards",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.235,
+        0.05,
+        0.02
+      ]
+    },
+    {
+      "id": "e41",
+      "role": "link",
+      "label": "Airbnb.org emergency stays",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.667,
+        1.275,
+        0.142,
+        0.02
+      ]
+    },
+    {
+      "id": "e42",
+      "role": "text",
+      "label": "Footer section",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.599,
+        0.001,
+        0.001
+      ]
+    },
+    {
+      "id": "e43",
+      "role": "text",
+      "label": "© 2026 Airbnb, Inc.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        1.606,
+        0.096,
+        0.02
+      ]
+    },
+    {
+      "id": "e44",
+      "role": "text",
+      "label": "·",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.121,
+        1.606,
+        0.015,
+        0.02
+      ]
+    },
+    {
+      "id": "e45",
+      "role": "link",
+      "label": "Privacy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.136,
+        1.606,
+        0.036,
+        0.02
+      ]
+    },
+    {
+      "id": "e46",
+      "role": "text",
+      "label": "·",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.173,
+        1.606,
+        0.015,
+        0.02
+      ]
+    },
+    {
+      "id": "e47",
+      "role": "link",
+      "label": "Terms",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.188,
+        1.606,
+        0.031,
+        0.02
+      ]
+    },
+    {
+      "id": "e48",
+      "role": "text",
+      "label": "·",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.219,
+        1.606,
+        0.015,
+        0.02
+      ]
+    },
+    {
+      "id": "e49",
+      "role": "link",
+      "label": "Your Privacy Choices",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.234,
+        1.606,
+        0.131,
+        0.02
+      ]
+    },
+    {
+      "id": "e50",
+      "role": "button",
+      "label": "Choose a language",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.749,
+        1.599,
+        0.091,
+        0.033
+      ]
+    },
+    {
+      "id": "e51",
+      "role": "button",
+      "label": "Choose a currency",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.843,
+        1.599,
+        0.047,
+        0.033
+      ]
+    },
+    {
+      "id": "e52",
+      "role": "link",
+      "label": "Navigate to Facebook",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.9,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e53",
+      "role": "link",
+      "label": "Navigate to Twitter",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.931,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e54",
+      "role": "link",
+      "label": "Navigate to Instagram",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.963,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e55",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        -0.001,
+        0.066,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e56",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.025,
+        0.027,
+        0.08,
+        0.036
+      ]
+    },
+    {
+      "id": "e57",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.913,
+        0.036,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e58",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.953,
+        0.036,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e59",
+      "role": "image",
+      "label": "img (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0,
+        0.089,
+        1,
+        0.911
+      ]
+    },
+    {
+      "id": "e60",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.484,
+        0.344,
+        0.031,
+        0.044
+      ]
+    },
+    {
+      "id": "e61",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.464,
+        0.69,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e62",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.52,
+        0.69,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e63",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.345,
+        1.609,
+        0.02,
+        0.013
+      ]
+    },
+    {
+      "id": "e64",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.755,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e65",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.9,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e66",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.931,
+        1.607,
+        0.013,
+        0.018
+      ]
+    },
+    {
+      "id": "e67",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.963,
+        1.607,
+        0.013,
+        0.018
+      ]
+    }
+  ],
+  "detections": [
+    {
+      "id": "d1",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n13",
+      "bbox": {
+        "x": 424,
+        "y": 428,
+        "w": 432,
+        "h": 55
+      }
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "<EMAIL_1>",
+      "type": "EMAIL",
+      "value": "bhooshan.20@gmail.com"
+    }
+  ]
+}
