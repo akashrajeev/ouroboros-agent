@@ -57,6 +57,9 @@ class StubPlanner:
 
     def plan(self, req: StepRequest) -> Action:
         task_tokens = [m.group(0) for m in TOKEN_RE.finditer(req.task)]
+        # When the task names no values ("fill the form from my saved profile"),
+        # plan from the legend instead - the same signal the VLM planner uses.
+        candidates = task_tokens or list(req.legend)
         used = {h.text for h in req.history if h.op == "type"}
         typed_into = {h.element_id for h in req.history if h.op == "type"}
         for el in req.screen_map:
@@ -67,7 +70,7 @@ class StubPlanner:
             want = field_token_type(el)
             if not want:
                 continue
-            for tok in task_tokens:
+            for tok in candidates:
                 if tok in used:
                     continue
                 if req.legend.get(tok) == want:
