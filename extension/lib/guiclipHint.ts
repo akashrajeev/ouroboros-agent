@@ -6,7 +6,9 @@ export type SemanticHint = { label: typeof LABELS[number]; score: number; margin
 let pending: Promise<{ session: ort.InferenceSession; embeddings: number[][] }> | undefined;
 
 async function model() {
-  const base = browser.runtime.getURL('/' as never);
+  // Keep this module typecheckable in eval too, which imports the loop without WXT globals.
+  const api = globalThis as unknown as { browser?: { runtime: { getURL(path: string): string } }; chrome?: { runtime: { getURL(path: string): string } } };
+  const base = (api.browser ?? api.chrome)!.runtime.getURL('/');
   ort.env.wasm.wasmPaths = `${base}ort/`;
   ort.env.wasm.numThreads = 1;
   pending ??= Promise.all([
