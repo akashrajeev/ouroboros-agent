@@ -1,0 +1,11 @@
+{
+  "site": "linkedin",
+  "capture": "linkedin.capture.json",
+  "annotatedBy": "manual review of all 29 observed elements + viewport screenshot",
+  "positives": [
+    { "element": 1, "field": "value", "type": "EMAIL", "value": "dharitri.10@gmail.com", "note": "typed synthetic email" },
+    { "element": 2, "field": "value", "type": "PASSWORD", "value": "Qxir5QVrln#7", "note": "typed synthetic password" }
+  ],
+  "benign_lookalikes": [],
+  "notes": ["No other PII or lookalikes on the page."]
+}
