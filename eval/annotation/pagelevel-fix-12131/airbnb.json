@@ -1,0 +1,18 @@
+{
+  "site": "airbnb",
+  "capture": "airbnb.capture.json",
+  "annotatedBy": "manual review of all 54 observed elements + viewport screenshot; re-located on fixed pipeline capture",
+  "positives": [
+    {
+      "element": 6,
+      "field": "value",
+      "type": "EMAIL",
+      "value": "bhooshan.20@gmail.com",
+      "note": "typed synthetic email into phone-or-email field"
+    }
+  ],
+  "benign_lookalikes": [],
+  "notes": [
+    "No other PII or lookalikes on the page. Marketing imagery contains no readable personal data (checked screenshot)."
+  ]
+}
