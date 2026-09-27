@@ -62,7 +62,7 @@ export default defineBackground(() => {
           const dataUrl = await browser.tabs.captureVisibleTab(tab.windowId!, { format: 'png' });
           const r = await host<VisualResponse>({ type: 'ouro:host:visual', target: 'host', dataUrl, regions: raw.opaque.map((o) => o.bbox), viewportW: raw.viewport.w });
           events.push({ kind: 'vision', ms: r.ms, regions: r.regions } as never);
-          return { jpegB64: r.jpegB64, imageText: r.imageText, detections: r.detections };
+          return { jpegB64: r.jpegB64, imageText: r.imageText, detections: r.detections, semanticHint: r.semanticHint };
         },
         scroll: async (direction) => { await send({ type: 'ouro:scroll', direction }); },
         settle: async () => { await send({ type: 'ouro:settle' }); },
