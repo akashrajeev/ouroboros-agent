@@ -1,0 +1,69 @@
+{
+  "site": "zerodha",
+  "capture": "signup.capture.json",
+  "annotatedBy": "manual review of all 81 observed elements + viewport screenshot; re-located on fixed pipeline capture",
+  "positives": [
+    {
+      "element": 12,
+      "field": "value",
+      "type": "PHONE",
+      "value": "7142902107",
+      "note": "typed synthetic mobile"
+    }
+  ],
+  "benign_lookalikes": [
+    {
+      "element": 28,
+      "field": "name",
+      "value": "NRI demat account",
+      "kind": "navigation link text",
+      "expect": "unmasked"
+    },
+    {
+      "element": 59,
+      "field": "text",
+      "value": "#153/154, 4th Cross, Dollars Colony, Opp. Clarence Public School, J.P Nagar 4th Phase, Bengaluru - 560078, Karnataka, India",
+      "kind": "corporate registered address in SEBI disclosure",
+      "expect": "unmasked"
+    },
+    {
+      "element": 59,
+      "field": "text",
+      "value": "INZ000031633",
+      "kind": "corporate SEBI registration number",
+      "expect": "unmasked"
+    },
+    {
+      "element": 59,
+      "field": "text",
+      "value": "IN-DP-431-2019",
+      "kind": "corporate SEBI registration number",
+      "expect": "unmasked"
+    },
+    {
+      "element": 59,
+      "field": "text",
+      "value": "INZ000038238",
+      "kind": "corporate SEBI registration number",
+      "expect": "unmasked"
+    },
+    {
+      "element": 60,
+      "field": "name",
+      "value": "complaints@zerodha.com",
+      "kind": "public business contact email",
+      "expect": "unmasked"
+    },
+    {
+      "element": 61,
+      "field": "name",
+      "value": "dp@zerodha.com",
+      "kind": "public business contact email",
+      "expect": "unmasked"
+    }
+  ],
+  "notes": [
+    "No natural-person PII in page content outside the typed field; verified against viewport screenshot.",
+    "Policy: corporate/business contact details and regulatory disclosure data are public information, not user PII; masking them degrades the agent's view and counts against precision."
+  ]
+}
