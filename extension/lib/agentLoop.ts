@@ -1,7 +1,7 @@
 import type { SemanticHint } from './guiclipHint';
 import {
-  observationKey, leakGate, estimateTokens, type StepRecord, legend, PlaceholderMap, rehydrate, sanitize, validateAction,
-  type Action, type RawObservation, type ScreenMap, type TextDetector,
+  buildRedactionManifest, observationKey, leakGate, estimateTokens, PAYLOAD_VERSION, type StepRecord, legend, PlaceholderMap,
+  rehydrate, sanitize, validateAction, type Action, type RawObservation, type ScreenMap, type TextDetector,
 } from '@ouroboros/core';
 
 /**
@@ -71,36 +71,45 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const vis = wantVisual && deps.visual ? await deps.visual(raw) : null;
       wantVisual = false;
       const tv = now();
+      // Payload v2: the redaction manifest makes the scheme explicit - the server
+      // KNOWS what is masked, the token grammar, and how the image was redacted.
       const body = JSON.stringify({
+        payload_version: PAYLOAD_VERSION,
         session_id: opts.sessionId ?? 'local',
         task: safeTask,
         url_origin: screen.url_origin, // elements are sent once, as screen_map (the server ignores anything else)
         screen_map: screen.elements,
-        legend: legend(map),
+        legend: legend(map), // v1 field kept for older servers; redaction.legend is authoritative in v2
+        redaction: buildRedactionManifest(screen, map, vis ? { detections: vis.detections } : undefined, safeTask),
         history: history.map((h) => ({ op: h.op, element_id: h.element_id ?? null, text: h.text ?? null })),
         ...(vis ? { image_jpeg_b64: vis.jpegB64 } : {}),
         ...(vis?.semanticHint ? { semantic_hint: vis.semanticHint } : {}),
       });
       const gate = await leakGate(body, map, { canaries: deps.canaries, imageText: vis?.imageText });
       const t3 = now();
-      const rec = (outcome: StepRecord['outcome'], action: string, server = 0): StepRecord => ({
+      // M5: one row per step, recorded when the step's work actually ends. ms_total spans
+      // observe -> execute (or the step's real end): everything the task waited on this step.
+      const later = { server: 0, validate: 0, confirm: 0, execute: 0 };
+      const rec = (outcome: StepRecord['outcome'], action: string, end: number): StepRecord => ({
         run_id: runId, step, ts: Date.now(), origin: screen.url_origin, outcome, action, reused,
         elements: screen.elements.length, opaque: screen.opaqueCount, placeholders: map.size,
         image_detections: vis?.detections ?? 0, image_sent: !!vis && outcome !== 'blocked',
         bytes: outcome === 'blocked' ? 0 : gate.bytes, tokens_est: outcome === 'blocked' ? 0 : estimateTokens(gate.bytes - (vis?.jpegB64.length ?? 0), !!vis),
         gate_hits: gate.hits.length,
-        ms_observe: t1 - t0, ms_sanitize: t2 - t1, ms_vision: tv - t2, ms_gate: t3 - tv, ms_server: server, ms_total: t3 - t0 + server,
+        ms_observe: t1 - t0, ms_sanitize: t2 - t1, ms_vision: tv - t2, ms_gate: t3 - tv,
+        ms_server: later.server, ms_validate: later.validate, ms_confirm: later.confirm, ms_execute: later.execute,
+        ms_total: end - t0,
         model_load_ms: step === 1 ? (deps.modelLoadMs?.() ?? 0) : 0,
       });
       if (!gate.pass) {
-        deps.record?.(rec('blocked', ''));
+        deps.record?.(rec('blocked', '', t3));
         deps.log?.({ kind: 'blocked', step, hits: gate.hits.map((h) => ({ kind: h.kind, type: h.type })) });
         return { status: 'blocked', steps: step };
       }
       const res = await deps.post(body);
       const t4 = now();
+      later.server = t4 - t3;
       const op = String((res.action as Action)?.op ?? 'invalid');
-      deps.record?.(rec(op === 'done' ? 'done' : 'sent', op, t4 - t3));
       deps.log?.({ kind: 'sent', step, sha256: gate.sha256, bytes: gate.bytes, ms: { observe: t1 - t0, sanitize: t2 - t1, vision: tv - t2, gate: t3 - tv, server: t4 - t3 }, ...(vis ? { image: { detections: vis.detections } } : {}), ...(reused ? { reused: true } : {}) });
 
       const planned: ScreenMap = screen;
@@ -113,33 +122,52 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
         current = fk === key ? planned : sanitize(fresh, map, { extraDetectors: fx }).screen;
       }
       const v = validateAction(res.action, planned, current, map);
+      const t5 = now();
+      later.validate = t5 - t4; // fresh re-observe + stale-state check + schema/token checks (A9)
       if (!v.ok) {
+        deps.record?.(rec('rejected', op, t5));
         { const a = res.action as { op?: string; element_id?: string; text?: string } | null; const el = current.elements.find((e) => e.id === a?.element_id);
           deps.log?.({ kind: 'rejected', step, reason: v.reason, op: a?.op, label: el?.label, tokens: (a?.text ?? '').match(/<[A-Z_]+_\d+>/g)?.join(',') }); }
         return { status: 'rejected', steps: step, reason: v.reason };
       }
       const a = v.action;
-      if (a.op === 'done') { deps.log?.({ kind: 'finished', step, reason: a.reason ?? '' }); return { status: 'done', steps: step }; }
-      if (a.op === 'need_visual') { wantVisual = true; history.push(a); continue; }
+      if (a.op === 'done') {
+        deps.record?.(rec('done', 'done', t5));
+        deps.log?.({ kind: 'finished', step, reason: a.reason ?? '' });
+        return { status: 'done', steps: step };
+      }
+      if (a.op === 'need_visual') { deps.record?.(rec('sent', a.op, t5)); wantVisual = true; history.push(a); continue; }
       if (a.op === 'scroll' && deps.scroll) {
         await deps.scroll(/up/i.test(a.text ?? a.reason ?? '') ? 'up' : 'down');
+        deps.record?.(rec('sent', a.op, now()));
         deps.log?.({ kind: 'executed', step, op: a.op });
         history.push(a);
         continue;
       }
-      if (a.op === 'wait' && deps.settle) { await deps.settle(); history.push(a); continue; }
+      if (a.op === 'wait' && deps.settle) { await deps.settle(); deps.record?.(rec('sent', a.op, now())); history.push(a); continue; }
       if (a.op === 'ask_user' || a.op === 'wait' || a.op === 'scroll') {
         // Stub-era: visual escalation and scrolling land in later phases.
+        deps.record?.(rec('sent', a.op, t5));
         history.push(a);
         continue;
       }
+      let tC = t5;
       if (v.needsConfirm) {
         const el = current.elements.find((e) => e.id === a.element_id);
-        if (!(await deps.confirm(el?.label ?? a.element_id ?? ''))) return { status: 'declined', steps: step };
+        if (!(await deps.confirm(el?.label ?? a.element_id ?? ''))) {
+          later.confirm = now() - t5;
+          deps.record?.(rec('declined', a.op, now()));
+          return { status: 'declined', steps: step };
+        }
+        tC = now();
+        later.confirm = tC - t5;
       }
       const nodeId = current.nodeOf[a.element_id!]!;
       const text = a.text ? rehydrate(a.text, map).text : undefined; // A10, in memory only
       const r = await deps.execute(nodeId, a.op, text);
+      const t7 = now();
+      later.execute = t7 - tC;
+      deps.record?.(rec(r.ok ? 'sent' : 'error', a.op, t7));
       if (!r.ok) return { status: 'exec_failed', steps: step, reason: r.reason };
       deps.log?.({ kind: 'executed', step, op: a.op, element_id: a.element_id });
       history.push(a);
