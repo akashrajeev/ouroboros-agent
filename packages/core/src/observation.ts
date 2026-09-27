@@ -21,6 +21,10 @@ export interface RawElement {
   context?: string;
   /** <select> option texts (real page content; sanitized before sending). */
   options?: string[];
+  /** Element sits inside a boilerplate region (<footer>, [role=contentinfo]). Detection context only; never serialized. */
+  boilerplate?: boolean;
+  /** Link whose visible text is the site's own contact endpoint (mailto:/tel: href), not user data. */
+  contact?: 'mailto' | 'tel';
   bbox: BBox;
 }
 
