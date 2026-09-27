@@ -1,4 +1,4 @@
-import { summarizeSteps, type StepRecord } from '@ouroboros/core';
+import { quantile, summarizeRuns, summarizeSteps, type StepRecord } from '@ouroboros/core';
 
 const esc = (s: string) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!);
 const f = (n: number, d = 1) => n.toFixed(d);
@@ -7,6 +7,8 @@ const f = (n: number, d = 1) => n.toFixed(d);
 export function renderDashboard(rows: StepRecord[]): string {
   if (!rows.length) return '<p>No metrics yet. Run a task, or load a CSV.</p>';
   const s = summarizeSteps(rows);
+  const runSummaries = summarizeRuns(rows);
+  const taskMs = runSummaries.map((r) => r.ms_task);
   const max = Math.max(1, ...Object.values(s.stages).map((v) => v.p95));
   const bars = (Object.entries(s.stages) as [string, { p50: number; p95: number }][]).map(([k, v]) => `
     <tr><td>${k}</td><td>${f(v.p50)}</td><td>${f(v.p95)}</td>
@@ -15,12 +17,14 @@ export function renderDashboard(rows: StepRecord[]): string {
   rows.forEach((r) => byRun.set(r.run_id, [...(byRun.get(r.run_id) ?? []), r]));
   const runs = [...byRun].map(([id, rs]) => {
     const last = rs[rs.length - 1]!;
-    return `<tr><td>${esc(id)}</td><td>${esc(last.origin)}</td><td>${rs.length}</td><td>${rs.filter((r) => r.reused).length}</td><td>${rs.filter((r) => r.image_sent).length}</td><td>${Math.max(...rs.map((r) => r.placeholders))}</td><td>${rs.reduce((a, r) => a + r.bytes, 0)}</td><td>${esc(last.outcome)}</td></tr>`;
+    const task = runSummaries.find((r) => r.run_id === id);
+    return `<tr><td>${esc(id)}</td><td>${esc(last.origin)}</td><td>${rs.length}</td><td>${rs.filter((r) => r.reused).length}</td><td>${rs.filter((r) => r.image_sent).length}</td><td>${Math.max(...rs.map((r) => r.placeholders))}</td><td>${rs.reduce((a, r) => a + r.bytes, 0)}</td><td>${f(task?.ms_task ?? 0, 0)}</td><td>${esc(last.outcome)}</td></tr>`;
   }).join('');
   return `
   <section class="cards">
     <div><b>${s.steps}</b><span>steps / ${s.runs} runs</span></div>
     <div><b>${f(s.stages.total.p50, 0)} / ${f(s.stages.total.p95, 0)} ms</b><span>step p50 / p95 (M5)</span></div>
+    <div><b>${f(quantile(taskMs, 0.5), 0)} / ${f(quantile(taskMs, 0.95), 0)} ms</b><span>whole-task p50 / p95 (M5 end-to-end)</span></div>
     <div><b>${f(s.g1SkipPct)}%</b><span>steps reusing the sanitized screen (G1)</span></div>
     <div><b>${f(s.imageStepPct)}%</b><span>steps that sent a masked image (G5)</span></div>
     <div><b>${f(s.bytesMean, 0)} B / ${f(s.tokensMean, 0)} tok</b><span>mean payload per step (M4)</span></div>
@@ -30,5 +34,5 @@ export function renderDashboard(rows: StepRecord[]): string {
   <h2>Stage latency (ms)</h2>
   <table><tr><th>stage</th><th>p50</th><th>p95</th><th></th></tr>${bars}</table>
   <h2>Runs</h2>
-  <table><tr><th>run</th><th>origin</th><th>steps</th><th>G1 skips</th><th>images</th><th>PII values</th><th>bytes</th><th>outcome</th></tr>${runs}</table>`;
+  <table><tr><th>run</th><th>origin</th><th>steps</th><th>G1 skips</th><th>images</th><th>PII values</th><th>bytes</th><th>task ms</th><th>outcome</th></tr>${runs}</table>`;
 }
