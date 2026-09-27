@@ -25,6 +25,12 @@ class HistoryItem(BaseModel):
     text: Optional[str] = None
 
 
+class SemanticHint(BaseModel):
+    label: Literal["login", "registration", "checkout", "search", "error"]
+    score: float = Field(ge=-1, le=1)
+    margin: float = Field(ge=0, le=2)
+
+
 class StepRequest(BaseModel):
     session_id: str
     task: str = Field(max_length=4000)
@@ -33,6 +39,7 @@ class StepRequest(BaseModel):
     legend: dict[str, str] = Field(default_factory=dict)
     history: list[HistoryItem] = Field(default_factory=list)
     image_jpeg_b64: Optional[str] = None
+    semantic_hint: Optional[SemanticHint] = None
 
 
 class Action(BaseModel):
