@@ -61,6 +61,17 @@ describe('end-to-end device loop (stub planner)', () => {
     expect(bodies.length).toBe(4);
     for (const b of bodies) for (const s of SECRETS) expect(b).not.toContain(s);
     expect(bodies[0]).toContain('<PHONE_1>');
+    // Payload v2: explicit redaction manifest, no real values, server-visible scheme.
+    const wire = JSON.parse(bodies[0]!);
+    expect(wire.payload_version).toBe(2);
+    expect(wire.redaction.scheme).toBe('ouroboros-redact/1');
+    expect(wire.redaction.task_tokens).toContain('<PHONE_1>');
+    expect(wire.redaction.legend['<PHONE_1>']).toBe('PHONE');
+    expect(JSON.stringify(wire.redaction)).not.toContain('9876543210');
+    // After the first type, the filled field shows up as a masked element on the wire.
+    const later = JSON.parse(bodies[1]!);
+    expect(later.redaction.masked_elements.length).toBeGreaterThan(0);
+    expect(later.redaction.masked_elements[0].tokens[0]).toMatch(/^<[A-Z]+_\d+>$/);
     expect(events.filter((e) => e.kind === 'sent').every((e) => e.kind === 'sent' && /^[0-9a-f]{64}$/.test(e.sha256))).toBe(true);
   });
 
