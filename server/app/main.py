@@ -43,6 +43,8 @@ def step(req: StepRequest) -> StepResponse:
             input_chars=len(text_view),
             image_bytes=image_bytes,
             planner=planner.name,
+            redaction_scheme=req.redaction.scheme if req.redaction else None,
+            masked_elements=req.redaction.masked_element_count if req.redaction else None,
             planner_ms=getattr(planner, "last", {}).get("ms"),
             prompt_tokens=getattr(planner, "last", {}).get("prompt_tokens"),
             completion_tokens=getattr(planner, "last", {}).get("completion_tokens"),
