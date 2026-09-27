@@ -1,0 +1,220 @@
+{
+  "tag": "pagelevel-fix-12131",
+  "generated": "2026-09-27T17:56:48.397Z",
+  "totals": {
+    "tp": 9,
+    "fn": 0,
+    "fp": 0,
+    "tn": 8,
+    "pos": 9,
+    "microPrecision": 1,
+    "microRecall": 1,
+    "microF1": 1,
+    "macroPrecision": 1,
+    "macroRecall": 1
+  },
+  "sites": [
+    {
+      "site": "airbnb",
+      "url": "https://www.airbnb.com/signup_login",
+      "elements": 54,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 6,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "bhooshan.20@gmail.com",
+          "note": "typed synthetic email into phone-or-email field",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "groww",
+      "url": "https://groww.in/login",
+      "elements": 13,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 7,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "girindra.40@gmail.com",
+          "note": "typed synthetic email",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "linkedin",
+      "url": "https://www.linkedin.com/signup",
+      "elements": 29,
+      "positives": 2,
+      "tp": 2,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 1,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "dharitri.10@gmail.com",
+          "note": "typed synthetic email",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 2,
+          "field": "value",
+          "type": "PASSWORD",
+          "value": "Qxir5QVrln#7",
+          "note": "typed synthetic password",
+          "masked": true,
+          "token": "<PASSWORD_1>",
+          "tokenType": "PASSWORD",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "shine",
+      "url": "https://www.shine.com/registration/",
+      "elements": 37,
+      "positives": 4,
+      "tp": 4,
+      "fn": 0,
+      "fp": 0,
+      "tn": 1,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 0.75,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 9,
+          "field": "value",
+          "type": "NAME",
+          "value": "Arjun Varman",
+          "note": "typed synthetic full name",
+          "masked": true,
+          "token": "<NAME_1>",
+          "tokenType": "NAME",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 10,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "satish.70@gmail.com",
+          "note": "typed synthetic email",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 12,
+          "field": "value",
+          "type": "PHONE",
+          "value": "0832967736",
+          "note": "typed synthetic mobile; site split it into country-code box '91' + this 10-digit field",
+          "masked": true,
+          "token": "<ACCOUNT_1>",
+          "tokenType": "ACCOUNT",
+          "typeCorrect": false,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 13,
+          "field": "value",
+          "type": "PASSWORD",
+          "value": "Qxs6dEnkpe#7",
+          "note": "typed synthetic password",
+          "masked": true,
+          "token": "<PASSWORD_1>",
+          "tokenType": "PASSWORD",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "zerodha",
+      "url": "https://signup.zerodha.com/",
+      "elements": 81,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "tn": 7,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 12,
+          "field": "value",
+          "type": "PHONE",
+          "value": "7142902107",
+          "note": "typed synthetic mobile",
+          "masked": true,
+          "token": "<PHONE_1>",
+          "tokenType": "PHONE",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    }
+  ]
+}
