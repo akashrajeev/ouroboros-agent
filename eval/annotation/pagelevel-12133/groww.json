@@ -1,0 +1,18 @@
+{
+  "site": "groww",
+  "capture": "groww.capture.json",
+  "annotatedBy": "auto-derived positives from recorded fills + manual benign list re-located by value; page text verified unchanged vs run 1",
+  "positives": [
+    {
+      "element": 7,
+      "field": "value",
+      "type": "EMAIL",
+      "value": "charuchandra.76@gmail.com",
+      "note": "auto-derived from recorded fill (typed 'charuchandra.76@gmail.com'); seed 12133"
+    }
+  ],
+  "benign_lookalikes": [],
+  "notes": [
+    "No other PII or lookalikes on the page."
+  ]
+}
