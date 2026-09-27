@@ -9,3 +9,4 @@ export * from './sanitize';
 export * from './validator';
 export * from './gate';
 export * from './metrics';
+export * from './redaction';
