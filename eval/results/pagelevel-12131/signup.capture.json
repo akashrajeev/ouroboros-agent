@@ -1,0 +1,2622 @@
+{
+  "index": 0,
+  "url": "https://signup.zerodha.com/",
+  "finalUrl": "https://signup.zerodha.com/",
+  "status": 200,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "fills": [
+    {
+      "type": "PHONE",
+      "value": "7142902107",
+      "nodeId": "n16",
+      "label": "Enter your mobile number"
+    }
+  ],
+  "raw": [
+    {
+      "nodeId": "n1",
+      "tag": "a",
+      "role": "link",
+      "name": "",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 0,
+        "w": 128,
+        "h": 76
+      }
+    },
+    {
+      "nodeId": "n3",
+      "tag": "a",
+      "role": "link",
+      "name": "Signup",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 683.828125,
+        "y": 29,
+        "w": 46.75,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n4",
+      "tag": "a",
+      "role": "link",
+      "name": "About",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 770.578125,
+        "y": 29,
+        "w": 39.484375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n5",
+      "tag": "a",
+      "role": "link",
+      "name": "Products",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 850.0625,
+        "y": 29,
+        "w": 59.0625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n6",
+      "tag": "a",
+      "role": "link",
+      "name": "Pricing",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 949.125,
+        "y": 29,
+        "w": 46,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n7",
+      "tag": "a",
+      "role": "link",
+      "name": "Support",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1035.125,
+        "y": 29,
+        "w": 52.875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n8",
+      "tag": "button",
+      "role": "button",
+      "name": "Open main menu",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 1136,
+        "y": 18,
+        "w": 40,
+        "h": 40
+      }
+    },
+    {
+      "nodeId": "n9",
+      "tag": "h1",
+      "role": "heading",
+      "name": "Open a free demat & trading account online",
+      "text": "Open a free demat & trading account online",
+      "value": "",
+      "bbox": {
+        "x": 284.75,
+        "y": 172,
+        "w": 710.484375,
+        "h": 57.796875
+      }
+    },
+    {
+      "nodeId": "n10",
+      "tag": "div",
+      "role": "text",
+      "name": "Start investing brokerage free and join a community of 1.5+ crore investors and traders",
+      "text": "Start investing brokerage free and join a community of 1.5+ crore investors and traders",
+      "value": "",
+      "bbox": {
+        "x": 271.671875,
+        "y": 233.796875,
+        "w": 736.65625,
+        "h": 30.59375
+      }
+    },
+    {
+      "nodeId": "n12",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Signup now",
+      "text": "Signup now",
+      "value": "",
+      "bbox": {
+        "x": 659.5,
+        "y": 352.390625,
+        "w": 448.5,
+        "h": 48
+      }
+    },
+    {
+      "nodeId": "n13",
+      "tag": "span",
+      "role": "text",
+      "name": "Or track your existing application",
+      "text": "Or track your existing application",
+      "value": "",
+      "bbox": {
+        "x": 659.5,
+        "y": 400.390625,
+        "w": 448.5,
+        "h": 24
+      }
+    },
+    {
+      "nodeId": "n14",
+      "tag": "button",
+      "role": "button",
+      "name": "+91",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 659.5,
+        "y": 444.390625,
+        "w": 88.015625,
+        "h": 55
+      }
+    },
+    {
+      "nodeId": "n16",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Enter your mobile number",
+      "text": "",
+      "value": "7142902107",
+      "inputType": "tel",
+      "autocomplete": "tel-national",
+      "htmlName": "Enter your mobile number",
+      "htmlId": "v-0",
+      "placeholder": "Enter your mobile number",
+      "bbox": {
+        "x": 747.515625,
+        "y": 444.390625,
+        "w": 256,
+        "h": 55
+      }
+    },
+    {
+      "nodeId": "n17",
+      "tag": "button",
+      "role": "button",
+      "name": "Get OTP",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 659.5,
+        "y": 531.390625,
+        "w": 260,
+        "h": 54
+      }
+    },
+    {
+      "nodeId": "n18",
+      "tag": "p",
+      "role": "text",
+      "name": "By proceeding, you agree to the Zerodha &",
+      "text": "By proceeding, you agree to the Zerodha &",
+      "value": "",
+      "bbox": {
+        "x": 659.5,
+        "y": 633.390625,
+        "w": 448.5,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n19",
+      "tag": "a",
+      "role": "link",
+      "name": "terms",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 934.328125,
+        "y": 634.390625,
+        "w": 38.421875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n20",
+      "tag": "a",
+      "role": "link",
+      "name": "privacy policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 989.65625,
+        "y": 634.390625,
+        "w": 93.25,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n22",
+      "tag": "p",
+      "role": "text",
+      "name": "© 2010 - 2026 Zerodha Broking Ltd. All rights reserved.",
+      "text": "© 2010 - 2026 Zerodha Broking Ltd. All rights reserved.",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 894.390625,
+        "w": 252,
+        "h": 32
+      }
+    },
+    {
+      "nodeId": "n23",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha twitter account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n25",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha facebook account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 140,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n27",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha instagram account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 176,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n29",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha linkedin account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 212,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n31",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha youtube account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1003.390625,
+        "w": 28,
+        "h": 28
+      }
+    },
+    {
+      "nodeId": "n33",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha whatsapp account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 148,
+        "y": 1007.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n35",
+      "tag": "a",
+      "role": "link",
+      "name": "zerodha telegram account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 184,
+        "y": 1007.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n37",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Accounts",
+      "text": "Accounts",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 834.390625,
+        "w": 198,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n38",
+      "tag": "a",
+      "role": "link",
+      "name": "Open demat account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 895.390625,
+        "w": 138.421875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n39",
+      "tag": "a",
+      "role": "link",
+      "name": "Minor demat account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 931.390625,
+        "w": 140.671875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n40",
+      "tag": "a",
+      "role": "link",
+      "name": "NRI demat account",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 967.390625,
+        "w": 126.015625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n41",
+      "tag": "a",
+      "role": "link",
+      "name": "Commodity",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 1003.390625,
+        "w": 76.234375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n42",
+      "tag": "a",
+      "role": "link",
+      "name": "Dematerialisation",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 1039.390625,
+        "w": 114.328125,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n43",
+      "tag": "a",
+      "role": "link",
+      "name": "Fund transfer",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 1075.390625,
+        "w": 88.4375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n44",
+      "tag": "a",
+      "role": "link",
+      "name": "MTF",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 1111.390625,
+        "w": 29.953125,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n45",
+      "tag": "a",
+      "role": "link",
+      "name": "Referral program",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 372,
+        "y": 1147.390625,
+        "w": 111.84375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n46",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Support",
+      "text": "Support",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 834.390625,
+        "w": 198,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n47",
+      "tag": "a",
+      "role": "link",
+      "name": "Contact us",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 895.390625,
+        "w": 71.59375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n48",
+      "tag": "a",
+      "role": "link",
+      "name": "Support portal",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 931.390625,
+        "w": 95.171875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n49",
+      "tag": "a",
+      "role": "link",
+      "name": "How to file a complaint?",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 967.390625,
+        "w": 158.46875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n50",
+      "tag": "a",
+      "role": "link",
+      "name": "Status of your complaints",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 1003.390625,
+        "w": 168.65625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n51",
+      "tag": "a",
+      "role": "link",
+      "name": "Bulletin",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 1039.390625,
+        "w": 48.625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n52",
+      "tag": "a",
+      "role": "link",
+      "name": "Circulars",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 1075.390625,
+        "w": 58.84375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n53",
+      "tag": "a",
+      "role": "link",
+      "name": "Z-Connect blog",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 1111.390625,
+        "w": 103.484375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n54",
+      "tag": "a",
+      "role": "link",
+      "name": "Downloads",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 574,
+        "y": 1147.390625,
+        "w": 73.71875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n55",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Company",
+      "text": "Company",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 834.390625,
+        "w": 198,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n56",
+      "tag": "a",
+      "role": "link",
+      "name": "About",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 895.390625,
+        "w": 39.484375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n57",
+      "tag": "a",
+      "role": "link",
+      "name": "Philosophy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 931.390625,
+        "w": 72.703125,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n58",
+      "tag": "a",
+      "role": "link",
+      "name": "Press and media",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 967.390625,
+        "w": 109.765625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n59",
+      "tag": "a",
+      "role": "link",
+      "name": "Careers",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 1003.390625,
+        "w": 52.125,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n60",
+      "tag": "a",
+      "role": "link",
+      "name": "Zerodha Cares (CSR)",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 1039.390625,
+        "w": 140.109375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n61",
+      "tag": "a",
+      "role": "link",
+      "name": "Zerodha tech",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 1075.390625,
+        "w": 87.9375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n62",
+      "tag": "a",
+      "role": "link",
+      "name": "Open source",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 776,
+        "y": 1111.390625,
+        "w": 84.921875,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n63",
+      "tag": "h2",
+      "role": "heading",
+      "name": "Quick Links",
+      "text": "Quick Links",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 834.390625,
+        "w": 198,
+        "h": 60
+      }
+    },
+    {
+      "nodeId": "n64",
+      "tag": "a",
+      "role": "link",
+      "name": "Upcoming IPO",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 895.390625,
+        "w": 95.25,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n65",
+      "tag": "a",
+      "role": "link",
+      "name": "Brokerage charges",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 931.390625,
+        "w": 125.265625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n66",
+      "tag": "a",
+      "role": "link",
+      "name": "Market holidays",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 967.390625,
+        "w": 105,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n67",
+      "tag": "a",
+      "role": "link",
+      "name": "Economic calendar",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 1003.390625,
+        "w": 126.59375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n68",
+      "tag": "a",
+      "role": "link",
+      "name": "Calculators",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 1039.390625,
+        "w": 74.515625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n69",
+      "tag": "a",
+      "role": "link",
+      "name": "Markets",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 1075.390625,
+        "w": 53.375,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n70",
+      "tag": "a",
+      "role": "link",
+      "name": "Sectors",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 978,
+        "y": 1111.390625,
+        "w": 50.640625,
+        "h": 17
+      }
+    },
+    {
+      "nodeId": "n71",
+      "tag": "p",
+      "role": "text",
+      "name": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: Depository services through Zerodha Broking Ltd. – SEBI Registration no.: IN-DP-431-2019 Commodity Trading through Zerodha Commodities Pvt. Ltd. MCX: 46025 – SEBI Registration no.: INZ000038238 Registered Address: Zerodha Broking Ltd., #153/154, 4th Cross, Dollars Colony, Opp. Clarence Public School, J.P Nagar 4th Phase, Bengaluru - 560078, Karnataka, India. For any complaints pertaining to securities broking please write to , for DP related to . Please ensure you carefully read the Risk Disclosure Document as prescribed by SEBI ICF",
+      "text": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: Depository services through Zerodha Broking Ltd. – SEBI Registration no.: IN-DP-431-2019 Commodity Trading through Zerodha Commodities Pvt. Ltd. MCX: 46025 – SEBI Registration no.: INZ000038238 Registered Address: Zerodha Broking Ltd., #153/154, 4th Cross, Dollars Colony, Opp. Clarence Public School, J.P Nagar 4th Phase, Bengaluru - 560078, Karnataka, India. For any complaints pertaining to securities broking please write to , for DP related to . Please ensure you carefully read the Risk Disclosure Document as prescribed by SEBI ICF",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1206.390625,
+        "w": 1072,
+        "h": 81.5625
+      }
+    },
+    {
+      "nodeId": "n72",
+      "tag": "a",
+      "role": "link",
+      "name": "complaints@zerodha.com",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1269.5625,
+        "w": 147.453125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n73",
+      "tag": "a",
+      "role": "link",
+      "name": "dp@zerodha.com",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 354.03125,
+        "y": 1269.5625,
+        "w": 100.453125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n74",
+      "tag": "span",
+      "role": "text",
+      "name": "|",
+      "text": "|",
+      "value": "",
+      "bbox": {
+        "x": 950.78125,
+        "y": 1269.5625,
+        "w": 4,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n75",
+      "tag": "p",
+      "role": "text",
+      "name": "Procedure to file a complaint on : Register on SCORES portal. Mandatory details for filing complaints on SCORES: Name, PAN, Address, Mobile Number, E-mail ID. Benefits: Effective Communication, Speedy redressal of the grievances",
+      "text": "Procedure to file a complaint on : Register on SCORES portal. Mandatory details for filing complaints on SCORES: Name, PAN, Address, Mobile Number, E-mail ID. Benefits: Effective Communication, Speedy redressal of the grievances",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1299.953125,
+        "w": 1072,
+        "h": 40.78125
+      }
+    },
+    {
+      "nodeId": "n76",
+      "tag": "a",
+      "role": "link",
+      "name": "SEBI SCORES",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 287.796875,
+        "y": 1301.953125,
+        "w": 77.640625,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n77",
+      "tag": "a",
+      "role": "link",
+      "name": "Smart Online Dispute Resolution",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1354.734375,
+        "w": 182.21875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n78",
+      "tag": "span",
+      "role": "text",
+      "name": "|",
+      "text": "|",
+      "value": "",
+      "bbox": {
+        "x": 286.21875,
+        "y": 1354.734375,
+        "w": 10.75,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n79",
+      "tag": "a",
+      "role": "link",
+      "name": "Grievances Redressal Mechanism",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 296.96875,
+        "y": 1354.734375,
+        "w": 191.59375,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n80",
+      "tag": "p",
+      "role": "text",
+      "name": "Investments in securities market are subject to market risks; read all the related documents carefully before investing.",
+      "text": "Investments in securities market are subject to market risks; read all the related documents carefully before investing.",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1385.125,
+        "w": 1072,
+        "h": 20.390625
+      }
+    },
+    {
+      "nodeId": "n81",
+      "tag": "p",
+      "role": "text",
+      "name": "Attention investors: 1) Stock brokers can accept securities as margins from clients only by way of pledge in the depository system w.e.f September 01, 2020. 2) Update your e-mail and phone number with your stock broker / depository participant and receive OTP directly from depository on your e-mail and/or mobile number to create pledge. 3) Check your securities / MF / bonds in the consolidated account statement issued by NSDL/CDSL every month.",
+      "text": "Attention investors: 1) Stock brokers can accept securities as margins from clients only by way of pledge in the depository system w.e.f September 01, 2020. 2) Update your e-mail and phone number with your stock broker / depository participant and receive OTP directly from depository on your e-mail and/or mobile number to create pledge. 3) Check your securities / MF / bonds in the consolidated account statement issued by NSDL/CDSL every month.",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1417.515625,
+        "w": 1072,
+        "h": 61.171875
+      }
+    },
+    {
+      "nodeId": "n82",
+      "tag": "p",
+      "role": "text",
+      "name": "\"Prevent unauthorised transactions in your account. Update your mobile numbers/email IDs with your stock brokers. Receive information of your transactions directly from Exchange on your mobile/email at the end of the day. Issued in the interest of investors. KYC is one time exercise while dealing in securities markets - once KYC is done through a SEBI registered intermediary (broker, DP, Mutual Fund etc.), you need not undergo the same process again when you approach another intermediary.\" Dear Investor, if you are subscribing to an IPO, there is no need to issue a cheque. Please write the Bank account number and sign the IPO application form to authorize your bank to make payment in case of allotment. In case of non allotment the funds will remain in your bank account. As a business we don't give stock tips, and have not authorized anyone to trade on behalf of others. If you find anyone claiming to be part of Zerodha and offering such services, please .",
+      "text": "\"Prevent unauthorised transactions in your account. Update your mobile numbers/email IDs with your stock brokers. Receive information of your transactions directly from Exchange on your mobile/email at the end of the day. Issued in the interest of investors. KYC is one time exercise while dealing in securities markets - once KYC is done through a SEBI registered intermediary (broker, DP, Mutual Fund etc.), you need not undergo the same process again when you approach another intermediary.\" Dear Investor, if you are subscribing to an IPO, there is no need to issue a cheque. Please write the Bank account number and sign the IPO application form to authorize your bank to make payment in case of allotment. In case of non allotment the funds will remain in your bank account. As a business we don't give stock tips, and have not authorized anyone to trade on behalf of others. If you find anyone claiming to be part of Zerodha and offering such services, please .",
+      "value": "",
+      "bbox": {
+        "x": 104,
+        "y": 1490.6875,
+        "w": 1072,
+        "h": 122.34375
+      }
+    },
+    {
+      "nodeId": "n83",
+      "tag": "a",
+      "role": "link",
+      "name": "create a ticket here",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 277.890625,
+        "y": 1594.640625,
+        "w": 109.03125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n84",
+      "tag": "a",
+      "role": "link",
+      "name": "NSE",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 239.59375,
+        "y": 1627.03125,
+        "w": 24.078125,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n85",
+      "tag": "a",
+      "role": "link",
+      "name": "BSE",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 279.671875,
+        "y": 1627.03125,
+        "w": 22.875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n86",
+      "tag": "a",
+      "role": "link",
+      "name": "MCX",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 318.546875,
+        "y": 1627.03125,
+        "w": 28.0625,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n87",
+      "tag": "a",
+      "role": "link",
+      "name": "Terms & conditions",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 362.609375,
+        "y": 1627.03125,
+        "w": 109.984375,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n88",
+      "tag": "a",
+      "role": "link",
+      "name": "Policies & procedures",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 488.59375,
+        "y": 1627.03125,
+        "w": 124.234375,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n89",
+      "tag": "a",
+      "role": "link",
+      "name": "Privacy policy",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 628.828125,
+        "y": 1627.03125,
+        "w": 80.21875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n90",
+      "tag": "a",
+      "role": "link",
+      "name": "Disclosure",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 725.046875,
+        "y": 1627.03125,
+        "w": 60.484375,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n91",
+      "tag": "a",
+      "role": "link",
+      "name": "For investor's attention",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 801.53125,
+        "y": 1627.03125,
+        "w": 131.875,
+        "h": 15
+      }
+    },
+    {
+      "nodeId": "n92",
+      "tag": "a",
+      "role": "link",
+      "name": "Investor charter",
+      "text": "",
+      "value": "",
+      "bbox": {
+        "x": 949.40625,
+        "y": 1627.03125,
+        "w": 91,
+        "h": 15
+      }
+    }
+  ],
+  "opaque": [
+    {
+      "nodeId": "n2",
+      "kind": "img",
+      "bbox": {
+        "x": 104,
+        "y": 29.59375,
+        "w": 128,
+        "h": 16.8125
+      },
+      "src": "data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='utf-8'?%3e%3csvg%20version='1.2'%20baseProfile='tiny'%20id='Layer_1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20x='0px'%20y='0px'%20width='609px'%20height='80px'%20viewBox='0%200%20609%2080'%20xml:space='preserve'%3e%3cg%3e%3cg%3e%3cg%3e%3cpath%20fill-rule='evenodd'%20fill='%23387ED1'%20d='M66.252,21.469c4.404,5.71,8.056,12.124,10.886,19.04V3.931H46.077%20C53.549,7.968,60.394,13.874,66.252,21.469z'/%3e%3c/g%3e%3cg%3e%3cpath%20fill-rule='evenodd'%20fill='%23387ED1'%20d='M21.473,7.828c-5.754,0-11.289,1.23-16.473,3.506v64.735h68.963%20C73.429,38.315,50.088,7.828,21.473,7.828'/%3e%3c/g%3e%3c/g%3e%3cg%3e%3cpath%20fill='%23387ED1'%20d='M118.349,64.918l38.533-46.65H119.56V8.098h52.25v8.49l-38.533,46.651h38.533v10.169h-53.461V64.918z'/%3e%3cpath%20fill='%23387ED1'%20d='M186.177,8.098h48.331v10.356H197.56v16.794h32.751v10.357H197.56v17.446h37.413v10.356h-48.796V8.098z'/%3e%3cpath%20fill='%23387ED1'%20d='M248.689,8.098h29.11c4.105,0,7.744,0.576,10.917,1.726c3.171,1.151,5.814,2.752,7.93,4.805%20c1.741,1.805,3.08,3.888,4.013,6.251c0.933,2.364,1.398,4.977,1.398,7.837v0.187c0,2.675-0.388,5.085-1.165,7.231%20c-0.779,2.146-1.853,4.044-3.22,5.691c-1.369,1.648-3.001,3.049-4.898,4.198c-1.897,1.152-3.997,2.038-6.297,2.659l17.633,24.725%20h-13.529l-16.097-22.765h-0.186h-14.227v22.765h-11.383V8.098z%20M276.92,40.473c4.115,0,7.393-0.982,9.824-2.951%20c2.434-1.968,3.652-4.639,3.652-8.012v-0.187c0-3.56-1.188-6.263-3.559-8.106c-2.369-1.842-5.709-2.764-10.014-2.764h-16.752%20v22.019H276.92z'/%3e%3cpath%20fill='%23387ED1'%20d='M347.309,74.528c-5.039,0-9.641-0.886-13.807-2.658c-4.168-1.772-7.744-4.182-10.73-7.232%20c-2.986-3.047-5.318-6.607-6.996-10.682c-1.682-4.073-2.521-8.413-2.521-13.016v-0.187c0-4.603,0.84-8.941,2.521-13.016%20c1.678-4.073,4.041-7.651,7.09-10.73c3.045-3.079,6.654-5.52,10.824-7.324c4.166-1.803,8.768-2.706,13.807-2.706%20c5.037,0,9.641,0.886,13.809,2.659c4.166,1.772,7.744,4.184,10.73,7.231c2.984,3.048,5.316,6.609,6.996,10.683%20c1.682,4.074,2.521,8.413,2.521,13.015v0.187c0,4.604-0.84,8.943-2.521,13.015c-1.68,4.075-4.043,7.651-7.09,10.73%20c-3.049,3.078-6.656,5.521-10.824,7.324S352.348,74.528,347.309,74.528z%20M347.496,63.985c3.221,0,6.178-0.606,8.871-1.819%20c2.695-1.214,5.002-2.86,6.922-4.944c1.918-2.084,3.422-4.526,4.506-7.325s1.625-5.785,1.625-8.956v-0.187%20c0-3.172-0.541-6.173-1.625-9.004c-1.084-2.83-2.604-5.286-4.553-7.37c-1.951-2.083-4.289-3.747-7.016-4.992%20c-2.725-1.244-5.697-1.866-8.918-1.866s-6.178,0.606-8.871,1.819c-2.695,1.213-5.002,2.862-6.922,4.945%20c-1.92,2.085-3.422,4.525-4.508,7.324c-1.084,2.799-1.625,5.785-1.625,8.957v0.187c0,3.172,0.541,6.173,1.625,9.002%20c1.086,2.833,2.604,5.289,4.555,7.372c1.951,2.085,4.289,3.748,7.014,4.991C341.303,63.363,344.275,63.985,347.496,63.985z'/%3e%3cpath%20fill='%23387ED1'%20d='M395.451,8.098h24.354c5.1,0,9.779,0.825,14.043,2.473c4.26,1.648,7.928,3.934,11.008,6.857%20c3.08,2.924,5.457,6.361,7.139,10.311c1.68,3.95,2.52,8.227,2.52,12.829v0.187c0,4.604-0.84,8.896-2.52,12.875%20c-1.682,3.98-4.059,7.435-7.139,10.356c-3.08,2.926-6.748,5.226-11.008,6.904c-4.264,1.68-8.943,2.519-14.043,2.519h-24.354V8.098%20z%20M419.711,63.052c3.42,0,6.531-0.545,9.33-1.639s5.18-2.622,7.137-4.589c1.959-1.969,3.482-4.312,4.572-7.03%20c1.088-2.717,1.635-5.667,1.635-8.854v-0.187c0-3.186-0.547-6.152-1.635-8.9c-1.09-2.749-2.613-5.106-4.572-7.074%20c-1.957-1.969-4.338-3.514-7.137-4.639c-2.799-1.124-5.91-1.687-9.33-1.687h-12.877v44.598H419.711z'/%3e%3cpath%20fill='%23387ED1'%20d='M468.414,8.098h11.383v27.151h31.352V8.098h11.383v65.311h-11.383V45.885h-31.352v27.523h-11.383V8.098z'%20/%3e%3cpath%20fill='%23387ED1'%20d='M562.463,7.631H573.1l28.736,65.777h-12.129l-6.625-15.768h-30.883l-6.719,15.768h-11.756L562.463,7.631z%20M578.885,47.472l-11.291-26.125l-11.197,26.125H578.885z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e",
+      "name": "Zerodha logo"
+    },
+    {
+      "nodeId": "n11",
+      "kind": "img",
+      "bbox": {
+        "x": 148,
+        "y": 348.640625,
+        "w": 471.5,
+        "h": 328.5
+      },
+      "src": "/assets/landing-DQ76ex-B.svg",
+      "name": "Zerodha's signup landing page"
+    },
+    {
+      "nodeId": "n15",
+      "kind": "img",
+      "bbox": {
+        "x": 672.5,
+        "y": 445.390625,
+        "w": 28,
+        "h": 53
+      },
+      "src": "data:image/svg+xml,%3csvg%20width='28'%20height='28'%20viewBox='0%200%2028%2028'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M0%2010.5H28V16.625H0V10.5Z'%20fill='%23E6E7E8'%20/%3e%3cpath%20d='M23.625%203.9375H4.375C1.47569%203.9375%200%206.09219%200%208.75V10.5H28V8.75C28%206.09219%2026.5243%203.9375%2023.625%203.9375Z'%20fill='%23FF9933'%20/%3e%3cpath%20d='M0%2018.375C0%2021.0328%201.47569%2023.1875%204.375%2023.1875H23.625C26.5243%2023.1875%2028%2021.0328%2028%2018.375V16.625H0V18.375Z'%20fill='%23128807'%20/%3e%3cdefs%3e%3cradialGradient%20id='grad1'%20cx='50%25'%20cy='50%25'%20r='50%25'%20fx='50%25'%20fy='50%25'%3e%3cstop%20offset='0%25'%20style='stop-color:rgb(1,%200,%20136);stop-opacity:1'%20/%3e%3cstop%20offset='100%25'%20style='stop-color:rgb(1,%200,%20136);stop-opacity:0.1'%20/%3e%3c/radialGradient%3e%3c/defs%3e%3ccircle%20cx='14.2'%20cy='13.6'%20r='2.5'%20stroke='%23010088'%20stroke-width='0.4'%20fill='url(%23grad1)'%20/%3e%3ccircle%20cx='14.2'%20cy='13.6'%20r='.5'%20fill='%23010088'%20/%3e%3c/svg%3e",
+      "name": "India Phone number"
+    },
+    {
+      "nodeId": "n21",
+      "kind": "img",
+      "bbox": {
+        "x": 104,
+        "y": 854.390625,
+        "w": 152.25,
+        "h": 20
+      },
+      "src": "data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='utf-8'?%3e%3csvg%20version='1.2'%20baseProfile='tiny'%20id='Layer_1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20x='0px'%20y='0px'%20width='609px'%20height='80px'%20viewBox='0%200%20609%2080'%20xml:space='preserve'%3e%3cg%3e%3cg%3e%3cg%3e%3cpath%20fill-rule='evenodd'%20fill='%23387ED1'%20d='M66.252,21.469c4.404,5.71,8.056,12.124,10.886,19.04V3.931H46.077%20C53.549,7.968,60.394,13.874,66.252,21.469z'/%3e%3c/g%3e%3cg%3e%3cpath%20fill-rule='evenodd'%20fill='%23387ED1'%20d='M21.473,7.828c-5.754,0-11.289,1.23-16.473,3.506v64.735h68.963%20C73.429,38.315,50.088,7.828,21.473,7.828'/%3e%3c/g%3e%3c/g%3e%3cg%3e%3cpath%20fill='%23387ED1'%20d='M118.349,64.918l38.533-46.65H119.56V8.098h52.25v8.49l-38.533,46.651h38.533v10.169h-53.461V64.918z'/%3e%3cpath%20fill='%23387ED1'%20d='M186.177,8.098h48.331v10.356H197.56v16.794h32.751v10.357H197.56v17.446h37.413v10.356h-48.796V8.098z'/%3e%3cpath%20fill='%23387ED1'%20d='M248.689,8.098h29.11c4.105,0,7.744,0.576,10.917,1.726c3.171,1.151,5.814,2.752,7.93,4.805%20c1.741,1.805,3.08,3.888,4.013,6.251c0.933,2.364,1.398,4.977,1.398,7.837v0.187c0,2.675-0.388,5.085-1.165,7.231%20c-0.779,2.146-1.853,4.044-3.22,5.691c-1.369,1.648-3.001,3.049-4.898,4.198c-1.897,1.152-3.997,2.038-6.297,2.659l17.633,24.725%20h-13.529l-16.097-22.765h-0.186h-14.227v22.765h-11.383V8.098z%20M276.92,40.473c4.115,0,7.393-0.982,9.824-2.951%20c2.434-1.968,3.652-4.639,3.652-8.012v-0.187c0-3.56-1.188-6.263-3.559-8.106c-2.369-1.842-5.709-2.764-10.014-2.764h-16.752%20v22.019H276.92z'/%3e%3cpath%20fill='%23387ED1'%20d='M347.309,74.528c-5.039,0-9.641-0.886-13.807-2.658c-4.168-1.772-7.744-4.182-10.73-7.232%20c-2.986-3.047-5.318-6.607-6.996-10.682c-1.682-4.073-2.521-8.413-2.521-13.016v-0.187c0-4.603,0.84-8.941,2.521-13.016%20c1.678-4.073,4.041-7.651,7.09-10.73c3.045-3.079,6.654-5.52,10.824-7.324c4.166-1.803,8.768-2.706,13.807-2.706%20c5.037,0,9.641,0.886,13.809,2.659c4.166,1.772,7.744,4.184,10.73,7.231c2.984,3.048,5.316,6.609,6.996,10.683%20c1.682,4.074,2.521,8.413,2.521,13.015v0.187c0,4.604-0.84,8.943-2.521,13.015c-1.68,4.075-4.043,7.651-7.09,10.73%20c-3.049,3.078-6.656,5.521-10.824,7.324S352.348,74.528,347.309,74.528z%20M347.496,63.985c3.221,0,6.178-0.606,8.871-1.819%20c2.695-1.214,5.002-2.86,6.922-4.944c1.918-2.084,3.422-4.526,4.506-7.325s1.625-5.785,1.625-8.956v-0.187%20c0-3.172-0.541-6.173-1.625-9.004c-1.084-2.83-2.604-5.286-4.553-7.37c-1.951-2.083-4.289-3.747-7.016-4.992%20c-2.725-1.244-5.697-1.866-8.918-1.866s-6.178,0.606-8.871,1.819c-2.695,1.213-5.002,2.862-6.922,4.945%20c-1.92,2.085-3.422,4.525-4.508,7.324c-1.084,2.799-1.625,5.785-1.625,8.957v0.187c0,3.172,0.541,6.173,1.625,9.002%20c1.086,2.833,2.604,5.289,4.555,7.372c1.951,2.085,4.289,3.748,7.014,4.991C341.303,63.363,344.275,63.985,347.496,63.985z'/%3e%3cpath%20fill='%23387ED1'%20d='M395.451,8.098h24.354c5.1,0,9.779,0.825,14.043,2.473c4.26,1.648,7.928,3.934,11.008,6.857%20c3.08,2.924,5.457,6.361,7.139,10.311c1.68,3.95,2.52,8.227,2.52,12.829v0.187c0,4.604-0.84,8.896-2.52,12.875%20c-1.682,3.98-4.059,7.435-7.139,10.356c-3.08,2.926-6.748,5.226-11.008,6.904c-4.264,1.68-8.943,2.519-14.043,2.519h-24.354V8.098%20z%20M419.711,63.052c3.42,0,6.531-0.545,9.33-1.639s5.18-2.622,7.137-4.589c1.959-1.969,3.482-4.312,4.572-7.03%20c1.088-2.717,1.635-5.667,1.635-8.854v-0.187c0-3.186-0.547-6.152-1.635-8.9c-1.09-2.749-2.613-5.106-4.572-7.074%20c-1.957-1.969-4.338-3.514-7.137-4.639c-2.799-1.124-5.91-1.687-9.33-1.687h-12.877v44.598H419.711z'/%3e%3cpath%20fill='%23387ED1'%20d='M468.414,8.098h11.383v27.151h31.352V8.098h11.383v65.311h-11.383V45.885h-31.352v27.523h-11.383V8.098z'%20/%3e%3cpath%20fill='%23387ED1'%20d='M562.463,7.631H573.1l28.736,65.777h-12.129l-6.625-15.768h-30.883l-6.719,15.768h-11.756L562.463,7.631z%20M578.885,47.472l-11.291-26.125l-11.197,26.125H578.885z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e",
+      "name": "Zerodha logo"
+    },
+    {
+      "nodeId": "n24",
+      "kind": "svg",
+      "bbox": {
+        "x": 104,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n26",
+      "kind": "svg",
+      "bbox": {
+        "x": 140,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n28",
+      "kind": "svg",
+      "bbox": {
+        "x": 176,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n30",
+      "kind": "svg",
+      "bbox": {
+        "x": 212,
+        "y": 946.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n32",
+      "kind": "svg",
+      "bbox": {
+        "x": 104,
+        "y": 1003.390625,
+        "w": 28,
+        "h": 28
+      }
+    },
+    {
+      "nodeId": "n34",
+      "kind": "svg",
+      "bbox": {
+        "x": 148,
+        "y": 1007.390625,
+        "w": 20,
+        "h": 20
+      }
+    },
+    {
+      "nodeId": "n36",
+      "kind": "svg",
+      "bbox": {
+        "x": 184,
+        "y": 1007.390625,
+        "w": 20,
+        "h": 20
+      }
+    }
+  ],
+  "screen": [
+    {
+      "id": "e1",
+      "role": "link",
+      "label": "",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        0,
+        0.1,
+        0.084
+      ]
+    },
+    {
+      "id": "e2",
+      "role": "link",
+      "label": "Signup",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.534,
+        0.032,
+        0.037,
+        0.019
+      ]
+    },
+    {
+      "id": "e3",
+      "role": "link",
+      "label": "About",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.602,
+        0.032,
+        0.031,
+        0.019
+      ]
+    },
+    {
+      "id": "e4",
+      "role": "link",
+      "label": "Products",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.664,
+        0.032,
+        0.046,
+        0.019
+      ]
+    },
+    {
+      "id": "e5",
+      "role": "link",
+      "label": "Pricing",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.742,
+        0.032,
+        0.036,
+        0.019
+      ]
+    },
+    {
+      "id": "e6",
+      "role": "link",
+      "label": "Support",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.809,
+        0.032,
+        0.041,
+        0.019
+      ]
+    },
+    {
+      "id": "e7",
+      "role": "button",
+      "label": "Open main menu",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.888,
+        0.02,
+        0.031,
+        0.044
+      ]
+    },
+    {
+      "id": "e8",
+      "role": "heading",
+      "label": "Open a free demat & trading account online",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.222,
+        0.191,
+        0.555,
+        0.064
+      ]
+    },
+    {
+      "id": "e9",
+      "role": "text",
+      "label": "Start investing brokerage free and join a community of 1.5+ crore investors and traders",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.212,
+        0.26,
+        0.576,
+        0.034
+      ]
+    },
+    {
+      "id": "e10",
+      "role": "heading",
+      "label": "Signup now",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.515,
+        0.392,
+        0.35,
+        0.053
+      ]
+    },
+    {
+      "id": "e11",
+      "role": "text",
+      "label": "Or track your existing application",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.515,
+        0.445,
+        0.35,
+        0.027
+      ]
+    },
+    {
+      "id": "e12",
+      "role": "button",
+      "label": "+91",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.515,
+        0.494,
+        0.069,
+        0.061
+      ]
+    },
+    {
+      "id": "e13",
+      "role": "textbox",
+      "label": "Enter your mobile number",
+      "field_type": "tel",
+      "value": "<PHONE_1>",
+      "state": {},
+      "bbox": [
+        0.584,
+        0.494,
+        0.2,
+        0.061
+      ]
+    },
+    {
+      "id": "e14",
+      "role": "button",
+      "label": "Get OTP",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.515,
+        0.59,
+        0.203,
+        0.06
+      ]
+    },
+    {
+      "id": "e15",
+      "role": "text",
+      "label": "By proceeding, you agree to the Zerodha &",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.515,
+        0.704,
+        0.35,
+        0.022
+      ]
+    },
+    {
+      "id": "e16",
+      "role": "link",
+      "label": "terms",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.73,
+        0.705,
+        0.03,
+        0.019
+      ]
+    },
+    {
+      "id": "e17",
+      "role": "link",
+      "label": "privacy policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.773,
+        0.705,
+        0.073,
+        0.019
+      ]
+    },
+    {
+      "id": "e18",
+      "role": "text",
+      "label": "© 2010 - 2026 Zerodha Broking Ltd. All rights reserved.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        0.994,
+        0.197,
+        0.036
+      ]
+    },
+    {
+      "id": "e19",
+      "role": "link",
+      "label": "zerodha twitter account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e20",
+      "role": "link",
+      "label": "zerodha facebook account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.109,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e21",
+      "role": "link",
+      "label": "zerodha instagram account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.138,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e22",
+      "role": "link",
+      "label": "zerodha linkedin account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.166,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e23",
+      "role": "link",
+      "label": "zerodha youtube account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.115,
+        0.022,
+        0.031
+      ]
+    },
+    {
+      "id": "e24",
+      "role": "link",
+      "label": "zerodha whatsapp account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.116,
+        1.119,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e25",
+      "role": "link",
+      "label": "zerodha telegram account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.144,
+        1.119,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e26",
+      "role": "heading",
+      "label": "Accounts",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        0.927,
+        0.155,
+        0.067
+      ]
+    },
+    {
+      "id": "e27",
+      "role": "link",
+      "label": "Open demat account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        0.995,
+        0.108,
+        0.019
+      ]
+    },
+    {
+      "id": "e28",
+      "role": "link",
+      "label": "Minor demat account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.035,
+        0.11,
+        0.019
+      ]
+    },
+    {
+      "id": "e29",
+      "role": "link",
+      "label": "NR<NAME_1> account",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.075,
+        0.098,
+        0.019
+      ]
+    },
+    {
+      "id": "e30",
+      "role": "link",
+      "label": "Commodity",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.115,
+        0.06,
+        0.019
+      ]
+    },
+    {
+      "id": "e31",
+      "role": "link",
+      "label": "Dematerialisation",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.155,
+        0.089,
+        0.019
+      ]
+    },
+    {
+      "id": "e32",
+      "role": "link",
+      "label": "Fund transfer",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.195,
+        0.069,
+        0.019
+      ]
+    },
+    {
+      "id": "e33",
+      "role": "link",
+      "label": "MTF",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.235,
+        0.023,
+        0.019
+      ]
+    },
+    {
+      "id": "e34",
+      "role": "link",
+      "label": "Referral program",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.291,
+        1.275,
+        0.087,
+        0.019
+      ]
+    },
+    {
+      "id": "e35",
+      "role": "heading",
+      "label": "Support",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        0.927,
+        0.155,
+        0.067
+      ]
+    },
+    {
+      "id": "e36",
+      "role": "link",
+      "label": "Contact us",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        0.995,
+        0.056,
+        0.019
+      ]
+    },
+    {
+      "id": "e37",
+      "role": "link",
+      "label": "Support portal",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.035,
+        0.074,
+        0.019
+      ]
+    },
+    {
+      "id": "e38",
+      "role": "link",
+      "label": "How to file a complaint?",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.075,
+        0.124,
+        0.019
+      ]
+    },
+    {
+      "id": "e39",
+      "role": "link",
+      "label": "Status of your complaints",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.115,
+        0.132,
+        0.019
+      ]
+    },
+    {
+      "id": "e40",
+      "role": "link",
+      "label": "Bulletin",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.155,
+        0.038,
+        0.019
+      ]
+    },
+    {
+      "id": "e41",
+      "role": "link",
+      "label": "Circulars",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.195,
+        0.046,
+        0.019
+      ]
+    },
+    {
+      "id": "e42",
+      "role": "link",
+      "label": "Z-Connect blog",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.235,
+        0.081,
+        0.019
+      ]
+    },
+    {
+      "id": "e43",
+      "role": "link",
+      "label": "Downloads",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.448,
+        1.275,
+        0.058,
+        0.019
+      ]
+    },
+    {
+      "id": "e44",
+      "role": "heading",
+      "label": "Company",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        0.927,
+        0.155,
+        0.067
+      ]
+    },
+    {
+      "id": "e45",
+      "role": "link",
+      "label": "About",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        0.995,
+        0.031,
+        0.019
+      ]
+    },
+    {
+      "id": "e46",
+      "role": "link",
+      "label": "Philosophy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.035,
+        0.057,
+        0.019
+      ]
+    },
+    {
+      "id": "e47",
+      "role": "link",
+      "label": "Press and media",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.075,
+        0.086,
+        0.019
+      ]
+    },
+    {
+      "id": "e48",
+      "role": "link",
+      "label": "Careers",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.115,
+        0.041,
+        0.019
+      ]
+    },
+    {
+      "id": "e49",
+      "role": "link",
+      "label": "Zerodha Cares (CSR)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.155,
+        0.109,
+        0.019
+      ]
+    },
+    {
+      "id": "e50",
+      "role": "link",
+      "label": "Zerodha tech",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.195,
+        0.069,
+        0.019
+      ]
+    },
+    {
+      "id": "e51",
+      "role": "link",
+      "label": "Open source",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.606,
+        1.235,
+        0.066,
+        0.019
+      ]
+    },
+    {
+      "id": "e52",
+      "role": "heading",
+      "label": "Quick Links",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        0.927,
+        0.155,
+        0.067
+      ]
+    },
+    {
+      "id": "e53",
+      "role": "link",
+      "label": "Upcoming IPO",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        0.995,
+        0.074,
+        0.019
+      ]
+    },
+    {
+      "id": "e54",
+      "role": "link",
+      "label": "Brokerage charges",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.035,
+        0.098,
+        0.019
+      ]
+    },
+    {
+      "id": "e55",
+      "role": "link",
+      "label": "Market holidays",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.075,
+        0.082,
+        0.019
+      ]
+    },
+    {
+      "id": "e56",
+      "role": "link",
+      "label": "Economic calendar",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.115,
+        0.099,
+        0.019
+      ]
+    },
+    {
+      "id": "e57",
+      "role": "link",
+      "label": "Calculators",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.155,
+        0.058,
+        0.019
+      ]
+    },
+    {
+      "id": "e58",
+      "role": "link",
+      "label": "Markets",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.195,
+        0.042,
+        0.019
+      ]
+    },
+    {
+      "id": "e59",
+      "role": "link",
+      "label": "Sectors",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.764,
+        1.235,
+        0.04,
+        0.019
+      ]
+    },
+    {
+      "id": "e60",
+      "role": "text",
+      "label": "Zerodha Broking Ltd.: Member of NSE​ &​ BSE – SEBI Registration no.: INZ000031633 CDSL: Depository services through Zerodha Broking Ltd. – SEBI Registration no.: IN-DP-431-2019 Commodity Trading through Zerodha Commodities Pvt. Ltd. MCX: 46025 – SEBI Registration no.: INZ000038238 Registered Address: Zerodha Broking Ltd., <ADDRESS_1> Public School, <ADDRESS_2> 4th <ADDRESS_3>. For any complaints pertaining to securities broking please write to , for DP related to . Please ensure you carefully read the Risk Disclosure Document as prescribed by SEBI ICF",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.34,
+        0.838,
+        0.091
+      ]
+    },
+    {
+      "id": "e61",
+      "role": "link",
+      "label": "<EMAIL_1>",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.411,
+        0.115,
+        0.017
+      ]
+    },
+    {
+      "id": "e62",
+      "role": "link",
+      "label": "<EMAIL_2>",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.277,
+        1.411,
+        0.078,
+        0.017
+      ]
+    },
+    {
+      "id": "e63",
+      "role": "text",
+      "label": "|",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.743,
+        1.411,
+        0.003,
+        0.017
+      ]
+    },
+    {
+      "id": "e64",
+      "role": "text",
+      "label": "Procedure to file a complaint on : Register on SCORES portal. Mandatory details for filing complaints on SCORES: Name, PAN, Address, Mobile Number, E-mail ID. Benefits: Effective Communication, Speedy redressal of the grievances",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.444,
+        0.838,
+        0.045
+      ]
+    },
+    {
+      "id": "e65",
+      "role": "link",
+      "label": "SEBI SCORES",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.225,
+        1.447,
+        0.061,
+        0.017
+      ]
+    },
+    {
+      "id": "e66",
+      "role": "link",
+      "label": "Smart Online Dispute Resolution",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.505,
+        0.142,
+        0.017
+      ]
+    },
+    {
+      "id": "e67",
+      "role": "text",
+      "label": "|",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.224,
+        1.505,
+        0.008,
+        0.017
+      ]
+    },
+    {
+      "id": "e68",
+      "role": "link",
+      "label": "Grievances Redressal Mechanism",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.232,
+        1.505,
+        0.15,
+        0.017
+      ]
+    },
+    {
+      "id": "e69",
+      "role": "text",
+      "label": "Investments in securities market are subject to market risks; read all the related documents carefully before investing.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.539,
+        0.838,
+        0.023
+      ]
+    },
+    {
+      "id": "e70",
+      "role": "text",
+      "label": "Attention investors: 1) Stock brokers can accept securities as margins from clients only by way of pledge in the depository system w.e.f September 01, 2020. 2) Update your e-mail and phone number with your stock broker / depository participant and receive OTP directly from depository on your e-mail and/or mobile number to create pledge. 3) Check your securities / MF / bonds in the consolidated account statement issued by NSDL/CDSL every month.",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.575,
+        0.838,
+        0.068
+      ]
+    },
+    {
+      "id": "e71",
+      "role": "text",
+      "label": "\"Prevent unauthorised transactions in your account. Update your mobile numbers/email IDs with your stock brokers. Receive information of your transactions directly from Exchange on your mobile/email at the end of the day. Issued in the interest of investors. KYC is one time exercise while dealing in securities markets - once KYC is done through a SEBI registered intermediary (broker, DP, Mutual Fund etc.), you need not undergo the same process again when you approach another intermediary.\" Dear Investor, if you are subscribing to an IPO, there is no need to issue a cheque. Please write the Bank account number and sign the IPO application form to authorize your bank to make payment in case of allotment. In case of non allotment the funds will remain in your bank account. As a business we don't give stock tips, and have not authorized anyone to trade on behalf of others. If you find anyone claiming to be part of Zerodha and offering such services, please .",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.656,
+        0.838,
+        0.136
+      ]
+    },
+    {
+      "id": "e72",
+      "role": "link",
+      "label": "create a ticket here",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.217,
+        1.772,
+        0.085,
+        0.017
+      ]
+    },
+    {
+      "id": "e73",
+      "role": "link",
+      "label": "NSE",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.187,
+        1.808,
+        0.019,
+        0.017
+      ]
+    },
+    {
+      "id": "e74",
+      "role": "link",
+      "label": "BSE",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.218,
+        1.808,
+        0.018,
+        0.017
+      ]
+    },
+    {
+      "id": "e75",
+      "role": "link",
+      "label": "MCX",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.249,
+        1.808,
+        0.022,
+        0.017
+      ]
+    },
+    {
+      "id": "e76",
+      "role": "link",
+      "label": "Terms & conditions",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.283,
+        1.808,
+        0.086,
+        0.017
+      ]
+    },
+    {
+      "id": "e77",
+      "role": "link",
+      "label": "Policies & procedures",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.382,
+        1.808,
+        0.097,
+        0.017
+      ]
+    },
+    {
+      "id": "e78",
+      "role": "link",
+      "label": "Privacy policy",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.491,
+        1.808,
+        0.063,
+        0.017
+      ]
+    },
+    {
+      "id": "e79",
+      "role": "link",
+      "label": "Disclosure",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.566,
+        1.808,
+        0.047,
+        0.017
+      ]
+    },
+    {
+      "id": "e80",
+      "role": "link",
+      "label": "For investor's attention",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.626,
+        1.808,
+        0.103,
+        0.017
+      ]
+    },
+    {
+      "id": "e81",
+      "role": "link",
+      "label": "Investor charter",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.742,
+        1.808,
+        0.071,
+        0.017
+      ]
+    },
+    {
+      "id": "e82",
+      "role": "image",
+      "label": "Zerodha logo (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        0.033,
+        0.1,
+        0.019
+      ]
+    },
+    {
+      "id": "e83",
+      "role": "image",
+      "label": "Zerodha's signup landing page (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.116,
+        0.387,
+        0.368,
+        0.365
+      ]
+    },
+    {
+      "id": "e84",
+      "role": "image",
+      "label": "India Phone number (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.525,
+        0.495,
+        0.022,
+        0.059
+      ]
+    },
+    {
+      "id": "e85",
+      "role": "image",
+      "label": "Zerodha logo (img: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        0.949,
+        0.119,
+        0.022
+      ]
+    },
+    {
+      "id": "e86",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e87",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.109,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e88",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.138,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e89",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.166,
+        1.052,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e90",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.081,
+        1.115,
+        0.022,
+        0.031
+      ]
+    },
+    {
+      "id": "e91",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.116,
+        1.119,
+        0.016,
+        0.022
+      ]
+    },
+    {
+      "id": "e92",
+      "role": "image",
+      "label": "svg (svg: pixels not in this list; use need_visual to see it)",
+      "value": "",
+      "state": {},
+      "bbox": [
+        0.144,
+        1.119,
+        0.016,
+        0.022
+      ]
+    }
+  ],
+  "detections": [
+    {
+      "id": "d1",
+      "type": "PHONE",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.93,
+      "nodeId": "n16",
+      "bbox": {
+        "x": 747.515625,
+        "y": 444.390625,
+        "w": 256,
+        "h": 55
+      }
+    },
+    {
+      "id": "d2",
+      "type": "NAME",
+      "sources": [
+        "ner"
+      ],
+      "confidence": 0.5849850376447042,
+      "nodeId": "n40",
+      "bbox": {
+        "x": 372,
+        "y": 967.390625,
+        "w": 126.015625,
+        "h": 17
+      }
+    },
+    {
+      "id": "d3",
+      "type": "ADDRESS",
+      "sources": [
+        "ner"
+      ],
+      "confidence": 0.8204452196756998,
+      "nodeId": "n71",
+      "bbox": {
+        "x": 104,
+        "y": 1206.390625,
+        "w": 1072,
+        "h": 81.5625
+      }
+    },
+    {
+      "id": "d4",
+      "type": "ADDRESS",
+      "sources": [
+        "ner"
+      ],
+      "confidence": 0.6666261851787567,
+      "nodeId": "n71",
+      "bbox": {
+        "x": 104,
+        "y": 1206.390625,
+        "w": 1072,
+        "h": 81.5625
+      }
+    },
+    {
+      "id": "d5",
+      "type": "ADDRESS",
+      "sources": [
+        "ner"
+      ],
+      "confidence": 0.7058539069615878,
+      "nodeId": "n71",
+      "bbox": {
+        "x": 104,
+        "y": 1206.390625,
+        "w": 1072,
+        "h": 81.5625
+      }
+    },
+    {
+      "id": "d6",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n72",
+      "bbox": {
+        "x": 104,
+        "y": 1269.5625,
+        "w": 147.453125,
+        "h": 15
+      }
+    },
+    {
+      "id": "d7",
+      "type": "EMAIL",
+      "sources": [
+        "pattern"
+      ],
+      "confidence": 0.99,
+      "nodeId": "n73",
+      "bbox": {
+        "x": 354.03125,
+        "y": 1269.5625,
+        "w": 100.453125,
+        "h": 15
+      }
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "<PHONE_1>",
+      "type": "PHONE",
+      "value": "7142902107"
+    },
+    {
+      "token": "<NAME_1>",
+      "type": "NAME",
+      "value": "I demat"
+    },
+    {
+      "token": "<ADDRESS_1>",
+      "type": "ADDRESS",
+      "value": "#153/154, 4th Cross, Dollars Colony, Opp. Clarence"
+    },
+    {
+      "token": "<ADDRESS_2>",
+      "type": "ADDRESS",
+      "value": "J.P Nagar"
+    },
+    {
+      "token": "<ADDRESS_3>",
+      "type": "ADDRESS",
+      "value": "Phase, Bengaluru - 560078, Karnataka, India"
+    },
+    {
+      "token": "<EMAIL_1>",
+      "type": "EMAIL",
+      "value": "complaints@zerodha.com"
+    },
+    {
+      "token": "<EMAIL_2>",
+      "type": "EMAIL",
+      "value": "dp@zerodha.com"
+    }
+  ]
+}
