@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecureKYC demo fixture (synthetic data)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  .banner { background: #fff3cd; border: 1px solid #ffc107; padding: .5rem .75rem; border-radius: 6px; font-size: .9rem; }
+  .card { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; }
+  .card h2 { margin-top: 0; font-size: 1.05rem; }
+  #profile-card p { margin: .25rem 0; } #profile-card span { color: #555; display: inline-block; min-width: 90px; }
+  form { display: grid; gap: .8rem; }
+  label { display: grid; gap: .25rem; font-size: .95rem; }
+  input { padding: .5rem .6rem; font-size: 1rem; border: 1px solid #999; border-radius: 6px; }
+  button { padding: .6rem 1rem; font-size: 1rem; background: #0b5fff; color: #fff; border: 0; border-radius: 6px; cursor: pointer; width: fit-content; }
+  #success { display: none; background: #d1e7dd; border: 1px solid #198754; padding: .75rem 1rem; border-radius: 6px; margin-top: 1rem; }
+  #ouro-pill { position: fixed; right: 12px; bottom: 12px; background: #111; color: #0f0; font: 12px/1.4 monospace; padding: .4rem .6rem; border-radius: 6px; display: none; white-space: pre; }
+</style>
+</head>
+<body>
+<h1>SecureKYC - customer onboarding (demo fixture)</h1>
+<p class="banner">All values on this page are synthetic test data for the Ouroboros Agent demo. No real person's data appears here.</p>
+
+<section class="card" id="profile-card" aria-label="Saved profile">
+  <h2>Your saved profile</h2>
+  <p><span>Name:</span> <strong>Aarav Sharma</strong></p>
+  <p><span>Email:</span> <strong>aarav.sharma@example.in</strong></p>
+  <p><span>Mobile:</span> <strong>98765 43210</strong></p>
+  <p><span>Aadhaar:</span> <strong>2341 2341 2346</strong></p>
+  <p><span>PAN:</span> <strong>BQKPS1234F</strong></p>
+  <p><span>DOB:</span> <strong>15-06-1998</strong></p>
+</section>
+
+<section class="card">
+  <h2>KYC verification form</h2>
+  <form id="kyc-form" action="#" method="post">
+    <label for="full-name">Full name
+      <input id="full-name" name="full_name" type="text" autocomplete="name">
+    </label>
+    <label for="email">Email address
+      <input id="email" name="email" type="email" autocomplete="email">
+    </label>
+    <label for="mobile">Mobile number
+      <input id="mobile" name="mobile" type="tel" autocomplete="tel">
+    </label>
+    <label for="aadhaar">Aadhaar number
+      <input id="aadhaar" name="aadhaar" type="text" inputmode="numeric">
+    </label>
+    <label for="pan">PAN
+      <input id="pan" name="pan" type="text" style="text-transform: uppercase">
+    </label>
+    <label for="dob">Date of birth (dd-mm-yyyy)
+      <input id="dob" name="dob" type="text" placeholder="dd-mm-yyyy">
+    </label>
+    <button type="submit" id="submit-kyc">Submit KYC</button>
+  </form>
+  <div id="success" role="status">KYC submitted. Reference: KYC-2026-000481. The agent filled this form; a human pressed submit.</div>
+</section>
+
+<div id="ouro-pill"></div>
+<script>
+  document.getElementById('kyc-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var inputs = this.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) if (!inputs[i].value.trim()) return;
+    document.getElementById('success').style.display = 'block';
+  });
+  // Mirrors the extension's run status for the live demo (the content script
+  // dispatches 'ouro:run-done'; detail stays inside the page).
+  window.addEventListener('ouro:run', function () {
+    var p = document.getElementById('ouro-pill');
+    p.style.display = 'block'; p.textContent = 'ouroboros: running';
+  });
+  window.addEventListener('ouro:run-done', function (ev) {
+    var p = document.getElementById('ouro-pill');
+    var s = ev.detail && ev.detail.result && ev.detail.result.status;
+    p.textContent = 'ouroboros: ' + (s || 'error');
+  });
+</script>
+</body>
+</html>
