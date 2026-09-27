@@ -72,3 +72,44 @@ def test_metrics_present():
 def test_schema_rejects_bad_element_id():
     bad = [dict(FORM[0], id="x1")]
     assert client.post("/step", json=req(screen_map=bad)).status_code == 422
+
+
+
+MANIFEST = {
+    "scheme": "ouroboros-redact/1",
+    "placeholder_format": "<TYPE_N>",
+    "legend": LEGEND,
+    "masked_elements": [
+        {"element_id": "e2", "tokens": ["<PHONE_1>"]},
+        {"element_id": "e3", "tokens": ["<PAN_1>"]},
+    ],
+    "masked_element_count": 2,
+    "opaque_regions": 0,
+}
+
+
+def test_v2_manifest_accepted_and_scheme_echoed():
+    r = client.post("/step", json=req(payload_version=2, redaction=MANIFEST))
+    assert r.status_code == 200, r.text
+    m = r.json()["metrics"]
+    assert m["redaction_scheme"] == "ouroboros-redact/1"
+    assert m["masked_elements"] == 2
+
+
+def test_v2_manifest_alone_supplies_the_legend():
+    body = req(payload_version=2, redaction=MANIFEST)
+    del body["legend"]
+    r = client.post("/step", json=body)
+    assert r.status_code == 200, r.text
+    assert r.json()["action"]["op"] in {"type", "click", "done"}
+
+
+def test_conflicting_legends_are_rejected():
+    bad = dict(MANIFEST, legend={"<PHONE_1>": "NAME"})
+    r = client.post("/step", json=req(payload_version=2, redaction=bad))
+    assert r.status_code == 422
+
+
+def test_manifest_requires_v2():
+    r = client.post("/step", json=req(redaction=MANIFEST))  # payload_version defaults to 1
+    assert r.status_code == 422
