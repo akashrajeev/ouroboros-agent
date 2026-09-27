@@ -1,0 +1,11 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Ouroboros GUIClip local ViT probe</title></head>
+<body style="font:14px system-ui;margin:24px">
+<h1>On-device GUIClip ViT screen probe</h1>
+<p>Academic-use GUIClip ViT-B/32, ONNX/WASM, local synthetic screens only. This model is not a privacy or action gate.</p>
+<p>Run <code>scripts/fetch-models.sh</code>, <code>scripts/prepare-guiclip.sh</code>, <code>scripts/stage-models.sh</code>, then build and open this extension page.</p>
+<button id="go">Run five-screen synthetic probe</button>
+<canvas id="screen" width="800" height="520" style="display:block;max-width:100%;border:1px solid #ddd"></canvas>
+<pre id="out">Not started.</pre>
+<script type="module" src="./bench/guiclip.ts"></script>
+</body></html>
