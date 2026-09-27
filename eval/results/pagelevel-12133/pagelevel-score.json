@@ -1,0 +1,274 @@
+{
+  "tag": "pagelevel-12133",
+  "generated": "2026-09-27T17:36:23.888Z",
+  "totals": {
+    "tp": 9,
+    "fn": 0,
+    "fp": 6,
+    "tn": 4,
+    "pos": 9,
+    "microPrecision": 0.6,
+    "microRecall": 1,
+    "microF1": 0.7499999999999999,
+    "macroPrecision": 0.8285714285714286,
+    "macroRecall": 1
+  },
+  "sites": [
+    {
+      "site": "airbnb",
+      "url": "https://www.airbnb.com/signup_login",
+      "elements": 54,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 6,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "kumuda.82@gmail.com",
+          "note": "auto-derived from recorded fill (typed 'kumuda.82@gmail.com'); seed 12133",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "groww",
+      "url": "https://groww.in/login",
+      "elements": 13,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 7,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "charuchandra.76@gmail.com",
+          "note": "auto-derived from recorded fill (typed 'charuchandra.76@gmail.com'); seed 12133",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "linkedin",
+      "url": "https://www.linkedin.com/signup",
+      "elements": 29,
+      "positives": 2,
+      "tp": 2,
+      "fn": 0,
+      "fp": 0,
+      "tn": 0,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 1,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "devani.44@gmail.com",
+          "note": "auto-derived from recorded fill (typed 'devani.44@gmail.com'); seed 12133",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 2,
+          "field": "value",
+          "type": "PASSWORD",
+          "value": "Qx0SvUgyBc#7",
+          "note": "auto-derived from recorded fill (typed 'Qx0SvUgyBc#7'); seed 12133",
+          "masked": true,
+          "token": "<PASSWORD_1>",
+          "tokenType": "PASSWORD",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "shine",
+      "url": "https://www.shine.com/registration/",
+      "elements": 37,
+      "positives": 4,
+      "tp": 4,
+      "fn": 0,
+      "fp": 0,
+      "tn": 1,
+      "benignLookalikesMasked": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "typeAccuracyOnMasked": 0.75,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 9,
+          "field": "value",
+          "type": "NAME",
+          "value": "Jagdeep Saini",
+          "note": "auto-derived from recorded fill (typed 'Jagdeep Saini'); seed 12133",
+          "masked": true,
+          "token": "<NAME_1>",
+          "tokenType": "NAME",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 10,
+          "field": "value",
+          "type": "EMAIL",
+          "value": "girija.71@gmail.com",
+          "note": "auto-derived from recorded fill (typed 'girija.71@gmail.com'); seed 12133",
+          "masked": true,
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 12,
+          "field": "value",
+          "type": "PHONE",
+          "value": "0612685725",
+          "note": "auto-derived from recorded fill (typed '06126857253'); seed 12133",
+          "masked": true,
+          "token": "<ACCOUNT_1>",
+          "tokenType": "ACCOUNT",
+          "typeCorrect": false,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "positive",
+          "element": 13,
+          "field": "value",
+          "type": "PASSWORD",
+          "value": "QxdkAHoaAD#7",
+          "note": "auto-derived from recorded fill (typed 'QxdkAHoaAD#7'); seed 12133",
+          "masked": true,
+          "token": "<PASSWORD_1>",
+          "tokenType": "PASSWORD",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        }
+      ]
+    },
+    {
+      "site": "zerodha",
+      "url": "https://signup.zerodha.com/",
+      "elements": 81,
+      "positives": 1,
+      "tp": 1,
+      "fn": 0,
+      "fp": 6,
+      "tn": 3,
+      "benignLookalikesMasked": 4,
+      "precision": 0.14285714285714285,
+      "recall": 1,
+      "f1": 0.25,
+      "typeAccuracyOnMasked": 1,
+      "rows": [
+        {
+          "kind": "positive",
+          "element": 12,
+          "field": "value",
+          "type": "PHONE",
+          "value": "07170260256",
+          "note": "auto-derived from recorded fill (typed '07170260256'); seed 12133",
+          "masked": true,
+          "token": "<PHONE_1>",
+          "tokenType": "PHONE",
+          "typeCorrect": true,
+          "leakedVerbatim": false
+        },
+        {
+          "kind": "false_positive",
+          "token": "<NAME_1>",
+          "tokenType": "NAME",
+          "value": "I demat",
+          "elements": [
+            28
+          ]
+        },
+        {
+          "kind": "false_positive",
+          "token": "<ADDRESS_1>",
+          "tokenType": "ADDRESS",
+          "value": "#153/154, 4th Cross, Dollars Colony, Opp. Clarence",
+          "elements": [
+            59
+          ]
+        },
+        {
+          "kind": "false_positive",
+          "token": "<ADDRESS_2>",
+          "tokenType": "ADDRESS",
+          "value": "J.P Nagar",
+          "elements": [
+            59
+          ]
+        },
+        {
+          "kind": "false_positive",
+          "token": "<ADDRESS_3>",
+          "tokenType": "ADDRESS",
+          "value": "Phase, Bengaluru - 560078, Karnataka, India",
+          "elements": [
+            59
+          ]
+        },
+        {
+          "kind": "false_positive",
+          "token": "<EMAIL_1>",
+          "tokenType": "EMAIL",
+          "value": "complaints@zerodha.com",
+          "elements": [
+            60
+          ]
+        },
+        {
+          "kind": "false_positive",
+          "token": "<EMAIL_2>",
+          "tokenType": "EMAIL",
+          "value": "dp@zerodha.com",
+          "elements": [
+            61
+          ]
+        }
+      ]
+    }
+  ]
+}
