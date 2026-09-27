@@ -17,9 +17,19 @@ mkdir -p "$dst/models/bert-small-pii/onnx"
 cp models/bert-small-pii/{config.json,tokenizer.json,tokenizer_config.json,special_tokens_map.json} "$dst/models/bert-small-pii/"
 cp models/bert-small-pii/onnx/model_quantized.onnx "$dst/models/bert-small-pii/onnx/"
 fi
+# GUIClip is optional, and does not alter the PII/privacy gate.
+if [ -s models/guiclip/vision-int8.onnx ] && [ -s models/guiclip/embeddings.json ]; then
+  mkdir -p "$dst/models/guiclip"
+  cp models/guiclip/{vision-int8.onnx,embeddings.json} "$dst/models/guiclip/"
+  echo 'GUIClip ViT staged for optional synthetic probe (academic use only)'
+else
+  echo 'GUIClip not staged; run scripts/prepare-guiclip.sh for the optional ViT probe'
+fi
 echo "NER: $NER (build with WXT_NER_SOURCE=$NER)"
 ort=node_modules/onnxruntime-web/dist
 rm -f "$dst"/ort/*
 # One runtime for vision + Transformers.js (asyncify build, WebGPU-capable)
 cp "$ort"/ort-wasm-simd-threaded.asyncify.{mjs,wasm} "$dst/ort/"
+# GUIClip's standard onnxruntime-web WASM entry point uses the jsep artifact.
+cp "$ort"/ort-wasm-simd-threaded.jsep.{mjs,wasm} "$dst/ort/"
 du -sh "$dst/models" "$dst/ort"
