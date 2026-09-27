@@ -1,3 +1,4 @@
+import type { SemanticHint } from './guiclipHint';
 import {
   observationKey, leakGate, estimateTokens, type StepRecord, legend, PlaceholderMap, rehydrate, sanitize, validateAction,
   type Action, type RawObservation, type ScreenMap, type TextDetector,
@@ -29,7 +30,7 @@ export interface LoopDeps {
   scroll?(direction: 'up' | 'down'): Promise<void>;
   /** Wait for the DOM to settle (wait op). */
   settle?(): Promise<void>;
-  visual?(raw: RawObservation): Promise<{ jpegB64: string; imageText: string; detections: number } | null>;
+  visual?(raw: RawObservation): Promise<{ jpegB64: string; imageText: string; detections: number; semanticHint?: SemanticHint } | null>;
 }
 
 export type LoopEvent =
@@ -78,6 +79,7 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
         legend: legend(map),
         history: history.map((h) => ({ op: h.op, element_id: h.element_id ?? null, text: h.text ?? null })),
         ...(vis ? { image_jpeg_b64: vis.jpegB64 } : {}),
+        ...(vis?.semanticHint ? { semantic_hint: vis.semanticHint } : {}),
       });
       const gate = await leakGate(body, map, { canaries: deps.canaries, imageText: vis?.imageText });
       const t3 = now();
