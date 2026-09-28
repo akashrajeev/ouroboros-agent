@@ -2,6 +2,7 @@ import type { TextMatch } from '@ouroboros/core';
 import type { Box } from '@ouroboros/vision';
 import { ModelHost, toShotBoxes } from './modelHost';
 import { classifyMasked, type SemanticHint } from './guiclipHint';
+import { opaqueOnly } from './visualEgress';
 import { cachedFetch, ensureDownloaded, NER_FILES, type NerSource } from './modelSource';
 
 export const NER_SOURCE: NerSource = ((import.meta as { env?: Record<string, string> }).env?.WXT_NER_SOURCE as NerSource) || 'download';
@@ -64,7 +65,10 @@ export async function handleHostRequest(msg: HostRequest): Promise<PrimeResponse
   // Only the redacted pixels enter GUIClip. Missing/failed optional assets never bypass the gate.
   let semanticHint: SemanticHint | undefined;
   try { semanticHint = await classifyMasked(canvas); } catch { /* optional semantic hint unavailable */ }
-  const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.8 });
+  // The local classifier can use the full processed image, but the remote planner
+  // receives only redacted opaque regions. Visible DOM text pixels are blacked out.
+  const outbound = opaqueOnly(canvas, toShotBoxes(msg.regions, msg.viewportW, img.width));
+  const blob = await outbound.convertToBlob({ type: 'image/jpeg', quality: 0.8 });
   const bytes = new Uint8Array(await blob.arrayBuffer());
   let bin = '';
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
