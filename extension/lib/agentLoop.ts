@@ -40,7 +40,7 @@ export type LoopEvent =
   | { kind: 'executed'; step: number; op: string; element_id?: string | null }
   | { kind: 'finished'; step: number; reason: string };
 
-export interface RunResult { status: 'done' | 'blocked' | 'rejected' | 'declined' | 'max_steps' | 'exec_failed'; steps: number; reason?: string }
+export interface RunResult { status: 'done' | 'blocked' | 'rejected' | 'declined' | 'max_steps' | 'exec_failed' | 'error'; steps: number; reason?: string }
 
 /** Tokenize the user's task with the same map so the planner sees placeholders. */
 export function sanitizeTask(task: string, map: PlaceholderMap, extraDetectors: TextDetector[] = []): string {
@@ -173,6 +173,10 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       history.push(a);
     }
     return { status: 'max_steps', steps: opts.maxSteps ?? 20 };
+  } catch (e) {
+    // No uncaught rejections out of the worker: surface the failure in the popup instead.
+    const msg = e instanceof Error ? e.message : String(e);
+    return { status: 'error', steps: 0, reason: msg };
   } finally {
     if (!opts.map) map.clear(); // per-task clear of A6m
   }

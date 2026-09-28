@@ -1,16 +1,70 @@
 <!doctype html>
 <html>
-  <head><meta charset="utf-8" /><title>Ouroboros</title></head>
-  <body style="width:320px;font:13px system-ui;padding:10px">
-    <textarea id="task" rows="3" style="width:100%" placeholder="Task, e.g. fill this form with my details"></textarea>
-    <button id="run">Run</button>
-    <button id="csv">Export metrics CSV</button>
-    <a id="dash" href="/dashboard.html" target="_blank">Dashboard</a>
-    <div id="confirm" hidden style="border:1px solid #c33;padding:8px;margin:8px 0">
-      <div>Allow the agent to click <b id="confirm-label"></b>?</div>
-      <button id="yes">Allow</button> <button id="no">Decline</button>
-    </div>
-    <pre id="log" style="white-space:pre-wrap;max-height:300px;overflow:auto"></pre>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ouroboros</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="11.5" fill="none" stroke="url(#g)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="60 12" transform="rotate(-45 16 16)"/>
+        <path d="M25.2 8.6l2.9 3.6-4.6.4z" fill="#2dd4bf"/>
+        <circle cx="16" cy="16" r="3.4" fill="#2dd4bf" opacity=".9"/>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#2dd4bf"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+      </svg>
+      <div class="brand">
+        <div class="name">Ouroboros</div>
+        <div class="tag">on-device privacy agent</div>
+      </div>
+      <span id="models-pill" class="pill pill-dim">checking...</span>
+    </header>
+
+    <section class="card" id="page-card">
+      <div class="card-title">
+        <svg viewBox="0 0 16 16" class="ic"><path d="M8 1l5.5 2.2v4c0 3.4-2.3 6.4-5.5 7.6C4.8 13.6 2.5 10.6 2.5 7.2v-4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.6 8l1.7 1.7 3.1-3.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        This page
+      </div>
+      <div id="scan-status" class="scan-status">Scanning...</div>
+      <div id="scan-chips" class="chips"></div>
+      <button id="mask-toggle" class="mask-btn" type="button" hidden>Show masking on this page</button>
+      <div class="hint">Masking is automatic. Raw values never leave this device - the server only sees tokens like <code>&lt;AADHAAR_1&gt;</code>.</div>
+    </section>
+
+    <section class="card" id="agent-card">
+      <div class="card-title">
+        <svg viewBox="0 0 16 16" class="ic"><path d="M2 8h9M8 3.5L12.5 8 8 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Agent loop
+      </div>
+      <div id="server-row" class="server-row">
+        <span id="server-dot" class="dot dot-wait"></span>
+        <span id="server-text">Checking local server...</span>
+        <button id="setup-toggle" class="mini" type="button" hidden>setup</button>
+      </div>
+      <div id="setup-box" class="setup-box" hidden>
+        <div class="setup-title">Run needs the local planner server. Start it once:</div>
+        <pre id="setup-cmd">pip install -r server/requirements.txt
+python -m uvicorn app.main:app --port 8001 --app-dir server &
+python demo/trust_proxy.py 8000 http://127.0.0.1:8001 &</pre>
+        <button id="copy-setup" class="mini" type="button">Copy commands</button>
+      </div>
+      <textarea id="task" rows="2" placeholder="Task, e.g. fill this form with my details"></textarea>
+      <button id="run" class="primary" type="button">Run</button>
+      <div id="confirm" class="confirm" hidden>
+        <div class="confirm-text">Allow the agent to click <b id="confirm-label"></b>?</div>
+        <div class="confirm-btns">
+          <button id="yes" class="allow" type="button">Allow</button>
+          <button id="no" class="decline" type="button">Decline</button>
+        </div>
+      </div>
+      <pre id="log" class="log" hidden></pre>
+    </section>
+
+    <footer class="foot">
+      <a id="dash" href="/dashboard.html" target="_blank">Dashboard</a>
+      <button id="csv" class="ghost" type="button">Export metrics CSV</button>
+    </footer>
+
     <script type="module" src="./main.ts"></script>
   </body>
 </html>

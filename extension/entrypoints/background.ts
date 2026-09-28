@@ -39,6 +39,22 @@ export default defineBackground(() => {
   const metrics = new MetricsStore();
   browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
     const msg = raw as { type: string; task?: string; runId?: string };
+    if (msg.type === 'ouro:status') {
+      (async () => {
+        const models = await modelsEnabled();
+        let server = false;
+        try {
+          const ctl = new AbortController();
+          const t = setTimeout(() => ctl.abort(), 1500);
+          // Any HTTP response (even 405) proves the proxy is listening; a network error means it is down.
+          await fetch(`${SERVER}/step`, { method: 'GET', signal: ctl.signal }).catch(() => { throw new Error('down'); });
+          clearTimeout(t);
+          server = true;
+        } catch { server = false; }
+        sendResponse({ models, server });
+      })();
+      return true;
+    }
     if (msg.type === 'ouro:metrics:csv') { metrics.csv(msg.runId).then(sendResponse, () => sendResponse('')); return true; }
     if (msg.type === 'ouro:metrics:clear') { metrics.clear().then(() => sendResponse(true)); return true; }
         if (msg.type !== 'ouro:run' || !msg.task) return undefined as never;

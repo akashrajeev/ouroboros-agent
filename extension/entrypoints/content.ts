@@ -1,4 +1,5 @@
 import { executeOnElement, waitForDomQuiet } from '../lib/execute';
+import { PlaceholderMap, sanitize } from '@ouroboros/core';
 import type { ContentRequest } from '../lib/messages';
 import { NodeRegistry, observe } from '../lib/observe';
 
@@ -44,6 +45,54 @@ export default defineContentScript({
       const msg = raw as ContentRequest;
       if (msg.type === 'ouro:observe') {
         sendResponse(observe(document, registry));
+        return true;
+      }
+      if (msg.type === 'ouro:mask:preview' || msg.type === 'ouro:mask:clear') {
+        // On-demand visual proof: paint the current detections as black boxes with
+        // token labels on the live page. Purely local; nothing leaves the device.
+        document.querySelectorAll('.ouro-mask-overlay').forEach((n) => n.remove());
+        if (msg.type === 'ouro:mask:clear') { sendResponse({ cleared: true }); return true; }
+        try {
+          const obs = observe(document, registry);
+          const res = sanitize(obs, new PlaceholderMap());
+          const sx = window.scrollX, sy = window.scrollY;
+          const vh = window.innerHeight, vw = window.innerWidth;
+          let painted = 0;
+          for (const d of res.detections) {
+            const b = d.bbox;
+            if (!b || b.w <= 0 || b.h <= 0) continue;
+            if (b.y > vh || b.y + b.h < 0 || b.x > vw || b.x + b.w < 0) continue;
+            const el = document.createElement('div');
+            el.className = 'ouro-mask-overlay';
+            el.textContent = `<${d.type}>`;
+            el.setAttribute('style', [
+              `left:${Math.max(0, b.x + sx) - 2}px`, `top:${Math.max(0, b.y + sy) - 2}px`,
+              `width:${b.w + 4}px`, `height:${b.h + 4}px`,
+              'position:absolute', 'z-index:2147483647', 'background:#000',
+              'color:#2dd4bf', 'font:600 10px/1 ui-monospace,monospace',
+              'display:flex', 'align-items:center', 'justify-content:center',
+              'border-radius:2px', 'pointer-events:none', 'overflow:hidden',
+            ].join(';'));
+            document.body.appendChild(el);
+            painted++;
+          }
+          sendResponse({ painted, total: res.detections.length });
+        } catch (e) {
+          sendResponse({ error: String(e) });
+        }
+        return true;
+      }
+      if (msg.type === 'ouro:peek') {
+        // Popup status: same rules+pattern detectors as the real pipeline (A3a/A3b), instant and fully on-device.
+        try {
+          const obs = observe(document, registry);
+          const res = sanitize(obs, new PlaceholderMap());
+          const byType: Record<string, number> = {};
+          for (const d of res.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
+          sendResponse({ total: res.detections.length, byType });
+        } catch (e) {
+          sendResponse({ error: String(e) });
+        }
         return true;
       }
       if (msg.type === 'ouro:execute') {
