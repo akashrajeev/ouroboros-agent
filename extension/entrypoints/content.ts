@@ -86,10 +86,13 @@ export default defineContentScript({
         // Popup status: same rules+pattern detectors as the real pipeline (A3a/A3b), instant and fully on-device.
         try {
           const obs = observe(document, registry);
-          const res = sanitize(obs, new PlaceholderMap());
+          const map = new PlaceholderMap();
+          const res = sanitize(obs, map);
           const byType: Record<string, number> = {};
           for (const d of res.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
-          sendResponse({ total: res.detections.length, byType });
+          // Wire view: the exact raw -> token pairs the placeholder map holds. Device-local, capped for display.
+          const pairs = map.values().slice(0, 8).map((v) => ({ type: v.type, raw: v.value, token: v.token }));
+          sendResponse({ total: res.detections.length, byType, pairs });
         } catch (e) {
           sendResponse({ error: String(e) });
         }

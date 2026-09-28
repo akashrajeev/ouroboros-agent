@@ -37,6 +37,10 @@ async function modelsEnabled(): Promise<boolean> {
 
 export default defineBackground(() => {
   const metrics = new MetricsStore();
+  // Wire-view gate state: verdict of the last payload plus cumulative blocked count (session only).
+  let gateVerdict: 'pass' | 'blocked' | null = null;
+  let gateBlocked = 0;
+  let gateAt = 0;
   browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
     const msg = raw as { type: string; task?: string; runId?: string };
     if (msg.type === 'ouro:status') {
@@ -51,7 +55,7 @@ export default defineBackground(() => {
           clearTimeout(t);
           server = true;
         } catch { server = false; }
-        sendResponse({ models, server });
+        sendResponse({ models, server, gate: { verdict: gateVerdict, blocked: gateBlocked, at: gateAt } });
       })();
       return true;
     }
@@ -84,7 +88,11 @@ export default defineBackground(() => {
         settle: async () => { await send({ type: 'ouro:settle' }); },
         // A9: consequential actions need a click in the popup; closed popup or 60 s silence = decline.
         confirm: (label) => confirmWithTimeout(() => browser.runtime.sendMessage({ type: 'ouro:confirm', label } satisfies ConfirmRequest)),
-        log: (e) => events.push(e),
+        log: (e) => {
+          events.push(e);
+          if (e.kind === 'blocked') { gateVerdict = 'blocked'; gateBlocked += e.hits.length; gateAt = Date.now(); }
+          else if (e.kind === 'sent') { gateVerdict = 'pass'; gateAt = Date.now(); }
+        },
         record: (r) => { void metrics.add(r); },
       });
       sendResponse({ result, events });
