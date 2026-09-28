@@ -64,7 +64,7 @@ describe('end-to-end device loop (stub planner)', () => {
     // Payload v2: explicit redaction manifest, no real values, server-visible scheme.
     const wire = JSON.parse(bodies[0]!);
     expect(wire.payload_version).toBe(2);
-    expect(wire.redaction.scheme).toBe('ouroboros-redact/1');
+    expect(wire.redaction.scheme).toBe('ouroboros-redact/2');
     expect(wire.redaction.task_tokens).toContain('<PHONE_1>');
     expect(wire.redaction.legend['<PHONE_1>']).toBe('PHONE');
     expect(JSON.stringify(wire.redaction)).not.toContain('9876543210');
