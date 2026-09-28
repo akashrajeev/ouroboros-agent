@@ -41,7 +41,7 @@ export default defineBackground(() => {
     const msg = raw as { type: string; task?: string; runId?: string };
     if (msg.type === 'ouro:metrics:csv') { metrics.csv(msg.runId).then(sendResponse, () => sendResponse('')); return true; }
     if (msg.type === 'ouro:metrics:clear') { metrics.clear().then(() => sendResponse(true)); return true; }
-    if (msg.type !== 'ouro:run' || !msg.task) { sendResponse(undefined); return true; }
+        if (msg.type !== 'ouro:run' || !msg.task) return undefined as never;
     (async () => {
       const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
       if (!tab?.id) return sendResponse({ status: 'no_tab' });
