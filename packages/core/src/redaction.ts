@@ -6,7 +6,7 @@ import { legend, TOKEN_RE, type PlaceholderMap } from './placeholders';
  * Bump the suffix whenever masking behavior changes so a server can tell
  * exactly which scheme produced a payload.
  */
-export const REDACTION_SCHEME = 'ouroboros-redact/1' as const;
+export const REDACTION_SCHEME = 'ouroboros-redact/2' as const;
 
 /**
  * /step payload schema version.
@@ -19,7 +19,7 @@ export const PAYLOAD_VERSION = 2 as const;
 export interface MaskedImageScheme {
   encoding: 'jpeg';
   /** Solid black fill over text/ID detections, blur over faces (A6). */
-  method: 'solid-fill-text+blur-faces';
+  method: 'opaque-only+solid-fill-text+blur-faces';
   /** Masked regions in this image. */
   detections: number;
   /** The masked image's own re-OCR text passed the leak gate before egress. */
@@ -75,7 +75,7 @@ export function buildRedactionManifest(screen: ScreenMap, map: PlaceholderMap, i
     opaque_regions: screen.opaqueCount,
     task_tokens: task ? tokensIn(task) : [],
     ...(image
-      ? { image: { encoding: 'jpeg' as const, method: 'solid-fill-text+blur-faces' as const, detections: image.detections, re_ocr_gated: true as const } }
+      ? { image: { encoding: 'jpeg' as const, method: 'opaque-only+solid-fill-text+blur-faces' as const, detections: image.detections, re_ocr_gated: true as const } }
       : {}),
   };
 }
