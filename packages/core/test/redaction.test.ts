@@ -38,7 +38,7 @@ describe('redaction manifest (payload v2)', () => {
     expect(without.opaque_regions).toBe(1);
     expect(without.image).toBeUndefined();
     const withImg = buildRedactionManifest(screen, map, { detections: 3 });
-    expect(withImg.image).toEqual({ encoding: 'jpeg', method: 'solid-fill-text+blur-faces', detections: 3, re_ocr_gated: true });
+    expect(withImg.image).toEqual({ encoding: 'jpeg', method: 'opaque-only+solid-fill-text+blur-faces', detections: 3, re_ocr_gated: true });
   });
 
   it('tokensIn finds distinct placeholders only', () => {
