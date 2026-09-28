@@ -28,14 +28,14 @@ implicitly, never by guessing from placeholder-shaped strings.
 
 | Field | Meaning |
 |---|---|
-| `scheme` | `ouroboros-redact/1`. Bump the suffix on any masking-behavior change. |
+| `scheme` | `ouroboros-redact/2` (v1 scheme remains accepted for older device payloads). Bump the suffix on any masking-behavior change. |
 | `placeholder_format` | `<TYPE_N>` - the only grammar the server may emit in `type`/`select` text. |
 | `legend` | token -> PII type. The real values behind tokens NEVER leave the device. |
 | `masked_elements` | Every element carrying >=1 placeholder: `{element_id, tokens[]}`. |
 | `masked_element_count` | Convenience count. |
-| `opaque_regions` | Pixel regions (img/canvas/...) withheld from the DOM list; the server sees them only via a `need_visual` image. |
+| `opaque_regions` | Pixel regions (img/canvas/...) withheld from the DOM list; after `need_visual`, only these processed opaque pixels appear in the JPEG. Pixels outside them are solid black. |
 | `task_tokens` | Placeholders carried by the sanitized `task` text itself. |
-| `image` | Present when an image is attached: `{encoding: "jpeg", method: "solid-fill-text+blur-faces", detections, re_ocr_gated: true}`. |
+| `image` | Present when an image is attached: `{encoding: "jpeg", method: "opaque-only+solid-fill-text+blur-faces", detections, re_ocr_gated: true}`. |
 
 ## Server obligations
 
