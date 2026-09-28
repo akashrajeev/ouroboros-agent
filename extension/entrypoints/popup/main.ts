@@ -126,3 +126,5 @@ document.getElementById('csv')!.addEventListener('click', async () => {
 
 void refreshStatus();
 void scanPage();
+// Server state changes while the popup is open (he starts the server mid-test) - keep the dot live.
+setInterval(() => { void refreshStatus(); }, 4000);

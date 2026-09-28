@@ -9,6 +9,8 @@ export type TextDetector = (text: string) => TextMatch[];
 
 export interface SanitizeOptions {
   extraDetectors?: TextDetector[];
+  /** Hostname of the observed page (www stripped); lets contact-link gating recognize a site's own domain. */
+  pageHost?: string;
 }
 
 export interface SanitizeResult {
@@ -100,9 +102,16 @@ function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sin
     .map((m) => trimSpan(s, m))
     .filter((m) => m.source !== 'ner' || (m.value.match(/[A-Za-z0-9]/g) ?? []).length >= 3)
     .filter((m) => {
-      // A mailto:/tel: link's visible text is the site's own published contact endpoint, not user data.
-      if (rctx?.contact === 'mailto' && m.type === 'EMAIL') return false;
-      if (rctx?.contact === 'tel' && m.type === 'PHONE') return false;
+      // A mailto:/tel: link's visible text is usually the site's own published contact endpoint,
+      // not user data - but only when the context backs that: the link sits in boilerplate
+      // (footer/contentinfo, e.g. broker complaint lines) or points at the site's own domain.
+      // Anywhere else (a personal inbox, a message body) the visible address IS user data and masks.
+      if (rctx?.contact === 'mailto' && m.type === 'EMAIL') {
+        const dom = (m.value.split('@')[1] ?? '').toLowerCase();
+        const own = !!opts.pageHost && !!dom && (dom === opts.pageHost || dom.endsWith(`.${opts.pageHost}`));
+        if (rctx?.boilerplate || own) return false;
+      }
+      if (rctx?.contact === 'tel' && m.type === 'PHONE' && rctx?.boilerplate) return false;
       // Boilerplate regions (footer/contentinfo) are dominated by site-owned corporate text
       // (registered addresses, regulatory disclosures, navigation); uncorroborated NER-only spans
       // there are mostly false positives. Pattern/DOM-rule matches still mask. Field values are
@@ -119,7 +128,12 @@ function redactString(s: string, map: PlaceholderMap, opts: SanitizeOptions, sin
  * A3a/A3b(+A3c) -> A4 -> A5 -> A6 for DOM elements. Pure: all real values end up
  * only inside `map`.
  */
+function hostOf(url: string): string {
+  try { return new URL(url).hostname.replace(/^www\./, '').toLowerCase(); } catch { return ''; }
+}
+
 export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: SanitizeOptions = {}): SanitizeResult {
+  opts = { ...opts, pageHost: opts.pageHost ?? hostOf(obs.url) };
   const { w, h } = obs.viewport;
   const elements: ScreenElement[] = [];
   const nodeOf: Record<string, string> = {};

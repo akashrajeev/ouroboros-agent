@@ -104,9 +104,25 @@ describe('boilerplate + contact gating (Phase 13 follow-up)', () => {
     expect(screen.elements[0]!.label).toBe('complaints@zerodha.com');
   });
 
-  it('does not mask a tel link’s visible contact phone', () => {
-    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: '080 4718 1888', contact: 'tel' })), new PlaceholderMap());
+  it('does not mask a tel link’s visible contact phone in boilerplate', () => {
+    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: '080 4718 1888', contact: 'tel', boilerplate: true })), new PlaceholderMap());
     expect(screen.elements[0]!.label).toBe('080 4718 1888');
+  });
+
+  it('masks a mailto link’s visible email in page content (personal inbox case)', () => {
+    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: 'crestcannon7@gmail.com', contact: 'mailto' })), new PlaceholderMap());
+    expect(screen.elements[0]!.label).toBe('<EMAIL_1>');
+  });
+
+  it('masks a tel link’s visible phone in page content', () => {
+    const { screen } = sanitize(obs(el({ tag: 'a', role: 'link', name: '+91 98200 11223', contact: 'tel' })), new PlaceholderMap());
+    expect(screen.elements[0]!.label).toBe('<PHONE_1>');
+  });
+
+  it('does not mask a mailto link pointing at the site’s own domain', () => {
+    const o: RawObservation = { url: 'https://www.zerodha.com/support', viewport: { w: 1280, h: 900 }, elements: [el({ tag: 'a', role: 'link', name: 'complaints@zerodha.com', contact: 'mailto' })], opaque: [] };
+    const { screen } = sanitize(o, new PlaceholderMap());
+    expect(screen.elements[0]!.label).toBe('complaints@zerodha.com');
   });
 
   it('still masks a user-known value when it appears inside boilerplate', () => {

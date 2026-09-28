@@ -19,6 +19,7 @@ from __future__ import annotations
 import json
 import sys
 import time
+import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -43,8 +44,15 @@ class Handler(BaseHTTPRequestHandler):
             headers={"content-type": self.headers.get("content-type", "application/json")},
             method=self.command,
         )
-        with urllib.request.urlopen(req, timeout=120) as r:
-            return r.status, r.read()
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return r.status, r.read()
+        except urllib.error.HTTPError as e:
+            # A 404/405/500 from the backend is still an ANSWER. Forward it; dropping the
+            # connection (ERR_EMPTY_RESPONSE) is what made a live server look offline.
+            return e.code, e.read()
+        except urllib.error.URLError as e:
+            return 502, json.dumps({"detail": f"planner server unreachable on {TARGET}: {e.reason}"}).encode()
 
     def do_GET(self):
         status, data = self._forward()
