@@ -29,7 +29,7 @@ function renderGate() {
   if (!g || !g.verdict) {
     verdict.textContent = 'gate: idle';
     verdict.className = '';
-    line.innerHTML = '<i>run the agent - every payload passes this gate first</i>';
+    line.innerHTML = '<i>run the agent - inspect the gate result after the payload check</i>';
   } else if (g.verdict === 'pass') {
     verdict.textContent = 'gate: PASS';
     verdict.className = '';
