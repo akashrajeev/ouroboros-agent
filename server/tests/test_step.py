@@ -11,7 +11,7 @@ FORM = [
     {"id": "e4", "role": "button", "label": "Submit", "bbox": [0.1, 0.4, 0.1, 0.04]},
 ]
 LEGEND = {"<NAME_1>": "NAME", "<PHONE_1>": "PHONE", "<PAN_1>": "PAN"}
-TASK = "Fill the KYC form for <NAME_1>, mobile <PHONE_1>, PAN <PAN_1>"
+TASK = "Fill the KYC form for <NAME_1>, mobile <PHONE_1>, PAN <PAN_1>, then submit."
 
 
 def req(history=None, **kw):
@@ -113,3 +113,15 @@ def test_conflicting_legends_are_rejected():
 def test_manifest_requires_v2():
     r = client.post("/step", json=req(redaction=MANIFEST))  # payload_version defaults to 1
     assert r.status_code == 422
+
+
+def test_fill_only_instruction_never_clicks_submit():
+    history = [
+        {"op": "type", "element_id": "e1", "text": "<NAME_1>"},
+        {"op": "type", "element_id": "e2", "text": "<PHONE_1>"},
+        {"op": "type", "element_id": "e3", "text": "<PAN_1>"},
+    ]
+    task = "Fill the KYC form from my saved profile. Do not submit."
+    r = client.post("/step", json=req(history, task=task))
+    assert r.status_code == 200, r.text
+    assert r.json()["action"]["op"] == "done"

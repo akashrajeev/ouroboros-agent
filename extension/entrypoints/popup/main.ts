@@ -144,9 +144,10 @@ runBtn.addEventListener('click', async () => {
   runBtn.disabled = true;
   showLog('running...');
   try {
-    const res = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value })) as { status: string; steps?: number; reason?: string };
-    if (res.status === 'error' || res.status === 'exec_failed') showLog(`run failed: ${res.reason ?? 'unknown error'}`);
-    else showLog(JSON.stringify(res, null, 2));
+    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string };
+    const result: { status?: string; steps?: number; reason?: string } = response.result ?? response;
+    if (result.status === 'error' || result.status === 'exec_failed') showLog(`run failed: ${result.reason ?? 'unknown error'}`);
+    else showLog(`${result.status ?? 'unknown'} - ${result.steps ?? 0} steps\n${JSON.stringify(response.events ?? [], null, 2)}`);
   } catch (e) {
     showLog(`run failed: ${e instanceof Error ? e.message : String(e)}`);
   } finally {

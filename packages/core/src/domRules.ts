@@ -6,6 +6,7 @@ import type { FieldInfo, PiiType } from './types';
  */
 const LABEL_RULES: [RegExp, PiiType][] = [
   [/\b(otp|one[\s_-]?time)\b|verification[\s_-]?code/i, 'OTP'],
+  [/\b(full[\s_-]?name|applicant[\s_-]?name|customer[\s_-]?name)\b/i, 'NAME'],
   [/\bcvv2?\b|\bcvc\b|security[\s_-]?code/i, 'CVV'],
   [/\bm?pin\b(?![\s_-]?code)/i, 'PIN'],
   [/aadha+r|\buid(ai)?\b/i, 'AADHAAR'],

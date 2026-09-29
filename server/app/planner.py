@@ -31,6 +31,9 @@ FIELD_HINTS: list[tuple[re.Pattern[str], str]] = [
 ]
 TEXT_FIELD_TYPES = {"text", "tel", "email", "number", "textarea", "search", None}
 SUBMIT_RE = re.compile(r"submit|continue|next|save|register|sign ?up|proceed|pay", re.I)
+NO_SUBMIT_RE = re.compile(r"(?:do not|don't|without|never)\s+(?:click\s+)?(?:submit|send|register|pay|confirm)|(?:leave|keep)\s+(?:it\s+)?(?:unsubmitted|as\s+a\s+draft)", re.I)
+YES_SUBMIT_RE = re.compile(r"\b(?:submit|send|register|pay|confirm)\b", re.I)
+
 
 
 def field_token_type(el: Element) -> str | None:
@@ -76,6 +79,8 @@ class StubPlanner:
                 if req.legend.get(tok) == want:
                     return Action(op="type", element_id=el.id, text=tok, reason=f"{el.label or el.id} expects {want}")
         for el in req.screen_map:
+            if not YES_SUBMIT_RE.search(req.task) or NO_SUBMIT_RE.search(req.task):
+                break
             if el.role == "button" and SUBMIT_RE.search(el.label) and not el.state.get("disabled"):
                 if any(h.op == "click" and h.element_id == el.id for h in req.history):
                     return Action(op="done", reason="submitted")

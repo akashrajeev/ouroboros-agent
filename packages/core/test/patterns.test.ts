@@ -79,3 +79,17 @@ describe('overlap resolution', () => {
     expect(types(`ravi@x.com 9876543210 ABCPE1234F`)).toEqual(['EMAIL', 'PHONE', 'PAN']);
   });
 });
+
+
+describe('labeled synthetic PII fallbacks', () => {
+  it('masks names and explicit PAN/Aadhaar in paragraph text', () => {
+    expect(types('Name: Priya Sharma')).toEqual(['NAME']);
+    expect(types('PAN: ABCDE1234F')).toEqual(['PAN']);
+    expect(types('Aadhaar: 2341 2341 2346')).toEqual(['AADHAAR']);
+  });
+  it('leaves similarly shaped unlabeled strings alone', () => {
+    expect(types('Welcome Priya Sharma')).toEqual([]);
+    expect(types('Order ABCDE1234F')).toEqual([]);
+    expect(types('Ticket 2341 2341 2347')).toEqual([]);
+  });
+});

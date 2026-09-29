@@ -53,6 +53,27 @@ const RULES: Rule[] = [
     re: /\b[A-Za-z0-9][A-Za-z0-9._-]{1,255}@[A-Za-z]{2,64}\b(?!\.[A-Za-z])/g,
   },
   {
+    // The explicit label is stronger evidence than a synthetic or OCR-damaged checksum.
+    // Never apply this relaxed rule to a bare number or to an account-labeled number.
+    type: 'AADHAAR', priority: 72, confidence: 0.90,
+    re: /(?<!\d)[2-9]\d{3}[ -]?\d{4}[ -]?\d{4}(?!\d)/g,
+    validate: (_raw, text, start) => hasContext(text, start, /\b(aadha+r|uidai|uid)\b[^\d]{0,12}$/i, 35),
+  },
+  {
+    // Context-only fallback for OCR errors or fabricated demo PANs; keep the strict
+    // holder-code rule below for unlabeled IDs.
+    type: 'PAN', priority: 76, confidence: 0.90,
+    re: /\b[A-Z]{5}\d{4}[A-Z]\b/g,
+    validate: (_raw, text, start) => hasContext(text, start, /\bpan\b[^A-Z0-9]{0,12}$/i, 35),
+  },
+  {
+    // Names have no checksum. Only a local explicit field label can authorize a
+    // pattern fallback; free prose still relies on on-device NER.
+    type: 'NAME', priority: 22, confidence: 0.85,
+    re: /\b[A-Z][a-z]{1,25}(?:[ '-][A-Z][a-z]{1,25}){1,3}\b/g,
+    validate: (_raw, text, start) => hasContext(text, start, /\b(?:full[ -]?name|customer[ -]?name|applicant[ -]?name|name)\b[^A-Za-z]{0,5}$/i, 28),
+  },
+  {
     type: 'GSTIN', priority: 80, confidence: 0.99,
     re: /\b\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]\b/gi,
     validate: (raw) => gstinValid(raw),

@@ -132,3 +132,21 @@ describe('boilerplate + contact gating (Phase 13 follow-up)', () => {
     expect(screen.elements[1]!.label).toBe('Logged in as <EMAIL_1>');
   });
 });
+
+
+describe('labeled KYC wire safety', () => {
+  it('redacts all copies of name, PAN, and Aadhaar before egress', async () => {
+    const mk = (nodeId: string, name: string, value = ''): RawElement => ({ nodeId, tag: value ? 'input' : 'p', role: value ? 'textbox' : 'text', name, text: value ? '' : name, value, bbox: { x: 0, y: 0, w: 300, h: 30 } });
+    const obs: RawObservation = { url: 'https://example.org/kyc', viewport: { w: 1200, h: 900 }, opaque: [], elements: [
+      mk('n1', 'Name: Priya Sharma'), mk('n2', 'Full name', 'Priya Sharma'),
+      mk('n3', 'PAN: ABCDE1234F'), mk('n4', 'PAN', 'ABCDE1234F'),
+      mk('n5', 'Aadhaar: 2341 2341 2346'), mk('n6', 'Aadhaar', '2341 2341 2346'),
+    ] };
+    const map = new PlaceholderMap();
+    const r = sanitize(obs, map);
+    const wire = JSON.stringify(wireScreenMap(r.screen));
+    for (const raw of ['Priya Sharma', 'ABCDE1234F', '2341 2341 2346']) expect(wire).not.toContain(raw);
+    expect(r.detections.length).toBe(6);
+    expect((await leakGate(wire, map)).pass).toBe(true);
+  });
+});
