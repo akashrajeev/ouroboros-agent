@@ -33,7 +33,7 @@ function renderGate() {
   } else if (g.verdict === 'pass') {
     verdict.textContent = 'gate: PASS';
     verdict.className = '';
-    line.innerHTML = '<i>0 raw values left this device</i>';
+    line.innerHTML = '<i>this run passed the device leak gate</i>';
   } else {
     verdict.textContent = 'gate: BLOCKED';
     verdict.className = 'amber';
@@ -101,7 +101,7 @@ async function scanPage() {
       status.className = 'row ok';
       chips.innerHTML = '';
     } else {
-      status.textContent = `${peek.total} sensitive ${peek.total === 1 ? 'spot' : 'spots'} - masked from the cloud`;
+      status.textContent = `${peek.total} detected ${peek.total === 1 ? 'spot' : 'spots'} - preview available`;
       status.className = 'row amber';
       chips.innerHTML = Object.entries(peek.byType)
         .sort((a, b) => b[1] - a[1])
