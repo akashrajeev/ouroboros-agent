@@ -24,7 +24,7 @@ for (const [slug, url] of URLS) {
     await new Promise((r) => setTimeout(r, 2500));
     await page.evaluate(inpage);
     const obs = (await page.evaluate('window.__ouro.observe()')) as RawObservation;
-    const rawHtml: string = await page.evaluate('document.documentElement.outerHTML');
+    const rawHtml: string = await page.evaluate(() => document.documentElement.outerHTML);
     const map = new PlaceholderMap();
     const { screen } = sanitize(obs, map, { extraDetectors: [(t: string): TextMatch[] => ner.lookup(t)] });
     const wire = JSON.stringify(wireScreenMap(screen));
