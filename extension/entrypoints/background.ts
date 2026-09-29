@@ -56,7 +56,7 @@ export default defineBackground(() => {
           clearTimeout(t);
           server = true;
         } catch { server = false; }
-        sendResponse({ models, server, gate: { verdict: gateVerdict, blocked: gateBlocked, at: gateAt } });
+        sendResponse({ models, ner: models && NER_SOURCE !== 'off', server, gate: { verdict: gateVerdict, blocked: gateBlocked, at: gateAt } });
       })();
       return true;
     }

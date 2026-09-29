@@ -3,7 +3,7 @@ const logEl = document.getElementById('log')!;
 const runBtn = document.getElementById('run') as HTMLButtonElement;
 
 type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
-type Status = { models: boolean; server: boolean; gate?: Gate };
+type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate };
 type Pair = { type: string; raw: string; token: string };
 type DomLine = { role: string; label: string; value: string };
 type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[] } | { error: string };
@@ -48,7 +48,8 @@ async function refreshStatus() {
   const setupBox = document.getElementById('setup-box')!;
   let st: Status | undefined;
   try { st = (await browser.runtime.sendMessage({ type: 'ouro:status' })) as Status; } catch { /* fall through */ }
-  if (st?.models) { pill.textContent = 'models: on-device'; pill.className = 'dim ok'; }
+  if (st?.models && st?.ner) { pill.textContent = 'models: on-device'; pill.className = 'dim ok'; }
+  else if (st?.models) { pill.textContent = 'vision: on-device · text: rules'; pill.className = 'dim warn'; }
   else if (st) { pill.textContent = 'models: rules only'; pill.className = 'dim warn'; }
   else { pill.textContent = 'models: offline'; pill.className = 'dim'; }
   if (st?.server) {
