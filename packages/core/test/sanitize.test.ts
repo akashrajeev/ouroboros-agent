@@ -150,3 +150,15 @@ describe('labeled KYC wire safety', () => {
     expect((await leakGate(wire, map)).pass).toBe(true);
   });
 });
+
+
+describe('out-of-order known-value protection', () => {
+  it('masks an unlabeled greeting before a later explicitly labeled name', async () => {
+    const mk = (nodeId: string, name: string): RawElement => ({ nodeId, tag: 'p', role: 'text', name, text: name, value: '', bbox: { x: 0, y: 0, w: 300, h: 30 } });
+    const map = new PlaceholderMap();
+    const r = sanitize({url: 'https://example.org/',viewport:{w:1200,h:900},opaque:[],elements:[mk('n1','Welcome Priya Sharma'),mk('n2','Name: Priya Sharma')]},map);
+    const wire = JSON.stringify(wireScreenMap(r.screen));
+    expect(wire).not.toContain('Priya Sharma');
+    expect((await leakGate(wire,map)).pass).toBe(true);
+  });
+});

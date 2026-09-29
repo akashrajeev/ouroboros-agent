@@ -141,6 +141,19 @@ export function sanitize(obs: RawObservation, map: PlaceholderMap, opts: Sanitiz
   const accepts: ScreenMap['accepts'] = {};
   const detections: SensitiveDetection[] = [];
 
+  // Seed known personal values before emitting any element. A greeting can precede
+  // its labeled profile field in DOM order; the later field must protect the greeting.
+  for (const el of obs.elements) {
+    if (el.value) {
+      const rule = domRuleType(fieldOf(el));
+      if (rule) map.tokenFor(rule, el.value);
+    }
+    for (const s of [el.name, el.text]) {
+      if (!s) continue;
+      for (const m of detectPatterns(s)) map.tokenFor(m.type, m.value);
+    }
+  }
+
   obs.elements.forEach((el, i) => {
     const id = `e${i + 1}`;
     const field = fieldOf(el);

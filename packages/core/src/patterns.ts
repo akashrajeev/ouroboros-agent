@@ -53,15 +53,15 @@ const RULES: Rule[] = [
     re: /\b[A-Za-z0-9][A-Za-z0-9._-]{1,255}@[A-Za-z]{2,64}\b(?!\.[A-Za-z])/g,
   },
   {
-    // The explicit label is stronger evidence than a synthetic or OCR-damaged checksum.
-    // Never apply this relaxed rule to a bare number or to an account-labeled number.
+    // An explicit label may justify masking a checksum-failing value in a visual preview.
+    // This raises recall but can hide non-ID text; never call it validated Aadhaar.
     type: 'AADHAAR', priority: 72, confidence: 0.90,
     re: /(?<!\d)[2-9]\d{3}[ -]?\d{4}[ -]?\d{4}(?!\d)/g,
     validate: (_raw, text, start) => hasContext(text, start, /\b(aadha+r|uidai|uid)\b[^\d]{0,12}$/i, 35),
   },
   {
-    // Context-only fallback for OCR errors or fabricated demo PANs; keep the strict
-    // holder-code rule below for unlabeled IDs.
+    // Context-only fallback for PAN-shaped text; keep the strict holder-code rule below
+    // for unlabeled IDs. A label is not an identity verification.
     type: 'PAN', priority: 76, confidence: 0.90,
     re: /\b[A-Z]{5}\d{4}[A-Z]\b/g,
     validate: (_raw, text, start) => hasContext(text, start, /\bpan\b[^A-Z0-9]{0,12}$/i, 35),
