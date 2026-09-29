@@ -55,6 +55,7 @@ export class NerDetector {
     const tf = await import('@huggingface/transformers');
     tf.env.localModelPath = opts.localModelPath.endsWith('/') ? opts.localModelPath : `${opts.localModelPath}/`;
     tf.env.allowRemoteModels = false;
+    tf.env.allowLocalModels = true; // Browser defaults to false; assets are staged under the extension origin.
     const pipe = await tf.pipeline('token-classification', opts.modelId ?? 'bert-small-pii', { dtype: 'q8' });
     const tok = pipe.tokenizer as unknown as { tokenize: (s: string) => string[] };
     return new NerDetector((s) => pipe(s) as Promise<unknown>, (s) => tok.tokenize(s), opts.threshold ?? 0.5, opts.minChars ?? 4, opts.types === 'all' ? undefined : (opts.types ?? DEFAULT_NER_TYPES));
