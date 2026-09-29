@@ -5,7 +5,8 @@ const runBtn = document.getElementById('run') as HTMLButtonElement;
 type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
 type Status = { models: boolean; server: boolean; gate?: Gate };
 type Pair = { type: string; raw: string; token: string };
-type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[] } | { error: string };
+type DomLine = { role: string; label: string; value: string };
+type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[] } | { error: string };
 
 function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -87,10 +88,12 @@ async function scanPage() {
   const status = document.getElementById('scan-status')!;
   const chips = document.getElementById('scan-chips')!;
   try {
-    const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+    const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+    const tab = active?.url?.startsWith('chrome-extension://') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
     if (!tab?.id) throw new Error('no tab');
+    targetTabId = tab.id;
     const peek = (await browser.tabs.sendMessage(tab.id, { type: 'ouro:peek' })) as Peek;
-    if ('error' in peek) throw new Error(peek.error);
+    if (!peek || 'error' in peek) throw new Error(peek?.error ?? 'No response from content script');
     maskBtn.hidden = false;
     if (peek.total === 0) {
       status.textContent = 'nothing sensitive detected here';
@@ -105,20 +108,26 @@ async function scanPage() {
         .join('');
     }
     renderPairs('pairs' in peek ? peek.pairs : undefined, peek.total);
+    const view = document.getElementById('dom-view')!;
+    view.innerHTML = (peek.dom ?? []).map((e) => `<div class="dom-row"><span class="dom-role">${esc(e.role)}</span><span class="dom-content">${esc(clip(e.label || e.value, 72))}${e.value && e.label ? ` <b>${esc(clip(e.value, 28))}</b>` : ''}</span></div>`).join('') || '<span class="dim">No visible DOM text.</span>';
   } catch {
     status.textContent = 'scan runs on regular web pages';
     status.className = 'row dim2';
     chips.innerHTML = '';
     renderPairs(undefined, -1);
+    document.getElementById('dom-view')!.textContent = 'Open a regular web page to inspect its sanitized DOM.';
   }
 }
 
+let targetTabId: number | undefined;
 let maskOn = false;
 const maskBtn = document.getElementById('mask-toggle') as HTMLButtonElement;
 maskBtn.addEventListener('click', async () => {
   try {
-    const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+    const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+    const tab = active?.url?.startsWith('chrome-extension://') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
     if (!tab?.id) return;
+    targetTabId = tab.id;
     if (!maskOn) {
       const r = (await browser.tabs.sendMessage(tab.id, { type: 'ouro:mask:preview' })) as { painted?: number };
       maskOn = true;
@@ -144,10 +153,13 @@ runBtn.addEventListener('click', async () => {
   runBtn.disabled = true;
   showLog('running...');
   try {
-    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string };
+    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value, tabId: targetTabId })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string };
     const result: { status?: string; steps?: number; reason?: string } = response.result ?? response;
     if (result.status === 'error' || result.status === 'exec_failed') showLog(`run failed: ${result.reason ?? 'unknown error'}`);
-    else showLog(`${result.status ?? 'unknown'} - ${result.steps ?? 0} steps\n${JSON.stringify(response.events ?? [], null, 2)}`);
+    else {
+      const actions = (response.events ?? []).filter((e): e is { kind: string; op?: string } => !!e && typeof e === 'object' && 'kind' in e && (e as { kind: string }).kind === 'executed');
+      showLog(`${result.status === 'done' ? '✓ Task complete' : result.status ?? 'Run ended'} · ${actions.length} actions · ${result.steps ?? 0} steps\n${actions.map((e, i) => `${String(i + 1).padStart(2, '0')}  ${e.op === 'type' ? 'Filled a field' : e.op ?? 'Action'}`).join('\n')}\n${result.status === 'done' ? 'Review the filled page before submitting.' : result.reason ?? ''}`);
+    }
   } catch (e) {
     showLog(`run failed: ${e instanceof Error ? e.message : String(e)}`);
   } finally {
@@ -181,4 +193,4 @@ document.getElementById('csv')!.addEventListener('click', async () => {
 void refreshStatus();
 void scanPage();
 // Server state changes while the popup is open (he starts the server mid-test) - keep the row live.
-setInterval(() => { void refreshStatus(); }, 4000);
+setInterval(() => { void refreshStatus(); void scanPage(); }, 4000);

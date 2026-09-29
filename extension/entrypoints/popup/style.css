@@ -66,3 +66,17 @@ textarea::placeholder{color:#5a5a5a}
 .foot a{color:#e8e8e8;font-weight:700;text-decoration:none}
 .ghost{background:none;border:none;color:#7a7a7a;font:inherit;font-size:10.5px;cursor:pointer;padding:0}
 .ghost:hover{color:#e8e8e8}
+
+/* DOM inspector: show the actual sanitized map, never raw source markup. */
+.live-tag{float:right;color:#2dd4bf;font-size:9px;letter-spacing:1px}
+.dom-view{max-height:156px;overflow:auto;border:1px solid #555;padding:3px 7px;background:#111}
+.dom-row{display:grid;grid-template-columns:58px minmax(0,1fr);gap:8px;padding:4px 0;border-bottom:1px solid #272727;font-size:10px;line-height:1.35}
+.dom-row:last-child{border-bottom:0}.dom-role{text-transform:uppercase;color:#858585;font-size:9px}.dom-content{overflow-wrap:anywhere;color:#c8c8c8}.dom-content b{color:#2dd4bf;font-weight:600}
+
+/* Quiet finishing details: clear hierarchy and a legible live status readout. */
+body{padding:16px 17px 18px;min-height:560px}
+.hdr{padding-bottom:10px}.brand{letter-spacing:1.1px;font-size:16px}
+.sec{margin-top:17px;margin-bottom:8px}.wire{border-color:#666}.wire-h{padding:7px 8px}
+.run{transition:background .16s,color .16s}.run:hover{background:#2dd4bf}.mbtn:hover{background:#142c29}
+.log{font-size:10.5px;line-height:1.8;padding:9px;color:#d4e3dd;max-height:118px;white-space:pre-wrap}
+textarea{line-height:1.55;min-height:60px;padding:9px}.foot{padding-top:4px;border-top:1px solid #303030}

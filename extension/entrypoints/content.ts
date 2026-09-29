@@ -92,7 +92,8 @@ export default defineContentScript({
           for (const d of res.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
           // Wire view: the exact raw -> token pairs the placeholder map holds. Device-local, capped for display.
           const pairs = map.values().slice(0, 8).map((v) => ({ type: v.type, raw: v.value, token: v.token }));
-          sendResponse({ total: res.detections.length, byType, pairs });
+          const dom = res.screen.elements.filter((e) => e.label || e.value).slice(0, 24).map((e) => ({ role: e.role, label: e.label, value: e.value }));
+          sendResponse({ total: res.detections.length, byType, pairs, dom });
         } catch (e) {
           sendResponse({ error: String(e) });
         }

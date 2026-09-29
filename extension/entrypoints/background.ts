@@ -3,6 +3,7 @@ import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserH
 import { runTask, type LoopEvent } from '../lib/agentLoop';
 import { MetricsStore } from '../lib/metricsStore';
 import { confirmWithTimeout, type ConfirmRequest, type ContentRequest } from '../lib/messages';
+import { NER_SOURCE } from '../lib/browserHost';
 
 const SERVER = 'http://localhost:8000';
 
@@ -42,7 +43,7 @@ export default defineBackground(() => {
   let gateBlocked = 0;
   let gateAt = 0;
   browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
-    const msg = raw as { type: string; task?: string; runId?: string };
+    const msg = raw as { type: string; task?: string; runId?: string; tabId?: number };
     if (msg.type === 'ouro:status') {
       (async () => {
         const models = await modelsEnabled();
@@ -63,19 +64,20 @@ export default defineBackground(() => {
     if (msg.type === 'ouro:metrics:clear') { metrics.clear().then(() => sendResponse(true)); return true; }
         if (msg.type !== 'ouro:run' || !msg.task) return undefined as never;
     (async () => {
-      const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
-      if (!tab?.id) return sendResponse({ status: 'no_tab' });
+      const tab = msg.tabId ? await browser.tabs.get(msg.tabId).catch(() => undefined) : (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+      if (!tab?.id || !/^https?:/.test(tab.url ?? '')) return sendResponse({ result: { status: 'error', reason: 'Open a regular web page first.' } });
       const tabId = tab.id;
       const send = <T>(m: ContentRequest) => browser.tabs.sendMessage(tabId, m) as Promise<T>;
       const events: LoopEvent[] = [];
-      const result = await runTask(msg.task!, {
-        observe: () => send<RawObservation>({ type: 'ouro:observe' }),
+      try {
+        const result = await runTask(msg.task!, {
+        observe: async () => { const obs = await send<RawObservation>({ type: 'ouro:observe' }); if (!obs) throw new Error('No observation from the active page'); return obs; },
         execute: (nodeId, op, text) => send({ type: 'ouro:execute', nodeId, op, text }),
         post,
         detectText: async (texts) => {
-          if (!(await modelsEnabled())) return () => [];
+          if (NER_SOURCE === 'off' || !(await modelsEnabled())) return () => [];
           const m = await host<PrimeResponse>({ type: 'ouro:host:prime', target: 'host', texts });
-          return (t: string): TextMatch[] => m[t] ?? [];
+          return (t: string): TextMatch[] => m?.[t] ?? [];
         },
         visual: async (raw) => {
           if (!(await modelsEnabled())) return null; // fail closed: no masked image, text-only step
@@ -96,6 +98,10 @@ export default defineBackground(() => {
         record: (r) => { void metrics.add(r); },
       });
       sendResponse({ result, events });
+      } catch (error) {
+        console.error('ouro run failed', error);
+        sendResponse({ result: { status: 'error', reason: String(error) }, events });
+      }
     })();
     return true;
   });
