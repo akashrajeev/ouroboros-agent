@@ -6,7 +6,7 @@ Sits between the extension and the planner server:
     extension (A8 egress) -> localhost:8000 (this proxy) -> localhost:8001 (server)
 
 For every /step request it:
-  1. re-runs the server's own raw-PII guard (server/app/guard.py) over the payload,
+  1. re-runs the server's pattern-only PII guard (server/app/guard.py) over the payload,
   2. saves the exact payload to demo/out/last-payload.json so judges can inspect
      what crossed the trust boundary (placeholders, never values),
   3. prints one line per step with the verdict.
@@ -70,7 +70,7 @@ class Handler(BaseHTTPRequestHandler):
                 tokens = sorted(set(__import__("re").findall(r"<[A-Z]+_\d+>", text)))
             except Exception:
                 tokens = []
-            verdict = "CLEAN (placeholders only)" if not leaked else f"RAW PII LEAKED: {leaked}"
+            verdict = "PATTERN SCAN CLEAR (not proof against names)" if not leaked else f"RAW PATTERN DETECTED: {leaked}"
             print(f"[{time.strftime('%H:%M:%S')}] /step {len(body)} bytes -> {verdict}; tokens on the wire: {', '.join(tokens) or '(none)'}", flush=True)
         status, data = self._forward(body)
         self.send_response(status)

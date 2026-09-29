@@ -1,4 +1,4 @@
-import type { RawObservation, TextMatch } from '@ouroboros/core';
+import { PlaceholderMap, sanitize, type RawObservation, type TextMatch } from '@ouroboros/core';
 import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserHost';
 import { runTask, type LoopEvent } from '../lib/agentLoop';
 import { MetricsStore } from '../lib/metricsStore';
@@ -60,6 +60,30 @@ export default defineBackground(() => {
       })();
       return true;
     }
+    if (msg.type === 'ouro:preview:scan') {
+      (async () => {
+        const tab = msg.tabId ? await browser.tabs.get(msg.tabId).catch(() => undefined) : (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+        if (!tab?.id || !/^https?:/.test(tab.url ?? '')) return sendResponse({ error: 'Open a regular web page first.' });
+        const obs = await browser.tabs.sendMessage(tab.id, { type: 'ouro:observe' }) as RawObservation;
+        if (!obs) return sendResponse({ error: 'No observation from this page.' });
+        const texts = obs.elements.flatMap((e) => [e.name, e.text, e.value]).filter(Boolean);
+        let detector: ((s: string) => TextMatch[]) | undefined;
+        if (NER_SOURCE !== 'off' && await modelsEnabled()) {
+          const m = await host<PrimeResponse>({ type: 'ouro:host:prime', target: 'host', texts });
+          if (!m || typeof m !== 'object') return sendResponse({ error: 'On-device text model did not respond.' });
+          detector = (s) => m[s] ?? [];
+        }
+        const map = new PlaceholderMap();
+        const r = sanitize(obs, map, detector ? { extraDetectors: [detector] } : {});
+        const byType: Record<string, number> = {};
+        for (const d of r.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
+        sendResponse({ total: r.detections.length, byType,
+          pairs: map.values().slice(0, 8).map((v) => ({ type: v.type, raw: v.value, token: v.token })),
+          dom: r.screen.elements.filter((e) => e.label || e.value).slice(0, 24).map((e) => ({ role: e.role, label: e.label, value: e.value })),
+        });
+      })().catch((e) => sendResponse({ error: String(e) }));
+      return true;
+    }
     if (msg.type === 'ouro:metrics:csv') { metrics.csv(msg.runId).then(sendResponse, () => sendResponse('')); return true; }
     if (msg.type === 'ouro:metrics:clear') { metrics.clear().then(() => sendResponse(true)); return true; }
         if (msg.type !== 'ouro:run' || !msg.task) return undefined as never;
@@ -77,7 +101,8 @@ export default defineBackground(() => {
         detectText: async (texts) => {
           if (NER_SOURCE === 'off' || !(await modelsEnabled())) return () => [];
           const m = await host<PrimeResponse>({ type: 'ouro:host:prime', target: 'host', texts });
-          return (t: string): TextMatch[] => m?.[t] ?? [];
+          if (!m || typeof m !== 'object') throw new Error('On-device text model did not respond; outbound step stopped');
+          return (t: string): TextMatch[] => m[t] ?? [];
         },
         visual: async (raw) => {
           if (!(await modelsEnabled())) return null; // fail closed: no masked image, text-only step

@@ -73,7 +73,7 @@ function renderPairs(pairs: Pair[] | undefined, total: number) {
     pre.textContent = 'scan unavailable on this page';
   } else if (pairs.length === 0) {
     pre.textContent = total === 0
-      ? 'nothing sensitive on this page - payload would go out clean'
+      ? 'no values detected in this preview - not a safety verdict'
       : 'scanning page...';
   } else {
     pre.innerHTML = pairs
@@ -93,7 +93,7 @@ async function scanPage() {
     const tab = active?.url?.startsWith('chrome-extension://') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
     if (!tab?.id) throw new Error('no tab');
     targetTabId = tab.id;
-    const peek = (await browser.tabs.sendMessage(tab.id, { type: 'ouro:peek' })) as Peek;
+    const peek = (await browser.runtime.sendMessage({ type: 'ouro:preview:scan', tabId: tab.id })) as Peek;
     if (!peek || 'error' in peek) throw new Error(peek?.error ?? 'No response from content script');
     maskBtn.hidden = false;
     if (peek.total === 0) {
@@ -116,6 +116,7 @@ async function scanPage() {
     status.className = 'row dim2';
     chips.innerHTML = '';
     renderPairs(undefined, -1);
+    document.getElementById('wire-pairs')!.textContent = 'scan unavailable - do not treat this as clear';
     document.getElementById('dom-view')!.textContent = 'Open a regular web page to inspect its sanitized DOM.';
   }
 }
@@ -174,7 +175,7 @@ runBtn.addEventListener('click', async () => {
 const box = document.getElementById('confirm')!;
 browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
   const msg = raw as { type: string; label?: string };
-  if (msg.type !== 'ouro:confirm') { sendResponse(undefined); return true; }
+  if (msg.type !== 'ouro:confirm') return undefined as never; // Do not win the model host's response race.
   document.getElementById('confirm-label')!.textContent = msg.label ?? '';
   box.hidden = false;
   const answer = (v: boolean) => { box.hidden = true; sendResponse(v); };

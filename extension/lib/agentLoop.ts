@@ -53,7 +53,8 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
   const map = opts.map ?? new PlaceholderMap();
   const history: Action[] = [];
   // A3c on the task text too, so names/addresses the user types become placeholders the planner can use.
-  const safeTask = sanitizeTask(task, map, deps.detectText ? [await deps.detectText([task])] : []);
+  const taskDetector = deps.detectText ? await deps.detectText([task]) : undefined;
+  const safeTask = sanitizeTask(task, map, taskDetector ? [taskDetector] : []);
   const now = () => performance.now();
   let wantVisual = false;
   let last: { key: string; screen: ScreenMap } | undefined; // G1: unchanged screen = reuse sanitized state
@@ -85,7 +86,11 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
         ...(vis ? { image_jpeg_b64: vis.jpegB64 } : {}),
         ...(vis?.semanticHint ? { semantic_hint: vis.semanticHint } : {}),
       });
-      const gate = await leakGate(body, map, { canaries: deps.canaries, imageText: vis?.imageText });
+      // Independently check every model-detected source span against the exact serialized
+      // body. Pattern-only proxy rescans cannot recognize an unrelated person's name.
+      const modelCanaries = extra.flatMap((detector) => raw.elements.flatMap((el) =>
+        [el.name, el.text, el.value].filter(Boolean).flatMap((s) => detector(s).map((m) => m.value))));
+      const gate = await leakGate(body, map, { canaries: [...(deps.canaries ?? []), ...(taskDetector?.(task).map((m) => m.value) ?? []), ...modelCanaries], imageText: vis?.imageText });
       const t3 = now();
       // M5: one row per step, recorded when the step's work actually ends. ms_total spans
       // observe -> execute (or the step's real end): everything the task waited on this step.

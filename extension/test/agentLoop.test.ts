@@ -101,6 +101,33 @@ describe('end-to-end device loop (stub planner)', () => {
     expect(bodies).toHaveLength(0);
   });
 
+  it('blocks an unmapped model-detected name before the first post', async () => {
+    const m = mount();
+    document.body.insertAdjacentHTML('afterbegin', '<p>Welcome back, Rageshwari Embranthiri. Your form is ready.</p>');
+    const bodies: string[] = [];
+    const detectText = async (_texts: string[]) => (s: string) => s.includes('Rageshwari Embranthiri')
+      ? [{ type: 'NAME' as const, source: 'ner' as const, confidence: 0.91, start: s.indexOf('Rageshwari'), end: s.indexOf('Rageshwari') + 22, value: 'Rageshwari Embranthiri' }]
+      : [];
+    const r = await runTask(TASK, { ...m.deps, detectText, post: fakeServer(bodies), confirm: async () => true });
+    expect(r.status).toBe('done');
+    expect(bodies.length).toBeGreaterThan(0);
+    expect(bodies.every((body) => !body.includes('Rageshwari Embranthiri'))).toBe(true);
+  });
+
+  it('stops egress if a model-detected name survives sanitization', async () => {
+    const m = mount();
+    document.body.insertAdjacentHTML('afterbegin', '<p>Welcome back, Rageshwari Embranthiri. Your form is ready.</p>');
+    const bodies: string[] = [];
+    // A bad alignment result points to an unrelated text span. The source name itself
+    // still becomes a canary, so the outgoing payload must not be posted.
+    const detectText = async (_texts: string[]) => (s: string) => s.includes('Rageshwari Embranthiri')
+      ? [{ type: 'NAME' as const, source: 'ner' as const, confidence: 0.91, start: 0, end: 7, value: 'Rageshwari Embranthiri' }]
+      : [];
+    const r = await runTask(TASK, { ...m.deps, detectText, post: fakeServer(bodies), confirm: async () => true });
+    expect(r.status).toBe('blocked');
+    expect(bodies).toHaveLength(0);
+  });
+
   it('attaches a masked screenshot only after need_visual, and gates its re-OCR text', async () => {
     const m = mount();
     const bodies: string[] = [];
