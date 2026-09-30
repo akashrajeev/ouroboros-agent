@@ -26,7 +26,15 @@ async function host<T>(req: HostRequest): Promise<T> {
   if (!(await off.hasDocument?.())) {
     await off.createDocument({ url: 'offscreen.html', reasons: ['WORKERS'], justification: 'On-device PII models (onnxruntime-web)' }).catch(() => {});
   }
-  const r = (await browser.runtime.sendMessage(req)) as T & { error?: string };
+  // Offscreen createDocument can return before its listener is registered. Retry only
+  // the local read request when no response exists, never a provider/action send.
+  let r: (T & {error?:string}) | undefined;
+  for(let attempt=0;attempt<8;attempt++){
+    r=(await browser.runtime.sendMessage(req)) as T & {error?:string};
+    if(r!==undefined) break;
+    await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  if(!r) throw new Error('On-device host startup unavailable');
   if (r?.error) throw new Error(r.error);
   return r;
 }
@@ -85,7 +93,7 @@ export default defineBackground(() => {
           rawBytes: new TextEncoder().encode(JSON.stringify(obs)).length,
           safeBytes: new TextEncoder().encode(JSON.stringify(r.screen.elements)).length,
           pairs: map.values().map((v) => ({ type: v.type, raw: v.value, token: v.token })),
-          dom: r.screen.elements.filter((e) => e.label || e.value).slice(0, 80).map((e) => { const raw = obs.elements.find(x => x.nodeId === r.screen.nodeOf[e.id]); return { role: e.role, label: e.label, value: e.value, rawLabel: raw?.name || raw?.text || '', rawValue: raw?.value || '' }; }),
+          dom: r.screen.elements.filter((e) => (e.label || e.value) && obs.elements.find(x=>x.nodeId===r.screen.nodeOf[e.id])?.previewVisible !== false).slice(0, 80).map((e) => { const raw = obs.elements.find(x => x.nodeId === r.screen.nodeOf[e.id]); return { role: e.role, label: e.label, value: e.value, rawLabel: raw?.name || raw?.text || '', rawValue: raw?.value || '' }; }),
         });
       })().catch((e) => sendResponse({ error: String(e) }));
       return true;

@@ -25,6 +25,7 @@ export interface RawElement {
   boilerplate?: boolean;
   /** Link whose visible text is the site's own contact endpoint (mailto:/tel: href), not user data. */
   contact?: 'mailto' | 'tel';
+  previewVisible?: boolean;
   bbox: BBox;
 }
 

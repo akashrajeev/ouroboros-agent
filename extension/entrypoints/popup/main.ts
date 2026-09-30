@@ -3,6 +3,14 @@ const task = document.getElementById('task') as HTMLTextAreaElement;
 const logEl = document.getElementById('log')!;
 const runBtn = document.getElementById('run') as HTMLButtonElement;
 
+const fixedTab = Number(new URL(location.href).searchParams.get('tabId')) || undefined;
+async function selectedTab() {
+  if (fixedTab) return browser.tabs.get(fixedTab);
+  const active=(await browser.tabs.query({active:true,currentWindow:true}))[0];
+  return /^(chrome|moz)-extension:\/\//.test(active?.url??'') ? (await browser.tabs.query({currentWindow:true})).find(t=>t.url?.startsWith('http')) : active;
+}
+document.getElementById('pin-panel')!.addEventListener('click',async()=>{ const tab=await selectedTab();if(tab?.id) await browser.windows.create({url:browser.runtime.getURL('/popup.html' as never)+`?tabId=${tab.id}`,type:'popup',width:520,height:850}); });
+
 type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
 type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate };
 type Pair = { type: string; raw: string; token: string };
@@ -56,7 +64,7 @@ async function refreshStatus() {
   if (st?.server) {
     dot.textContent = '[ok]';
     dot.className = 'ok';
-    serverText.textContent = 'local server connected - full agent loop ready';
+    serverText.textContent = 'local server connected - extension planner ready';
     setupBox.hidden = true;
   } else {
     dot.textContent = '[x]';
@@ -96,8 +104,7 @@ async function scanPage() {
   const status = document.getElementById('scan-status')!;
   const chips = document.getElementById('scan-chips')!;
   try {
-    const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
-    const tab = /^(chrome|moz)-extension:\/\//.test(active?.url ?? '') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
+    const tab = await selectedTab();
     if (!tab?.id) throw new Error('no tab');
     targetTabId = tab.id;
     const peek = (await browser.runtime.sendMessage({ type: 'ouro:preview:scan', tabId: tab.id })) as Peek;
@@ -109,7 +116,7 @@ async function scanPage() {
     for (const pair of peek.pairs ?? []) caught.set(`${pair.type}:${pair.raw}`, pair);
     document.getElementById('caught-count')!.textContent = String(caught.size);
     document.getElementById('caught-list')!.innerHTML = [...caught.values()].map(p => `<div class="dom-row"><span class="dom-role">${esc(p.type)}</span><span class="dom-content">${esc(p.raw)} → <b>${esc(p.token)}</b></span></div>`).join('') || 'No detections yet.';
-    document.getElementById('scan-time')!.textContent = new Date().toLocaleTimeString();
+    document.getElementById('scan-time')!.textContent = 'viewport · '+new Date().toLocaleTimeString();
     document.getElementById('dom-compare')!.innerHTML = (peek.dom ?? []).map(e => `<div class="compare-row"><span>${esc(e.rawLabel || e.rawValue || '')}${e.rawLabel && e.rawValue ? ' '+esc(e.rawValue) : ''}</span><span>${esc(e.label || e.value || '')}${e.label && e.value ? ' '+esc(e.value) : ''}</span></div>`).join('');
     if (peek.total === 0) {
       status.textContent = 'nothing sensitive detected here';
@@ -126,8 +133,8 @@ async function scanPage() {
     renderPairs('pairs' in peek ? peek.pairs : undefined, peek.total);
     const view = document.getElementById('dom-view')!;
     view.innerHTML = (peek.dom ?? []).map((e) => `<div class="dom-row"><span class="dom-role">${esc(e.role)}</span><span class="dom-content">${esc(clip(e.label || e.value, 72))}${e.value && e.label ? ` <b>${esc(clip(e.value, 28))}</b>` : ''}</span></div>`).join('') || '<span class="dim">No visible DOM text.</span>';
-  } catch {
-    status.textContent = 'scan runs on regular web pages';
+  } catch(error) {
+    status.textContent = error instanceof Error ? error.message : 'scan unavailable';
     status.className = 'row dim2';
     chips.innerHTML = '';
     renderPairs(undefined, -1);
@@ -141,8 +148,7 @@ let maskOn = false;
 const maskBtn = document.getElementById('mask-toggle') as HTMLButtonElement;
 maskBtn.addEventListener('click', async () => {
   try {
-    const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
-    const tab = /^(chrome|moz)-extension:\/\//.test(active?.url ?? '') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
+    const tab = await selectedTab();
     if (!tab?.id) return;
     targetTabId = tab.id;
     if (!maskOn) {

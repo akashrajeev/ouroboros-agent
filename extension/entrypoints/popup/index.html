@@ -11,6 +11,7 @@
       <div class="dim" id="models-pill">checking...</div>
     </div>
 
+    <button id="pin-panel" class="mbtn" type="button">[ OPEN PERSISTENT PANEL - THIS TAB ]</button>
     <div class="sec">this_page.scan()</div>
     <div class="row" id="scan-status">scanning...</div>
     <div class="chips" id="scan-chips"></div>
@@ -23,17 +24,17 @@
       <div class="gate" id="gate-line"><i>run the agent - every payload passes this gate first</i></div>
     </div>
 
-    <div class="sec">sanitized DOM <span class="live-tag">LIVE</span></div>
+    <div class="sec">sanitized DOM - viewport <span class="live-tag">LIVE</span></div>
     <div class="dom-view" id="dom-view" aria-live="polite">Scanning this page...</div>
 
     <button id="inspect-toggle" class="mbtn" type="button">[ CAUGHT SO FAR / COMPARE DOM ]</button>
     <section id="inspect-panel" hidden>
-      <div class="sec">caught in this popup session <span id="caught-count" class="live-tag">0</span></div>
+      <div class="sec">caught in this panel session <span id="caught-count" class="live-tag">0</span></div>
       <div id="caught-list" class="dom-view"></div>
       <div class="sec">DOM comparison <span id="scan-time" class="live-tag">waiting</span></div>
       <div class="compare-head"><span>RAW - device only</span><span>MASKED - planner view</span></div>
       <div id="dom-compare" class="dom-view"></div>
-      <div class="hint">Raw values stay on this device. Snapshot refreshes up to once a second while this popup is open. Counts are detections, not ground-truth accuracy.</div>
+      <div class="hint">Raw values stay on this device. Snapshot refreshes up to once a second while this panel is open; persistent panel stays bound to its original tab. Counts are detections, not ground-truth accuracy.</div>
     </section>
     <div id="byte-savings" class="byte-meter">snapshot size: waiting for page</div>
     <button id="safety-drill" class="mbtn" type="button">[ TEST LEAK GATE - SYNTHETIC DRILL ]</button>

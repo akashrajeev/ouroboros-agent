@@ -1,3 +1,4 @@
+import { inPreviewViewport } from './viewport';
 import type { OpaqueKind, OpaqueRegion, RawElement, RawObservation } from '@ouroboros/core';
 
 /**
@@ -189,6 +190,7 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
       ...(el.tagName === 'A' && /^tel:/i.test(el.getAttribute('href') ?? '') ? { contact: 'tel' as const } : {}),
       ...(columnHeader(el) ? { context: columnHeader(el)! } : {}),
       ...(el.tagName === 'SELECT' ? { options: Array.from((el as HTMLSelectElement).options).map((o) => (o.textContent ?? '').replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 30) } : {}),
+      previewVisible: inPreviewViewport(el, rect(el), win),
       bbox: rect(el),
     });
   }
