@@ -106,7 +106,7 @@ async function scanPage() {
     document.getElementById('caught-count')!.textContent = String(caught.size);
     document.getElementById('caught-list')!.innerHTML = [...caught.values()].map(p => `<div class="dom-row"><span class="dom-role">${esc(p.type)}</span><span class="dom-content">${esc(p.raw)} → <b>${esc(p.token)}</b></span></div>`).join('') || 'No detections yet.';
     document.getElementById('scan-time')!.textContent = new Date().toLocaleTimeString();
-    document.getElementById('dom-compare')!.innerHTML = (peek.dom ?? []).map(e => `<div class="compare-row"><span>${esc(e.rawLabel || e.rawValue || '')}</span><span>${esc(e.label || e.value || '')}${e.label && e.value ? ' '+esc(e.value) : ''}</span></div>`).join('');
+    document.getElementById('dom-compare')!.innerHTML = (peek.dom ?? []).map(e => `<div class="compare-row"><span>${esc(e.rawLabel || e.rawValue || '')}${e.rawLabel && e.rawValue ? ' '+esc(e.rawValue) : ''}</span><span>${esc(e.label || e.value || '')}${e.label && e.value ? ' '+esc(e.value) : ''}</span></div>`).join('');
     if (peek.total === 0) {
       status.textContent = 'nothing sensitive detected here';
       status.className = 'row ok';
