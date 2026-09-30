@@ -37,7 +37,7 @@ class GeneralPlanner:
                 raise ValueError('GOOGLE_API_KEY missing; enter it locally, never commit it')
             from browser_use import ChatGoogle
             model = ChatGoogle(model=os.environ.get('OURO_MODEL', 'gemini-2.5-flash'),
-                temperature=0, max_output_tokens=512, max_retries=0)
+                temperature=0, max_output_tokens=512, max_retries=1)
         self.model = model
         self.name = 'general:' + str(getattr(model, 'model', 'test-double'))
         self.last: dict[str, Any] = {}

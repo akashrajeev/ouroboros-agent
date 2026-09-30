@@ -30,3 +30,17 @@ def test_provider_failure_does_not_leak_error():
 def test_repeated_action_stops():
     req=REQ.model_copy(update={'history':[Action(op='type',element_id='e1',text='<PAN_1>')]})
     assert GeneralPlanner(FakeModel(Action(op='type',element_id='e1',text='<PAN_1>'))).plan(req).op=='ask_user'
+
+def test_real_google_adapter_reaches_client_not_retry_assertion(monkeypatch):
+    from browser_use import ChatGoogle
+    calls=[]
+    def blocked_client(self):
+        calls.append(True)
+        raise RuntimeError('offline transport sentinel')
+    monkeypatch.setenv('GOOGLE_API_KEY','offline-test-not-a-key')
+    monkeypatch.setattr(ChatGoogle,'get_client',blocked_client)
+    planner=GeneralPlanner()
+    assert planner.model.max_retries == 1
+    assert planner.plan(REQ).op == 'ask_user'
+    assert calls == [True]
+    assert planner.last['error'] != 'AssertionError'
