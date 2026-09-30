@@ -4,6 +4,7 @@ import { defineConfig } from 'wxt';
 export default defineConfig({
   manifest: ({ browser }) => ({
     name: 'Ouroboros Agent',
+    version_name: '0.2.0-demo.1',
     description: 'Privacy-preserving browser agent: raw personal data never leaves the device.',
     permissions: ['activeTab', 'storage', 'scripting', 'tabs', ...(browser === 'firefox' ? [] : ['offscreen'])],
     // onnxruntime-web needs WebAssembly compilation in extension pages.
