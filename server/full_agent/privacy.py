@@ -31,11 +31,12 @@ class PrivacyBridge:
 class GatedModel:
     """All provider calls pass here. Messages are rebuilt after exact-payload gate."""
     _verified_api_keys = True
-    def __init__(self, inner, bridge, minimum_interval=0):
+    def __init__(self, inner, bridge, minimum_interval=0, event=lambda e: None):
         self.inner, self.bridge = inner, bridge
         self.model = inner.model
         self.minimum_interval = minimum_interval
         self.last_call = 0
+        self.event = event
         self.evidence = []
     @property
     def provider(self): return self.inner.provider
@@ -47,7 +48,12 @@ class GatedModel:
     async def ainvoke(self, messages, output_format=None, **kwargs):
         from browser_use.llm.messages import SystemMessage, UserMessage, AssistantMessage
         raw = [m.model_dump(mode='json',exclude_none=True) for m in messages]
-        safe = await self.bridge.call('messages', value=raw)
+        try:
+            safe = await self.bridge.call('messages', value=raw)
+        except PrivacyBlocked:
+            self.event({'gate':'blocked'})
+            raise
+        self.event({'gate':'pass', 'bytes':safe['gate']['bytes'], 'sha256':safe['gate']['sha256']})
         classes={'system':SystemMessage,'user':UserMessage,'assistant':AssistantMessage}
         rebuilt=[classes[m['role']].model_validate(m) for m in safe['value']]
         # No message/key/error text in evidence. Hash/byte count only.

@@ -1,3 +1,4 @@
+import { agentEvidence, type AgentState } from '../../lib/fullAgent';
 import { evidenceText, type RunEvidence } from '../../lib/runEvidence';
 const task = document.getElementById('task') as HTMLTextAreaElement;
 const logEl = document.getElementById('log')!;
@@ -12,7 +13,7 @@ async function selectedTab() {
 document.getElementById('pin-panel')!.addEventListener('click',async()=>{ const tab=await selectedTab();if(tab?.id) await browser.windows.create({url:browser.runtime.getURL('/popup.html' as never)+`?tabId=${tab.id}`,type:'popup',width:520,height:850}); });
 
 type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
-type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate };
+type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate; agentState?:AgentState };
 type Pair = { type: string; raw: string; token: string };
 type DomLine = { role: string; label: string; value: string; rawLabel?: string; rawValue?: string };
 type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[]; boxes?: {bbox:{x:number;y:number;w:number;h:number};type:string}[]; rawBytes?:number; safeBytes?:number } | { error: string };
@@ -42,7 +43,7 @@ function renderGate() {
   } else if (g.verdict === 'pass') {
     verdict.textContent = 'gate: PASS';
     verdict.className = '';
-    line.innerHTML = '<i>this run passed the device leak gate</i>';
+    line.innerHTML = '<i>last Agent message passed the local egress gate</i>';
   } else {
     verdict.textContent = 'gate: BLOCKED';
     verdict.className = 'amber';
@@ -64,7 +65,7 @@ async function refreshStatus() {
   if (st?.server) {
     dot.textContent = '[ok]';
     dot.className = 'ok';
-    serverText.textContent = 'local server connected - extension planner ready';
+    serverText.textContent = 'local full Agent server connected';
     setupBox.hidden = true;
   } else {
     dot.textContent = '[x]';
@@ -72,6 +73,7 @@ async function refreshStatus() {
     serverText.textContent = 'local server offline - masking still works';
     setupBox.hidden = false;
   }
+  if(st?.agentState){const card=document.getElementById('run-evidence')!;card.hidden=false;card.textContent=agentEvidence(st.agentState);}
   if (st?.gate) { lastGate = st.gate; renderGate(); }
 }
 
@@ -181,7 +183,8 @@ runBtn.addEventListener('click', async () => {
   const timer = setInterval(() => { clock.textContent = `elapsed ${((performance.now()-started)/1000).toFixed(1)} s - run in progress`; }, 100);
   showLog('running...');
   try {
-    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value, tabId: targetTabId })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string; evidence?: RunEvidence };
+    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value, tabId: targetTabId })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string; evidence?: RunEvidence; agentState?:AgentState };
+    if(response.agentState){evidence.textContent=agentEvidence(response.agentState);evidence.hidden=false;}
     if (response.evidence) { evidence.textContent = evidenceText(response.evidence); evidence.hidden = false; }
     const result: { status?: string; steps?: number; reason?: string } = response.result ?? response;
     if (result.status === 'error' || result.status === 'exec_failed') showLog(`run failed: ${result.reason ?? 'unknown error'}`);
@@ -203,7 +206,8 @@ runBtn.addEventListener('click', async () => {
 // A9 confirmation: the background asks, the user answers here.
 const box = document.getElementById('confirm')!;
 browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
-  const msg = raw as { type: string; label?: string; evidence?: RunEvidence; action?: string };
+  const msg = raw as { type: string; label?: string; evidence?: RunEvidence; action?: string;state?:AgentState };
+  if(msg.type==='ouro:agent:live'&&msg.state){const card=document.getElementById('run-evidence')!;card.hidden=false;card.textContent=agentEvidence(msg.state);void refreshStatus();return undefined as never;}
   if (msg.type === 'ouro:run:live' && msg.evidence) { const card=document.getElementById('run-evidence')!;card.hidden=false;card.textContent=evidenceText(msg.evidence);void scanPage();return undefined as never; }
   if (msg.type !== 'ouro:confirm') return undefined as never; // Do not win the model host's response race.
   document.getElementById('confirm-label')!.textContent = msg.label ?? '';

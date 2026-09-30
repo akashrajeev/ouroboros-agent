@@ -43,6 +43,11 @@ export default defineContentScript({
     });
     browser.runtime.onMessage.addListener((raw: unknown, _sender, sendResponse) => {
       const msg = raw as ContentRequest;
+      if(msg.type==='ouro:attach'){
+        if(!/^[a-f0-9]{32}$/.test(msg.marker))return undefined as never;
+        document.documentElement.setAttribute('data-ouro-attach',msg.marker);
+        sendResponse({url:location.href});return true;
+      }
       if (msg.type === 'ouro:observe') {
         sendResponse(observe(document, registry));
         return true;

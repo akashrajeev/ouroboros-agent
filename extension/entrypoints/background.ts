@@ -1,3 +1,4 @@
+import { startFullAgent, type AgentState } from '../lib/fullAgent';
 import { safetyDrill } from '../lib/safetyDrill';
 import { runEvidence } from '../lib/runEvidence';
 import { PlaceholderMap, sanitize, type RawObservation, type TextMatch } from '@ouroboros/core';
@@ -52,6 +53,7 @@ export default defineBackground(() => {
   let gateVerdict: 'pass' | 'blocked' | null = null;
   let gateBlocked = 0;
   let gateAt = 0;
+  let latestAgent:AgentState|undefined;
   browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
     const msg = raw as { type: string; task?: string; runId?: string; tabId?: number };
     if (msg.type === 'ouro:status') {
@@ -61,12 +63,13 @@ export default defineBackground(() => {
         try {
           const ctl = new AbortController();
           const t = setTimeout(() => ctl.abort(), 1500);
-          // Any HTTP response (even 405) proves the proxy is listening; a network error means it is down.
-          await fetch(`${SERVER}/step`, { method: 'GET', signal: ctl.signal }).catch(() => { throw new Error('down'); });
+          const r=await fetch(`${SERVER}/health`,{signal:ctl.signal});
+          const h=await r.json();
           clearTimeout(t);
+          if(!r.ok||h.mode!=='full-agent')throw Error('Wrong local service');
           server = true;
         } catch { server = false; }
-        sendResponse({ models, ner: models && NER_SOURCE !== 'off', server, gate: { verdict: gateVerdict, blocked: gateBlocked, at: gateAt } });
+        sendResponse({ models, ner: models && NER_SOURCE !== 'off', server, agentState:latestAgent, gate: { verdict: gateVerdict, blocked: gateBlocked, at: gateAt } });
       })();
       return true;
     }
@@ -105,44 +108,17 @@ export default defineBackground(() => {
       const tab = msg.tabId ? await browser.tabs.get(msg.tabId).catch(() => undefined) : (await browser.tabs.query({ active: true, currentWindow: true }))[0];
       if (!tab?.id || !/^https?:/.test(tab.url ?? '')) return sendResponse({ result: { status: 'error', reason: 'Open a regular web page first.' } });
       const tabId = tab.id;
-      const send = <T>(m: ContentRequest) => browser.tabs.sendMessage(tabId, m) as Promise<T>;
-      const events: LoopEvent[] = [];
-      const runRows: import('@ouroboros/core').StepRecord[] = [];
-      const runStarted = performance.now();
       try {
-        const result = await runTask(msg.task!, {
-        observe: async () => { const obs = await send<RawObservation>({ type: 'ouro:observe' }); if (!obs) throw new Error('No observation from the active page'); return obs; },
-        execute: (nodeId, op, text) => send({ type: 'ouro:execute', nodeId, op, text }),
-        post,
-        detectText: async (texts) => {
-          if (NER_SOURCE === 'off' || !(await modelsEnabled())) return () => [];
-          const m = await host<PrimeResponse>({ type: 'ouro:host:prime', target: 'host', texts });
-          if (!m || typeof m !== 'object') throw new Error('On-device text model did not respond; outbound step stopped');
-          return (t: string): TextMatch[] => m[t] ?? [];
-        },
-        visual: async (raw) => {
-          if (!(await modelsEnabled())) return null; // fail closed: no masked image, text-only step
-          const dataUrl = await browser.tabs.captureVisibleTab(tab.windowId!, { format: 'png' });
-          const r = await host<VisualResponse>({ type: 'ouro:host:visual', target: 'host', dataUrl, regions: raw.opaque.map((o) => o.bbox), viewportW: raw.viewport.w });
-          events.push({ kind: 'vision', ms: r.ms, regions: r.regions } as never);
-          return { jpegB64: r.jpegB64, imageText: r.imageText, detections: r.detections, semanticHint: r.semanticHint };
-        },
-        scroll: async (direction) => { await send({ type: 'ouro:scroll', direction }); },
-        settle: async () => { await send({ type: 'ouro:settle' }); },
-        // A9: consequential actions need a click in the popup; closed popup or 60 s silence = decline.
-        confirm: (label) => confirmWithTimeout(() => browser.runtime.sendMessage({ type: 'ouro:confirm', label } satisfies ConfirmRequest)),
-        log: (e) => {
-          events.push(e);
-          if (e.kind === 'blocked') { gateVerdict = 'blocked'; gateBlocked += e.hits.length; gateAt = Date.now(); }
-          else if (e.kind === 'sent') { gateVerdict = 'pass'; gateAt = Date.now(); }
-        },
-        record: (r) => { runRows.push(r); void metrics.add(r); void browser.runtime.sendMessage({ type: 'ouro:run:live', evidence: runEvidence(runRows, performance.now()-runStarted), action: r.action }).catch(() => {}); },
-      });
-      sendResponse({ result, events, evidence: runEvidence(runRows, performance.now() - runStarted) });
-      } catch (error) {
-        console.error('ouro run failed', error);
-        sendResponse({ result: { status: 'error', reason: String(error) }, events });
-      }
+        const marker=crypto.randomUUID().replace(/-/g,'');
+        const attached=await browser.tabs.sendMessage(tabId,{type:'ouro:attach',marker}) as {url?:string};
+        if(!attached?.url)throw Error('Refresh the page in dedicated debug Chrome before running.');
+        const state=await startFullAgent(SERVER,{task:msg.task!,marker,url:attached.url},(state:AgentState)=>{
+          latestAgent=state;
+          if(state.gate){gateVerdict=state.gate==='pass'?'pass':'blocked';gateAt=Date.now();if(state.gate==='blocked')gateBlocked++;}
+          void browser.runtime.sendMessage({type:'ouro:agent:live',state}).catch(()=>{});
+        });
+        sendResponse({result:{status:state.status,steps:state.steps,reason:state.reason},events:state.actions.map(op=>({kind:'executed',op})),agentState:state});
+      } catch(error){sendResponse({result:{status:'error',reason:error instanceof Error?error.message:'Full Agent bridge failed'}});}
     })();
     return true;
   });

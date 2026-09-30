@@ -17,3 +17,6 @@ demo/out/
 .env
 .env.*
 .venv-general/
+!.env.example
+.venv-full-agent/
+.ouro-chrome-profile/

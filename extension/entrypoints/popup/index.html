@@ -16,10 +16,10 @@
     <div class="row" id="scan-status">scanning...</div>
     <div class="chips" id="scan-chips"></div>
     <button class="mbtn" id="mask-toggle" type="button" hidden>[ SHOW MASKING ON THIS PAGE ]</button>
-    <div class="hint">detected values become tokens before a run. inspect the wire view and gate for this page, then check the result.</div>
+    <div class="hint">preview is device-only. Agent egress gate below comes from the local Agent server; token numbering may differ between preview and Agent.</div>
 
     <div class="wire" id="wire">
-      <div class="wire-h">WIRE VIEW - preview of tokens<span id="gate-verdict">gate: idle</span></div>
+      <div class="wire-h">LOCAL PREVIEW TOKENS / AGENT GATE<span id="gate-verdict">gate: idle</span></div>
       <pre id="wire-pairs">scanning page...</pre>
       <div class="gate" id="gate-line"><i>run the agent - every payload passes this gate first</i></div>
     </div>
@@ -39,13 +39,11 @@
     <div id="byte-savings" class="byte-meter">snapshot size: waiting for page</div>
     <button id="safety-drill" class="mbtn" type="button">[ TEST LEAK GATE - SYNTHETIC DRILL ]</button>
     <div id="safety-result" class="hint" aria-live="polite"></div>
-    <div class="sec">agent_loop</div>
+    <div class="sec">full_browser_use.Agent()</div>
     <div class="srow"><b id="server-dot">[?]</b><span id="server-text">checking local server...</span></div>
     <div class="setup" id="setup-box" hidden>
-      <pre id="setup-cmd">$ pip install -r server/requirements.txt
-$ python -m uvicorn app.main:app --port 8001
-    --app-dir server
-$ python demo/trust_proxy.py 8000 http://127.0.0.1:8001</pre>
+      <pre id="setup-cmd">$ python demo/run_agent_server.py
+# local .env + dedicated visible debug Chrome</pre>
       <button id="copy-setup" class="mini" type="button">[ copy ]</button>
     </div>
     <textarea id="task" rows="2" placeholder="task, e.g. fill this form with my details"></textarea>
