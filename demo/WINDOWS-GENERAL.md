@@ -54,6 +54,7 @@ rebuild it on this branch, with the model assets present:
 
 ```bat
 npm install
+set WXT_NER_SOURCE=bundled
 npm run build --workspace @ouroboros/extension
 ```
 

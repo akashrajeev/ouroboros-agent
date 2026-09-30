@@ -169,7 +169,7 @@ describe('end-to-end device loop (stub planner)', () => {
   });
   it('ends immediately when planner needs user input', async () => {
     const m = mount(); let posts = 0;
-    const r = await runTask(TASK, { ...m.deps, post: async () => { posts++; return {action:{op:'ask_user',reason:'Open the target website first.'}}; } });
+    const r = await runTask(TASK, { ...m.deps, confirm: async () => false, post: async () => { posts++; return {action:{op:'ask_user',reason:'Open the target website first.'}}; } });
     expect(posts).toBe(1); expect(r.status).toBe('declined'); expect(r.reason).toContain('Open the target');
   });
 
