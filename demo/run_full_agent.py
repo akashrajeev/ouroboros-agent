@@ -43,6 +43,8 @@ async def run(args):
         print(json.dumps({'success':history.is_successful(),'steps':history.number_of_steps(),'model_calls':len(model.evidence),'gates':model.evidence,'final':history.final_result()},indent=2))
         print('No submit tools were available. Inspect actual fields in the dedicated browser. This is not a universal-site guarantee.')
         if not args.headless: input('Press Enter after checking the fields to close this dedicated browser. ')
+        if history.is_successful() is not True:
+            raise SystemExit(1)
     except Exception as e:
         # Safe class only, never SDK error text, task, response excerpt or credentials.
         print(json.dumps({'status':'blocked','class':type(e).__name__,'provider':args.provider}))
