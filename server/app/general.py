@@ -30,6 +30,8 @@ No images are available. Do not request or claim to see screenshots.
 
 class GeneralPlanner:
     def __init__(self, model: Any = None):
+        os.environ['ANONYMIZED_TELEMETRY'] = 'false'
+        os.environ['BROWSER_USE_CLOUD_SYNC'] = 'false'
         if model is None:
             if not os.environ.get('GOOGLE_API_KEY'):
                 raise ValueError('GOOGLE_API_KEY missing; enter it locally, never commit it')

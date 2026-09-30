@@ -4,6 +4,7 @@ import getpass
 import os
 from pathlib import Path
 import subprocess
+import socket
 import sys
 import time
 import urllib.request
@@ -13,18 +14,22 @@ ROOT = Path(__file__).resolve().parent.parent
 def main():
     if sys.version_info < (3, 11):
         raise SystemExit('Use Python 3.11 or newer for this setup.')
+    for port in (8000, 8001, 8089):
+        with socket.socket() as probe:
+            try: probe.bind(('127.0.0.1', port))
+            except OSError: raise SystemExit(f'Port {port} is busy. Stop the old service first; nothing started.')
     os.environ['ANONYMIZED_TELEMETRY'] = 'false'
     os.environ['BROWSER_USE_CLOUD_SYNC'] = 'false'
     provider = os.environ.get('PLANNER', 'chain')
     if provider not in ('chain', 'general'): raise SystemExit('PLANNER must be chain or general.')
     os.environ['PLANNER'] = provider
     if provider == 'chain':
-        if not os.environ.get('OURO_WORKER_BASE_URL'):
+        if not os.environ.get('OURO_WORKER_BASE_URL') or not os.environ.get('OURO_WORKER_MODEL'):
             raise SystemExit('Set OURO_WORKER_BASE_URL and OURO_WORKER_MODEL after confirming the Worker API shape.')
         if not os.environ.get('OURO_WORKER_API_KEY'):
             os.environ['OURO_WORKER_API_KEY'] = getpass.getpass('Worker auth token (hidden, empty if no auth): ').strip()
     if not os.environ.get('GOOGLE_API_KEY'):
-        os.environ['GOOGLE_API_KEY'] = getpass.getpass('Gemini API key (hidden, not saved): ').strip()
+        os.environ['GOOGLE_API_KEY'] = getpass.getpass('Gemini API key (hidden, not saved; optional for Worker fallback): ').strip()
     if provider == 'general' and not os.environ['GOOGLE_API_KEY']:
         raise SystemExit('No key provided. Nothing started.')
     children = []
