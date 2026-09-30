@@ -1,6 +1,6 @@
 from app.provider_chain import ProviderChain
 from app.schemas import Action
-from test_vlm import REQ
+from .test_vlm import REQ
 
 class Provider:
     def __init__(self, result, error=None): self.result=result;self.last={'error':error} if error else {};self.calls=[]

@@ -3,7 +3,7 @@ pytest.importorskip("browser_use")
 from types import SimpleNamespace
 from app.general import GeneralPlanner
 from app.schemas import Action
-from test_vlm import REQ
+from .test_vlm import REQ
 
 class FakeModel:
     model = 'deterministic-test-double'
