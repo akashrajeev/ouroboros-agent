@@ -150,7 +150,11 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
         continue;
       }
       if (a.op === 'wait' && deps.settle) { await deps.settle(); deps.record?.(rec('sent', a.op, now())); history.push(a); continue; }
-      if (a.op === 'ask_user' || a.op === 'wait' || a.op === 'scroll') {
+      if (a.op === 'ask_user') {
+        deps.record?.(rec('done', 'ask_user', t5));
+        return { status: 'declined', steps: step, reason: a.reason ?? 'User input needed.' };
+      }
+      if (a.op === 'wait' || a.op === 'scroll') {
         // Stub-era: visual escalation and scrolling land in later phases.
         deps.record?.(rec('sent', a.op, t5));
         history.push(a);
@@ -176,6 +180,7 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       if (!r.ok) return { status: 'exec_failed', steps: step, reason: r.reason };
       deps.log?.({ kind: 'executed', step, op: a.op, element_id: a.element_id });
       history.push(a);
+      await deps.settle?.(); // let page transitions finish before taking the next observation
     }
     return { status: 'max_steps', steps: opts.maxSteps ?? 20 };
   } catch (e) {

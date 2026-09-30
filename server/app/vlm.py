@@ -105,6 +105,7 @@ class VlmPlanner:
         self.transport = transport
         self.name = f"vlm:{model}"
         self.last: dict[str, Any] = {}
+        self.system_prompt = SYSTEM
 
     @classmethod
     def from_env(cls) -> "VlmPlanner":
@@ -138,7 +139,7 @@ class VlmPlanner:
         if req.image_jpeg_b64:
             content.insert(0, {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_jpeg_b64}"}})
         body = {"model": self.model, "temperature": 0, "max_tokens": 200,
-                "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": content}]}
+                "messages": [{"role": "system", "content": self.system_prompt}, {"role": "user", "content": content}]}
         t0 = time.perf_counter()
         try:
             out = self.transport(self.url, body, self.headers, self.timeout)

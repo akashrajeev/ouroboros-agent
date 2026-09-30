@@ -12,6 +12,12 @@ from .schemas import StepMetrics, StepRequest, StepResponse
 
 app = FastAPI(title="ouroboros-agent server", version="0.1.0")
 def make_planner() -> Planner:
+    if os.environ.get("PLANNER") == "chain":
+        from .provider_chain import ProviderChain
+        return ProviderChain.from_env()
+    if os.environ.get("PLANNER") == "general":
+        from .general import GeneralPlanner
+        return GeneralPlanner()
     if os.environ.get("PLANNER") == "vlm":
         from .vlm import VlmPlanner
         return VlmPlanner.from_env()

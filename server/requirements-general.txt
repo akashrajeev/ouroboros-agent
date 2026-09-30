@@ -1,0 +1,6 @@
+# Separate environment: browser-use brings its own compatible pydantic/uvicorn.
+# Python 3.11+, tested here on Python 3.12.
+browser-use==0.13.10
+fastapi==0.135.2
+pytest==8.4.2
+httpx==0.28.1

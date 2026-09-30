@@ -12,3 +12,8 @@ extension/public/models/
 extension/public/ort/
 
 demo/out/
+
+# Local-only credentials and general-demo environment
+.env
+.env.*
+.venv-general/

@@ -167,4 +167,10 @@ describe('end-to-end device loop (stub planner)', () => {
     expect(sent.map((e) => !!e.reused)).toEqual([false, true, true]);
     expect(new Set(bodies.map((b) => JSON.parse(b).screen_map.length)).size).toBe(1);
   });
+  it('ends immediately when planner needs user input', async () => {
+    const m = mount(); let posts = 0;
+    const r = await runTask(TASK, { ...m.deps, post: async () => { posts++; return {action:{op:'ask_user',reason:'Open the target website first.'}}; } });
+    expect(posts).toBe(1); expect(r.status).toBe('declined'); expect(r.reason).toContain('Open the target');
+  });
+
 });
