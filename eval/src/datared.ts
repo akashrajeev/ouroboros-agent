@@ -10,7 +10,7 @@ import { NodeRegistry, observe } from '../../extension/lib/observe';
 const models = new URL('../../models/', import.meta.url).pathname;
 const ner = await NerDetector.create({ localModelPath: models });
 const pages = generatePages(25); // seed 26171, 5 templates x 5
-const rect = () => ({ x: 0, y: 0, w: 100, h: 20, top: 0, left: 0, right: 100, bottom: 20, width: 100, height: 20, toJSON: () => ({}) }) as DOMRect;
+const rect = () => ({ x: 0, y: 0, w: 100, h: 20 });
 
 const byTemplate: Record<string, { raw: number[]; san: number[] }> = {};
 for (const p of pages) {
