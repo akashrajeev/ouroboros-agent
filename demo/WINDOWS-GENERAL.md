@@ -54,11 +54,12 @@ rebuild it on this branch, with the model assets present:
 
 ```bat
 npm install
+py -3.12 demo\stage_windows.py "PATH_TO_EXTRACTED_FIXED_CHROME_BUILD"
 set WXT_NER_SOURCE=bundled
 npm run build --workspace @ouroboros/extension
 ```
 
-Check that the popup reports models enabled. If using the morning prebuilt
+Replace the staging path with the extracted fixed bundled-NER build folder that contains manifest.json. This copies model assets from your verified morning download; the Git branch alone does not contain those ignored binaries. Check that the popup reports models enabled. If using the morning prebuilt
 archive, it can call this service too, but it lacks the new ask-user immediate
 stop and post-action settle changes. The prebuilt archive is not a new build.
 
