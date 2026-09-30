@@ -1,3 +1,4 @@
+import { runEvidence } from '../lib/runEvidence';
 import { PlaceholderMap, sanitize, type RawObservation, type TextMatch } from '@ouroboros/core';
 import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserHost';
 import { runTask, type LoopEvent } from '../lib/agentLoop';
@@ -93,6 +94,8 @@ export default defineBackground(() => {
       const tabId = tab.id;
       const send = <T>(m: ContentRequest) => browser.tabs.sendMessage(tabId, m) as Promise<T>;
       const events: LoopEvent[] = [];
+      const runRows: import('@ouroboros/core').StepRecord[] = [];
+      const runStarted = performance.now();
       try {
         const result = await runTask(msg.task!, {
         observe: async () => { const obs = await send<RawObservation>({ type: 'ouro:observe' }); if (!obs) throw new Error('No observation from the active page'); return obs; },
@@ -120,9 +123,9 @@ export default defineBackground(() => {
           if (e.kind === 'blocked') { gateVerdict = 'blocked'; gateBlocked += e.hits.length; gateAt = Date.now(); }
           else if (e.kind === 'sent') { gateVerdict = 'pass'; gateAt = Date.now(); }
         },
-        record: (r) => { void metrics.add(r); },
+        record: (r) => { runRows.push(r); void metrics.add(r); },
       });
-      sendResponse({ result, events });
+      sendResponse({ result, events, evidence: runEvidence(runRows, performance.now() - runStarted) });
       } catch (error) {
         console.error('ouro run failed', error);
         sendResponse({ result: { status: 'error', reason: String(error) }, events });

@@ -1,3 +1,4 @@
+import { evidenceText, type RunEvidence } from '../../lib/runEvidence';
 const task = document.getElementById('task') as HTMLTextAreaElement;
 const logEl = document.getElementById('log')!;
 const runBtn = document.getElementById('run') as HTMLButtonElement;
@@ -153,9 +154,15 @@ document.getElementById('copy-setup')!.addEventListener('click', async (ev) => {
 
 runBtn.addEventListener('click', async () => {
   runBtn.disabled = true;
+  const clock = document.getElementById('run-clock')!;
+  const evidence = document.getElementById('run-evidence')!;
+  evidence.hidden = true;
+  const started = performance.now();
+  const timer = setInterval(() => { clock.textContent = `elapsed ${((performance.now()-started)/1000).toFixed(1)} s - run in progress`; }, 100);
   showLog('running...');
   try {
-    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value, tabId: targetTabId })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string };
+    const response = (await browser.runtime.sendMessage({ type: 'ouro:run', task: task.value, tabId: targetTabId })) as { result?: { status: string; steps?: number; reason?: string }; events?: unknown[]; status?: string; evidence?: RunEvidence };
+    if (response.evidence) { evidence.textContent = evidenceText(response.evidence); evidence.hidden = false; }
     const result: { status?: string; steps?: number; reason?: string } = response.result ?? response;
     if (result.status === 'error' || result.status === 'exec_failed') showLog(`run failed: ${result.reason ?? 'unknown error'}`);
     else {
@@ -165,6 +172,8 @@ runBtn.addEventListener('click', async () => {
   } catch (e) {
     showLog(`run failed: ${e instanceof Error ? e.message : String(e)}`);
   } finally {
+    clearInterval(timer);
+    clock.textContent = `elapsed ${((performance.now()-started)/1000).toFixed(2)} s - run ended`;
     runBtn.disabled = false;
     // The run updated the gate verdict - pick it up immediately instead of waiting for the poll.
     void refreshStatus().then(() => scanPage());

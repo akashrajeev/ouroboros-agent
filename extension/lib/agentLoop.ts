@@ -174,13 +174,13 @@ export async function runTask(task: string, deps: LoopDeps, opts: { maxSteps?: n
       const nodeId = current.nodeOf[a.element_id!]!;
       const text = a.text ? rehydrate(a.text, map).text : undefined; // A10, in memory only
       const r = await deps.execute(nodeId, a.op, text);
+      if (r.ok) await deps.settle?.(); // include DOM settle in measured execution time
       const t7 = now();
       later.execute = t7 - tC;
       deps.record?.(rec(r.ok ? 'sent' : 'error', a.op, t7));
       if (!r.ok) return { status: 'exec_failed', steps: step, reason: r.reason };
       deps.log?.({ kind: 'executed', step, op: a.op, element_id: a.element_id });
       history.push(a);
-      await deps.settle?.(); // let page transitions finish before taking the next observation
     }
     return { status: 'max_steps', steps: opts.maxSteps ?? 20 };
   } catch (e) {
