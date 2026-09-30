@@ -1,3 +1,4 @@
+import { safetyDrill } from '../lib/safetyDrill';
 import { runEvidence } from '../lib/runEvidence';
 import { PlaceholderMap, sanitize, type RawObservation, type TextMatch } from '@ouroboros/core';
 import type { HostRequest, PrimeResponse, VisualResponse } from '../lib/browserHost';
@@ -61,6 +62,7 @@ export default defineBackground(() => {
       })();
       return true;
     }
+    if (msg.type === 'ouro:safety:drill') { safetyDrill().then(sendResponse); return true; }
     if (msg.type === 'ouro:preview:scan') {
       (async () => {
         const tab = msg.tabId ? await browser.tabs.get(msg.tabId).catch(() => undefined) : (await browser.tabs.query({ active: true, currentWindow: true }))[0];
@@ -79,6 +81,9 @@ export default defineBackground(() => {
         const byType: Record<string, number> = {};
         for (const d of r.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
         sendResponse({ total: r.detections.length, byType,
+          boxes: r.detections.filter(d=>d.bbox).map(d=>({bbox:d.bbox,type:d.type})),
+          rawBytes: new TextEncoder().encode(JSON.stringify(obs)).length,
+          safeBytes: new TextEncoder().encode(JSON.stringify(r.screen.elements)).length,
           pairs: map.values().map((v) => ({ type: v.type, raw: v.value, token: v.token })),
           dom: r.screen.elements.filter((e) => e.label || e.value).slice(0, 80).map((e) => { const raw = obs.elements.find(x => x.nodeId === r.screen.nodeOf[e.id]); return { role: e.role, label: e.label, value: e.value, rawLabel: raw?.name || raw?.text || '', rawValue: raw?.value || '' }; }),
         });

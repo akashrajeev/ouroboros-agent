@@ -58,7 +58,7 @@ export default defineContentScript({
           const sx = window.scrollX, sy = window.scrollY;
           const vh = window.innerHeight, vw = window.innerWidth;
           let painted = 0;
-          for (const d of res.detections) {
+          for (const d of msg.boxes ?? res.detections) {
             const b = d.bbox;
             if (!b || b.w <= 0 || b.h <= 0) continue;
             if (b.y > vh || b.y + b.h < 0 || b.x > vw || b.x + b.w < 0) continue;
@@ -71,7 +71,7 @@ export default defineContentScript({
               'position:absolute', 'z-index:2147483647', 'background:#000',
               'color:#2dd4bf', 'font:600 10px/1 ui-monospace,monospace',
               'display:flex', 'align-items:center', 'justify-content:center',
-              'border-radius:2px', 'pointer-events:none', 'overflow:hidden',
+              'border:2px solid #2dd4bf', 'box-shadow:0 0 12px #2dd4bf66', 'border-radius:3px', 'pointer-events:none', 'overflow:hidden',
             ].join(';'));
             document.body.appendChild(el);
             painted++;

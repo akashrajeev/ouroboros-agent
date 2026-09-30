@@ -37,6 +37,11 @@ describe('observe', () => {
     expect(obs.elements.map((e) => e.text)).toEqual(['Phone: 9876543210', 'UID: 2345 6789', 'a', 'b']);
   });
 
+  it('ignores local mask overlays in observations', () => {
+    const obs = page('<p>page text</p><div class="ouro-mask-overlay"><span>NAME</span></div>');
+    expect(obs.elements.map(e => e.text)).toEqual(['page text']);
+  });
+
   it('button text is not duplicated as a separate text element', () => {
     const obs = page(`<button><span>Pay now</span></button>`);
     expect(obs.elements).toHaveLength(1);

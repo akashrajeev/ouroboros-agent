@@ -163,6 +163,7 @@ export function observe(doc: Document, registry: NodeRegistry, rect: RectFn = de
     if (block) merged.add(el);
     const text = block ? (el.textContent ?? '').replace(/\s+/g, ' ').trim() : directText(el);
     if (!interactive && !(TEXT_TAGS.has(el.tagName) && text)) continue;
+    if (el.closest('.ouro-mask-overlay')) continue; // presentation chrome is not page input
     if (!interactive && el.closest('button, a[href], label')) continue; // folded into the control's name
     const input = el as HTMLInputElement;
     const form = el.closest('form');

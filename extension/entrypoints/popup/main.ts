@@ -7,7 +7,7 @@ type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
 type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate };
 type Pair = { type: string; raw: string; token: string };
 type DomLine = { role: string; label: string; value: string; rawLabel?: string; rawValue?: string };
-type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[] } | { error: string };
+type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[]; boxes?: {bbox:{x:number;y:number;w:number;h:number};type:string}[]; rawBytes?:number; safeBytes?:number } | { error: string };
 
 function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -87,6 +87,7 @@ function renderPairs(pairs: Pair[] | undefined, total: number) {
 }
 
 let scanning = false;
+let previewBoxes: {bbox:{x:number;y:number;w:number;h:number};type:string}[] = [];
 const caught = new Map<string, Pair>();
 document.getElementById('inspect-toggle')!.addEventListener('click', () => { const panel=document.getElementById('inspect-panel')!;panel.hidden=!panel.hidden; });
 async function scanPage() {
@@ -96,12 +97,15 @@ async function scanPage() {
   const chips = document.getElementById('scan-chips')!;
   try {
     const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
-    const tab = active?.url?.startsWith('chrome-extension://') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
+    const tab = /^(chrome|moz)-extension:\/\//.test(active?.url ?? '') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
     if (!tab?.id) throw new Error('no tab');
     targetTabId = tab.id;
     const peek = (await browser.runtime.sendMessage({ type: 'ouro:preview:scan', tabId: tab.id })) as Peek;
     if (!peek || 'error' in peek) throw new Error(peek?.error ?? 'No response from content script');
     maskBtn.hidden = false;
+    previewBoxes=peek.boxes ?? [];
+    if (peek.rawBytes && peek.safeBytes != null) { const saved=100*(1-peek.safeBytes/peek.rawBytes); document.getElementById('byte-savings')!.textContent=`LOCAL SNAPSHOT: ${peek.rawBytes.toLocaleString()} B raw observation → ${peek.safeBytes.toLocaleString()} B sanitized map (${saved.toFixed(1)}% smaller). Includes structure pruning, not redaction alone. Actual wire bytes are below.`; }
+    if (maskOn) await browser.tabs.sendMessage(tab.id,{type:'ouro:mask:preview',boxes:previewBoxes});
     for (const pair of peek.pairs ?? []) caught.set(`${pair.type}:${pair.raw}`, pair);
     document.getElementById('caught-count')!.textContent = String(caught.size);
     document.getElementById('caught-list')!.innerHTML = [...caught.values()].map(p => `<div class="dom-row"><span class="dom-role">${esc(p.type)}</span><span class="dom-content">${esc(p.raw)} → <b>${esc(p.token)}</b></span></div>`).join('') || 'No detections yet.';
@@ -138,11 +142,11 @@ const maskBtn = document.getElementById('mask-toggle') as HTMLButtonElement;
 maskBtn.addEventListener('click', async () => {
   try {
     const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
-    const tab = active?.url?.startsWith('chrome-extension://') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
+    const tab = /^(chrome|moz)-extension:\/\//.test(active?.url ?? '') ? (await browser.tabs.query({ currentWindow: true })).find((t) => t.url?.startsWith('http')) : active;
     if (!tab?.id) return;
     targetTabId = tab.id;
     if (!maskOn) {
-      const r = (await browser.tabs.sendMessage(tab.id, { type: 'ouro:mask:preview' })) as { painted?: number };
+      const r = (await browser.tabs.sendMessage(tab.id, { type: 'ouro:mask:preview', boxes: previewBoxes })) as { painted?: number };
       maskOn = true;
       maskBtn.textContent = `[ MASKING ON - ${r?.painted ?? 0} BOXES. TAP TO HIDE ]`;
       maskBtn.classList.add('on');
@@ -217,3 +221,9 @@ void scanPage();
 // Server state changes while the popup is open (he starts the server mid-test) - keep the row live.
 setInterval(() => { void scanPage(); }, 1000);
 setInterval(() => { void refreshStatus(); }, 4000);
+
+document.getElementById('safety-drill')!.addEventListener('click',async()=>{
+ const output=document.getElementById('safety-result')!;output.textContent='Checking deliberately raw synthetic PAN with the real leak gate...';
+ const r=await browser.runtime.sendMessage({type:'ouro:safety:drill'}) as {blocked:boolean;hits:number;bytes:number;networkRequests:number};
+ output.className='safety-block';output.textContent=r.blocked ? `STOPPED: ${r.hits} real gate hits in ${r.bytes} B test payload. ${r.networkRequests} network requests. Synthetic drill only, not the page task.` : 'DRILL FAILED: gate did not block. Do not claim protection.';
+});

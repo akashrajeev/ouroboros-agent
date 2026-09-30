@@ -54,6 +54,21 @@ class Handler(BaseHTTPRequestHandler):
         except urllib.error.URLError as e:
             return 502, json.dumps({"detail": f"planner server unreachable on {TARGET}: {e.reason}"}).encode()
 
+    def end_headers(self):
+        origin = self.headers.get("Origin", "")
+        # Firefox extension pages preflight JSON POSTs to this local demo proxy.
+        # Do not open the local planner to ordinary website origins.
+        if __import__("re").fullmatch(r"(?:moz|chrome)-extension://[A-Za-z0-9-]+", origin):
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "content-type")
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.end_headers()
+
     def do_GET(self):
         status, data = self._forward()
         self.send_response(status)

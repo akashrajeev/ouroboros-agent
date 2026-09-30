@@ -1,7 +1,7 @@
 export type ContentRequest =
   | { type: 'ouro:observe' }
   | { type: 'ouro:peek' }
-  | { type: 'ouro:mask:preview' }
+  | { type: 'ouro:mask:preview'; boxes?: {bbox:{x:number;y:number;w:number;h:number};type:string}[] }
   | { type: 'ouro:mask:clear' }
   | { type: 'ouro:execute'; nodeId: string; op: string; text?: string }
   | { type: 'ouro:scroll'; direction: 'up' | 'down' }
