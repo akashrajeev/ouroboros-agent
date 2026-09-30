@@ -26,6 +26,15 @@
     <div class="sec">sanitized DOM <span class="live-tag">LIVE</span></div>
     <div class="dom-view" id="dom-view" aria-live="polite">Scanning this page...</div>
 
+    <button id="inspect-toggle" class="mbtn" type="button">[ CAUGHT SO FAR / COMPARE DOM ]</button>
+    <section id="inspect-panel" hidden>
+      <div class="sec">caught in this popup session <span id="caught-count" class="live-tag">0</span></div>
+      <div id="caught-list" class="dom-view"></div>
+      <div class="sec">DOM comparison <span id="scan-time" class="live-tag">waiting</span></div>
+      <div class="compare-head"><span>RAW - device only</span><span>MASKED - planner view</span></div>
+      <div id="dom-compare" class="dom-view"></div>
+      <div class="hint">Raw values stay on this device. Snapshot refreshes up to once a second while this popup is open. Counts are detections, not ground-truth accuracy.</div>
+    </section>
     <div class="sec">agent_loop</div>
     <div class="srow"><b id="server-dot">[?]</b><span id="server-text">checking local server...</span></div>
     <div class="setup" id="setup-box" hidden>

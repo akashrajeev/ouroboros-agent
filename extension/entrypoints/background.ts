@@ -79,8 +79,8 @@ export default defineBackground(() => {
         const byType: Record<string, number> = {};
         for (const d of r.detections) byType[d.type] = (byType[d.type] ?? 0) + 1;
         sendResponse({ total: r.detections.length, byType,
-          pairs: map.values().slice(0, 8).map((v) => ({ type: v.type, raw: v.value, token: v.token })),
-          dom: r.screen.elements.filter((e) => e.label || e.value).slice(0, 24).map((e) => ({ role: e.role, label: e.label, value: e.value })),
+          pairs: map.values().map((v) => ({ type: v.type, raw: v.value, token: v.token })),
+          dom: r.screen.elements.filter((e) => e.label || e.value).slice(0, 80).map((e) => { const raw = obs.elements.find(x => x.nodeId === r.screen.nodeOf[e.id]); return { role: e.role, label: e.label, value: e.value, rawLabel: raw?.name || raw?.text || '', rawValue: raw?.value || '' }; }),
         });
       })().catch((e) => sendResponse({ error: String(e) }));
       return true;
@@ -123,7 +123,7 @@ export default defineBackground(() => {
           if (e.kind === 'blocked') { gateVerdict = 'blocked'; gateBlocked += e.hits.length; gateAt = Date.now(); }
           else if (e.kind === 'sent') { gateVerdict = 'pass'; gateAt = Date.now(); }
         },
-        record: (r) => { runRows.push(r); void metrics.add(r); },
+        record: (r) => { runRows.push(r); void metrics.add(r); void browser.runtime.sendMessage({ type: 'ouro:run:live', evidence: runEvidence(runRows, performance.now()-runStarted), action: r.action }).catch(() => {}); },
       });
       sendResponse({ result, events, evidence: runEvidence(runRows, performance.now() - runStarted) });
       } catch (error) {

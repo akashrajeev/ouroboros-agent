@@ -6,7 +6,7 @@ const runBtn = document.getElementById('run') as HTMLButtonElement;
 type Gate = { verdict: 'pass' | 'blocked' | null; blocked: number; at: number };
 type Status = { models: boolean; ner?: boolean; server: boolean; gate?: Gate };
 type Pair = { type: string; raw: string; token: string };
-type DomLine = { role: string; label: string; value: string };
+type DomLine = { role: string; label: string; value: string; rawLabel?: string; rawValue?: string };
 type Peek = { total: number; byType: Record<string, number>; pairs?: Pair[]; dom?: DomLine[] } | { error: string };
 
 function esc(s: string): string {
@@ -86,7 +86,12 @@ function renderPairs(pairs: Pair[] | undefined, total: number) {
   }
 }
 
+let scanning = false;
+const caught = new Map<string, Pair>();
+document.getElementById('inspect-toggle')!.addEventListener('click', () => { const panel=document.getElementById('inspect-panel')!;panel.hidden=!panel.hidden; });
 async function scanPage() {
+  if (scanning) return;
+  scanning = true;
   const status = document.getElementById('scan-status')!;
   const chips = document.getElementById('scan-chips')!;
   try {
@@ -97,6 +102,11 @@ async function scanPage() {
     const peek = (await browser.runtime.sendMessage({ type: 'ouro:preview:scan', tabId: tab.id })) as Peek;
     if (!peek || 'error' in peek) throw new Error(peek?.error ?? 'No response from content script');
     maskBtn.hidden = false;
+    for (const pair of peek.pairs ?? []) caught.set(`${pair.type}:${pair.raw}`, pair);
+    document.getElementById('caught-count')!.textContent = String(caught.size);
+    document.getElementById('caught-list')!.innerHTML = [...caught.values()].map(p => `<div class="dom-row"><span class="dom-role">${esc(p.type)}</span><span class="dom-content">${esc(p.raw)} → <b>${esc(p.token)}</b></span></div>`).join('') || 'No detections yet.';
+    document.getElementById('scan-time')!.textContent = new Date().toLocaleTimeString();
+    document.getElementById('dom-compare')!.innerHTML = (peek.dom ?? []).map(e => `<div class="compare-row"><span>${esc(e.rawLabel || e.rawValue || '')}</span><span>${esc(e.label || e.value || '')}${e.label && e.value ? ' '+esc(e.value) : ''}</span></div>`).join('');
     if (peek.total === 0) {
       status.textContent = 'nothing sensitive detected here';
       status.className = 'row ok';
@@ -119,7 +129,7 @@ async function scanPage() {
     renderPairs(undefined, -1);
     document.getElementById('wire-pairs')!.textContent = 'scan unavailable - do not treat this as clear';
     document.getElementById('dom-view')!.textContent = 'Open a regular web page to inspect its sanitized DOM.';
-  }
+  } finally { scanning = false; }
 }
 
 let targetTabId: number | undefined;
@@ -183,7 +193,8 @@ runBtn.addEventListener('click', async () => {
 // A9 confirmation: the background asks, the user answers here.
 const box = document.getElementById('confirm')!;
 browser.runtime.onMessage.addListener((raw: unknown, _s, sendResponse) => {
-  const msg = raw as { type: string; label?: string };
+  const msg = raw as { type: string; label?: string; evidence?: RunEvidence; action?: string };
+  if (msg.type === 'ouro:run:live' && msg.evidence) { const card=document.getElementById('run-evidence')!;card.hidden=false;card.textContent=evidenceText(msg.evidence);void scanPage();return undefined as never; }
   if (msg.type !== 'ouro:confirm') return undefined as never; // Do not win the model host's response race.
   document.getElementById('confirm-label')!.textContent = msg.label ?? '';
   box.hidden = false;
@@ -204,4 +215,5 @@ document.getElementById('csv')!.addEventListener('click', async () => {
 void refreshStatus();
 void scanPage();
 // Server state changes while the popup is open (he starts the server mid-test) - keep the row live.
-setInterval(() => { void refreshStatus(); void scanPage(); }, 4000);
+setInterval(() => { void scanPage(); }, 1000);
+setInterval(() => { void refreshStatus(); }, 4000);
